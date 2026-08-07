@@ -2,255 +2,173 @@
 
 ## Purpose
 
-Most fantasy football tools either cost money or tell you things you already
-know. The paid ones mostly repackage a rankings list; the free ones mostly
-repackage ADP. Neither answers the question you actually have on the clock,
-which is not "who is the best player left" but "who is the best player left
-*for my roster*, given what this specific room is about to take."
+Most fantasy football tools either charge a subscription or hand back the same
+rankings list that everyone else is already looking at. The question I actually
+have when I am on the clock is narrower than that. Given the roster I have built
+so far, and given what this particular room is likely to take in the twelve
+picks before my next turn, who should I take right now?
 
-I wanted to build that myself, with real math, because I like football and I
-wanted to see how far honest modeling could get. It is still a work in progress,
-but it has held up well in testing so far.
-
-Two rules shaped the whole project:
-
-- **Measure, do not assume.** Every model here was tested against a real season.
-  Several of them were rewritten when the data disagreed with the design. Those
-  results are written down below, including the ones that were inconvenient.
-- **Show the numbers, not a verdict.** Every recommendation explains itself in
-  terms you can check against a box score, and says so when it is uncertain.
+So I built something that answers that, using real math and the fact that I like
+football enough to spend a lot of evenings on it. Every model here was fitted
+against an actual season rather than assumed, and in several cases the data
+disagreed with my design badly enough that the design changed. It is still a
+work in progress. In testing so far it has held up well.
 
 ## What it does
 
-- **Draft assistant.** A Chrome side panel that reads the live draft (ESPN and
-  Sleeper), and recommends a pick with the reasoning attached. It gives two
-  answers: the best pick for your roster, and the pick most likely to be gone if
-  you wait. When they disagree, that disagreement is the useful part.
-- **Waiver targets.** Ranks free agents in your league by what they are actually
-  worth per game, with role changes and regression risk shown as context.
-- **Start/sit.** Fills your lineup, adjusting for the betting market's view of
-  each game, and flags genuine coin flips instead of pretending to be sure.
-- **Web app.** News filtered to players who matter to you, league status, and
-  the weekly views above.
+A Chrome side panel watches your live draft on ESPN or Sleeper and recommends a
+pick with the reasoning attached. It gives two answers rather than one: the
+strongest pick for your roster, and the player most likely to be gone before you
+pick again. When those two disagree, the disagreement is usually the useful
+part.
 
-Personal project, personal use. It reads public data and your own leagues; it is
-not a product and is not hosted anywhere.
+Once the season starts, the same engine ranks waiver targets by what a player is
+worth per game, and sets a lineup using projections adjusted for the betting
+market's read on each game. Genuine coin flips get labelled as coin flips.
+There is also a small web app for league status, ingest freshness and news
+filtered down to players who could plausibly matter to you.
+
+This is a personal project rather than a product. It reads public data plus your
+own leagues, and it is not hosted anywhere.
 
 ## How to run
 
-You need Python 3.12 with [uv](https://docs.astral.sh/uv/), and Node 24 or
-newer. No Docker required: the database is an embedded Postgres that runs in
-user space.
+You need Python 3.12 with [uv](https://docs.astral.sh/uv/) and Node 24 or newer.
+Docker is optional, since the database is an embedded Postgres that runs in user
+space.
 
     git clone <this repo>
     cd fantasy-football-engine-open
     cp .env.example .env
-
-One command brings up everything, applies migrations, refreshes stale data, and
-reports how current the market numbers are:
-
     ./scripts/draft-day.sh
 
-The web app is then at `http://localhost:8000/app`.
+That one script installs dependencies, applies migrations, refreshes any stale
+market data and starts the API. The web app is then at
+`http://localhost:8000/app`.
 
-To load the draft assistant in Chrome:
+For the draft assistant, build the extension and load it unpacked:
 
     cd extension && npm install && npm run build
 
-Then open `chrome://extensions`, turn on Developer mode, choose "Load unpacked",
-and select the `extension/` directory. Open a draft on ESPN or Sleeper and the
-side panel picks it up automatically.
+Open `chrome://extensions`, enable Developer mode, choose Load unpacked and
+select the `extension/` directory. Start a draft on either platform and the side
+panel picks it up on its own.
 
-Running the tests:
+Tests:
 
-    uv run pytest                      # engine, ingest, API
-    cd extension && npm test           # extension logic
+    uv run pytest
+    cd extension && npm test
 
-To watch the engine draft a full team against a simulated room and grade the
-result:
+You can also watch the engine draft an entire team against a simulated room,
+which prints every pick with its reasoning and then grades the finished roster:
 
     uv run python -m api.eval.mockdraft --slot 4 --seed 1
 
-### Optional
+ESPN private league reads need your own session cookies in `.env`, but nothing
+about drafting requires them, because the extension uses the session you are
+already logged into.
 
-ESPN private-league reads need your own session cookies in `.env` (`ESPN_S2`,
-`ESPN_SWID`). Everything else works without them, including drafting, because
-the browser extension uses your existing session.
+## Some of the math
 
-## The math
+### Value over replacement
 
-### Value over replacement, not rankings
+A player is worth what he scores above whatever you could get for free at his
+position, and that replacement line comes from your league settings rather than
+from a generic list. In a twelve team league running two backs plus a flex, it
+lands around the twenty ninth running back. Quarterbacks put up more raw points
+than running backs, yet the distance between the best quarterback and a freely
+available one is small, which is why the engine will happily pass on the higher
+scoring player.
 
-A player is worth the points he scores *above what you could get for free at his
-position*. That replacement level is derived from your league's actual settings
-rather than a generic list: with twelve teams and two running back slots plus a
-flex, roughly the 29th running back is replaceable, so the 5th is worth his
-points minus that baseline, not his raw total.
+### Will he last until my next pick
 
-This is why the engine will pass on a higher-scoring quarterback for a lower-
-scoring running back. Quarterbacks score more points, but the gap between the
-best and the freely available one is small; at running back it is large.
+Since every pick is really a comparison between taking someone now and taking
+whoever survives to your next turn, the engine needs a survival probability.
+Fitting real draft position against consensus ADP across 246 twelve team PPR
+drafts gives a spread of about 0.107 times ADP, so a player going fortieth on
+average moves by roughly four picks while one going 120th moves by thirteen.
 
-### Will he last until my next pick?
+A Monte Carlo of the intervening picks sharpens that, with simulated opponents
+drafting from the ADP distribution weighted by their own roster holes. Getting
+the decay right mattered more than I expected. An early setting put 56 percent
+of simulated pick mass on players more than twelve picks away from their ADP,
+which disagreed badly with the analytic curve; one receiver came out 83 percent
+gone by one method and 19 percent gone by the other. Sweeping that parameter
+brought the mean disagreement between the two down from 0.145 to 0.055.
 
-Every pick is really a comparison between taking a player now and taking the
-best remaining player at your next turn. That needs a probability that a given
-player survives that long.
+### Waivers, where the data changed my mind
 
-Fitting draft position against consensus ADP across 246 twelve-team PPR drafts
-gives a standard deviation of about `0.107 x ADP` -- a player going 40th on
-average has a spread of roughly four picks, and one going 120th has about
-thirteen. Survival is then the normal tail above your next pick number.
+Conventional wisdom holds that opportunity repeats while production does not, so
+free agents ought to be ranked by expected points from usage rather than by
+points actually scored. I built exactly that, then replayed the 2025 regular
+season through it, taking the top ten adds each week from week five to week
+fifteen and grading them on the following three weeks.
 
-The engine also runs a Monte Carlo of the picks between now and your next turn,
-where simulated opponents draft from that ADP distribution weighted by their own
-roster needs and any positional run in progress. The decay of that distribution
-was calibrated rather than guessed: an initial setting put 56% of simulated pick
-mass on players more than twelve picks from their ADP, which disagreed badly
-with the analytic curve (one receiver came out 83% gone analytically and 19%
-gone in simulation). Sweeping the parameter brought mean disagreement from 0.145
-to 0.055.
+    season points per game        7.91 PPR/gm
+    weighted season and recent    8.04
+    expected points from usage    7.41
+    chase last week's points      6.15
+    random available player       3.11
 
-The two are combined into one number, not added twice. Where the simulation
-modeled a player it wins, because it knows about roster needs and runs that the
-ADP curve cannot see; the analytic curve covers everyone else.
+Ranking by usage finished behind ranking by plain scoring average. Pulling
+efficiency out of the score throws away real skill alongside the touchdown luck,
+because good players genuinely do more with the same number of targets.
 
-### Two-turn utility
-
-The final ranking is expected value across your next two picks: the value of
-taking this player now, plus the best expected pick at your next turn given that
-choice, computed by re-simulating the room for each candidate. Taking the fifth
-running back is only good if the alternative at your next turn is meaningfully
-worse, and this measures exactly that instead of applying a positional fudge.
-
-### Waivers: opportunity does not beat production
-
-The standard advice is that opportunity is repeatable and production is not, so
-you should rank free agents by expected points from usage (xFP) rather than by
-points scored. I built that, then replayed the 2025 regular season through it --
-weeks 5 to 15, top ten adds each week, graded on the next three weeks:
-
-    season points per game      7.91 PPR/gm    36% returned a startable week
-    weighted season + recent    8.04           34%
-    expected points (xFP)       7.41           27%
-    chase last week's points    6.15           21%
-    random available player     3.11            8%
-
-Scoring opportunity instead of production made things **worse**. Stripping out
-efficiency throws away real skill along with the touchdown luck; good players
-genuinely do more with the same targets.
-
-The second result was stronger. Ranking strategies by how many "emerging"
-players they picked lines up almost perfectly against how badly they did, and
-the breakout-first strategy loses across the *entire* outcome distribution --
-mean, median, 90th percentile and best case alike. Only 4% of its picks returned
-a fifteen-point week, against 14% for plain season points.
-
-So the waiver score is season points per game, gated on the role still existing
-(a player whose snap share has collapsed is discounted regardless of his
-average). Role change and regression risk are reported as context, and neither
-moves the number. The expected-points model survives for the one thing it does
-well: flagging production that has outrun its usage.
-
-Fitted points per opportunity, from 4,621 player-weeks (R-squared 0.61):
-
-    per target:  RB 1.31   WR 1.71   TE 1.82
-    per carry:   0.70 (fitted on running back weeks; other positions are noise)
-    quarterback: 0.38 per pass attempt, 1.05 per carry (R-squared 0.43)
-
-Quarterbacks need their own model. Scoring them on targets and carries measures
-only their scrambles, which produced nonsense like a starter appearing to score
-twenty points above expectation every week.
-
-### Start/sit: the market matters, but less than you would think
-
-The betting market's implied team total is the best public predictor of team
-scoring, so it should help pick between two similar players. It does, and the
-effect size is worth being honest about.
-
-On genuine toss-ups -- same position, same week, season scoring within 1.5
-points, implied totals at least 2 apart -- the player in the better game
-environment outscored the other 51.8% of the time, by 0.56 points on average
-across 7,656 pairs (t = 4.96). Real, statistically solid, and small: enough to
-break a tie, never enough to overturn a projection gap.
-
-Wind is the larger effect. In sustained winds of 15 mph or more, quarterback,
-receiver and tight end production fell to 0.72 of each player's own season rate
-while running backs rose to 1.17 as game scripts turned run-heavy. It is also
-rare, roughly 143 player-weeks a season.
-
-Both adjustments are capped well inside the measured effects. At the lineup
-level, replaying 400 random rosters across weeks 5 to 17, they changed 9.7% of
-lineups, were better 51.7% of the time when they did, and gained 0.03 points per
-week overall -- not statistically significant. They are kept because they are
-directionally right in every test and cost nothing, but the real value is the
-reasons rather than the arithmetic. "22 mph wind" is worth knowing even in the
-weeks the half-point nudge changes nothing.
+The second finding was blunter. Sorting strategies by how many breakout
+candidates they selected tracks almost exactly against how badly they did, and a
+breakout first approach loses at every point of the outcome distribution rather
+than trading a worse average for a better ceiling. Four percent of its picks
+returned a fifteen point week, against fourteen percent for plain season
+scoring. Role changes still appear on the card as context, since a human may
+know something the model does not, but they no longer move the score.
 
 ### Risk and reward
 
-Two meters per player, both fitted rather than invented.
+Each player card carries two meters, both fitted rather than eyeballed. Risk is
+a calibrated probability of a dud week, driven by snap share and week to week
+volatility. Its R-squared is only 0.11, which is roughly the ceiling for
+predicting a single NFL week, but calibration is what a meter needs and that
+part lines up closely: buckets predicted at 20, 30, 40 and 50 percent came in at
+22, 29, 38 and 46 percent.
 
-**Risk** is a calibrated probability of a dud week (under half the player's own
-scoring rate), fitted on 3,484 point-in-time player-weeks:
-
-    P(bust) = 0.125 + 0.263 x (1 - snap share) + 0.132 x volatility
-
-The R-squared is only 0.11, which is the honest ceiling for predicting a single
-NFL week. What matters for a meter is calibration, and that is close to exact:
-
-    predicted   20%   30%   40%   50%   60%
-    actual      22%   29%   38%   46%   67%
-
-Signals that did **not** predict busting, and were left out: sample size (flat
-at 35% regardless of games played), the expected-points gap, and whether the
-player was emerging.
-
-**Reward** is the ceiling, normalized against what the position offers, since
-twelve points is an elite tight end week and a flex start for a running back:
-
-    ceiling = 2.86 + 1.09 x scoring rate
-
-Volatility was in that fit too and came out at -0.0155, which is nothing. That
-is the third independent time the data said the same thing: **past volatility
-does not buy upside.** Within equal-quality bands, volatile players had lower
-ceilings, lower floors and lower means than steady ones.
-
-Which means the honest caveat about the pairing: risk and reward correlate at
--0.78. Sorted into quadrants, "high reward, high risk" held one player out of
-521 real waiver candidates. Good players are both safer and better. The two
-meters answer two real questions, but they are not a tradeoff dial, and the
-interface does not pretend you are buying upside with risk.
+Reward is a projected ceiling normalised by position, since twelve points is an
+elite week for a tight end and a flex start for a running back. Volatility went
+into that fit too and came out at -0.0155, which is nothing. Past boom and bust
+does not buy you upside; inside equal quality bands, volatile players had lower
+ceilings and lower floors than steady ones.
 
 ## Testing
 
-The engine is pure functions over a player pool, so most of it is tested
-directly. Beyond unit tests there are two harnesses worth mentioning.
+Most of the engine is pure functions over a player pool, so it is tested
+directly. Two harnesses beyond the unit tests are worth mentioning.
 
-**A golden behaviour lock.** The recommendation pipeline is long and invites
-tidying, and tidying is exactly when a scoring change slips through unnoticed --
-the rule-based tests keep passing because they assert rules, not numbers. One
-test asserts exact scores to three decimals across four draft states, so a
-refactor either produces identical output or fails loudly.
+One is a golden behaviour lock. The recommendation pipeline is long and invites
+tidying, and tidying is precisely when a scoring change slips past unnoticed,
+because rule based tests keep passing when they assert rules instead of numbers.
+So one test pins exact scores to three decimal places across four draft states.
+A refactor either reproduces them or fails loudly.
 
-**A full-draft rehearsal.** The engine drafts all sixteen rounds against a
-simulated room, and the finished roster is graded against invariants a human
-would state flatly: never a third quarterback, never a second defense, kickers
-and defenses only in the endgame, every starting slot fillable, real depth at
-running back and receiver. Every one of those rules is a bug that actually
-shipped and was caught in a live mock draft. Now they are caught before a mock.
+The other is the full draft rehearsal mentioned above. After sixteen simulated
+rounds the finished roster gets checked against rules a human would state
+flatly: never a third quarterback, never a second defense, kickers and defenses
+only at the very end, every starting slot fillable, real depth at running back
+and receiver. Each of those is a bug that shipped at some point and got caught
+in a live mock draft. They are caught earlier now.
 
 ## Known limitations
 
-- Late-round value is still measured against *starter* replacement levels, which
-  structurally flatters backup quarterbacks and tight ends over bench depth at
-  running back and receiver. Positional holds contain the damage; a bench-aware
-  replacement model is the real fix.
-- Waiver and start/sit models were validated on a single season. The logic
-  transfers; the exact coefficients should be refit annually.
-- The start/sit backtest used each player's own scoring rate as the baseline
-  because historical weekly projections are not retrievable after the fact. In
-  use the baseline is a real projection, and the marginal value of the game
-  environment adjustments on top of that is untested.
-- Auto-draft clicks through the platform's own interface, which means it depends
-  on page structure that can change without notice.
+Late round value is still measured against starter replacement levels, which
+structurally flatters backup quarterbacks and tight ends over bench depth at
+running back and receiver. Positional holds contain the damage, though a bench
+aware replacement model would be the real fix.
+
+The waiver and start/sit models were validated against a single season. The
+logic should transfer; the coefficients want refitting every year.
+
+The start/sit backtest used each player's own scoring rate as its baseline,
+since historical weekly projections cannot be retrieved after the fact. In
+practice the baseline is a real projection, and how much the game environment
+adjustments add on top of that is untested.
+
+Auto draft works by clicking through the platform's own interface, so it depends
+on page structure that can change without warning.
