@@ -38,7 +38,7 @@ Docker is optional, since the database is an embedded Postgres that runs in user
 space.
 
     git clone <this repo>
-    cd fantasy-football-engine-open
+    cd Fantasy-Engine-Open
     cp .env.example .env
     ./scripts/draft-day.sh
 
