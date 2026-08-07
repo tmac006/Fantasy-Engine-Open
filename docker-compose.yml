@@ -1,0 +1,15 @@
+# Optional: for machines with Docker. Dev default on this machine is the
+# embedded pgserver (see .env.example DATABASE_URL).
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: fantasy
+      POSTGRES_PASSWORD: fantasy
+      POSTGRES_DB: fantasy
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
