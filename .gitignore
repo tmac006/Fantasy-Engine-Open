@@ -1,0 +1,36 @@
+# Secrets & credentials — never commit
+.env
+*.pem
+*.key
+*.p12
+*credentials*
+*secret*
+
+# Local tooling state
+.claude/
+.DS_Store
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Local data — recorded platform payloads stay out of the repo
+# (tests/fixtures/ is the deliberate exception: small, replayed in CI)
+docs/phase0-fixtures/
+.pgdata/
+*.jsonl
+
+# Frontend
+node_modules/
+dist/
+.angular/
+
+# Local working notes — no markdown ships in this repo
+docs/

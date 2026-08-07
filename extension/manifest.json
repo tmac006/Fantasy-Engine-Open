@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Fantasy Draft Assistant",
+  "description": "Live best-available recommendations during fantasy drafts. Optional auto-draft, off by default and re-armed each session.",
+  "version": "0.2.0",
+  "action": {
+    "default_title": "Open draft assistant"
+  },
+  "background": {
+    "service_worker": "dist/background.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "dist/panel.html"
+  },
+  "permissions": [
+    "storage",
+    "sidePanel",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://*.sleeper.app/*",
+    "*://sleeper.com/*",
+    "*://*.espn.com/*",
+    "http://localhost:8000/*",
+    "http://127.0.0.1:8000/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://fantasy.espn.com/football/draft*"
+      ],
+      "js": [
+        "dist/espn-tap.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://fantasy.espn.com/football/draft*"
+      ],
+      "js": [
+        "dist/espn-bridge.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

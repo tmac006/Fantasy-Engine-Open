@@ -1,0 +1,6254 @@
+{
+ "recommended_pick": {
+  "canonical_id": "478",
+  "name": "Bijan Robinson",
+  "position": "RB",
+  "team": "ATL",
+  "points": 332.1,
+  "vor": 173.1,
+  "value": 209.1,
+  "score": 364.0,
+  "tier": 1,
+  "tier_remaining": 1,
+  "adp": 1.8,
+  "survival": 0.453,
+  "disappearance_probability": 0.547,
+  "at_risk": false,
+  "vona": 10.9,
+  "opportunity_cost": 10.9,
+  "expected_next_turn_value": 182.3,
+  "reach_penalty": 0.0,
+  "reason": "proj RB1, tier 1 (1 left); market ADP 2; fills an open RB starter slot; 45% to last until pick 3; waiting at RB costs ~11 pts",
+  "platform_ids": {
+   "sleeper": "9509",
+   "espn": "4430807"
+  },
+  "analysis": {
+   "headline": "RB adjusted value 209.1 with 55% modeled room urgency.",
+   "projection_summary": "332.1 consensus; 324.9-339.4 modeled range.",
+   "projection_consensus": 332.1,
+   "projection_low": 324.9,
+   "projection_high": 339.4,
+   "projection_is_placeholder": false,
+   "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+   "timing": "55% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+   "model_factors": [
+    "League-adjusted value: 209.1."
+   ],
+   "usage": [
+    "games: 17"
+   ],
+   "team_context": [
+    "plays per game: 60.1"
+   ],
+   "status": "Active",
+   "risks": [],
+   "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+  },
+  "held_for_later": false,
+  "pos_rank": 1
+ },
+ "room_pick": {
+  "canonical_id": "478",
+  "name": "Bijan Robinson",
+  "position": "RB",
+  "team": "ATL",
+  "points": 332.1,
+  "vor": 173.1,
+  "value": 209.1,
+  "score": 364.0,
+  "tier": 1,
+  "tier_remaining": 1,
+  "adp": 1.8,
+  "survival": 0.453,
+  "disappearance_probability": 0.547,
+  "at_risk": false,
+  "vona": 10.9,
+  "opportunity_cost": 10.9,
+  "expected_next_turn_value": 182.3,
+  "reach_penalty": 0.0,
+  "reason": "proj RB1, tier 1 (1 left); market ADP 2; fills an open RB starter slot; 45% to last until pick 3; waiting at RB costs ~11 pts",
+  "platform_ids": {
+   "sleeper": "9509",
+   "espn": "4430807"
+  },
+  "analysis": {
+   "headline": "RB adjusted value 209.1 with 55% modeled room urgency.",
+   "projection_summary": "332.1 consensus; 324.9-339.4 modeled range.",
+   "projection_consensus": 332.1,
+   "projection_low": 324.9,
+   "projection_high": 339.4,
+   "projection_is_placeholder": false,
+   "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+   "timing": "55% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+   "model_factors": [
+    "League-adjusted value: 209.1."
+   ],
+   "usage": [
+    "games: 17"
+   ],
+   "team_context": [
+    "plays per game: 60.1"
+   ],
+   "status": "Active",
+   "risks": [],
+   "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+  },
+  "held_for_later": false,
+  "pos_rank": 1
+ },
+ "picks_agree": true,
+ "alternates": [
+  {
+   "canonical_id": "479",
+   "name": "Jahmyr Gibbs",
+   "position": "RB",
+   "team": "DET",
+   "points": 324.3,
+   "vor": 165.3,
+   "value": 194.2,
+   "score": 355.8,
+   "tier": 2,
+   "tier_remaining": 1,
+   "adp": 1.6,
+   "survival": 0.609,
+   "disappearance_probability": 0.391,
+   "at_risk": false,
+   "vona": -4.0,
+   "opportunity_cost": -4.0,
+   "expected_next_turn_value": 190.0,
+   "reach_penalty": 0.0,
+   "reason": "proj RB2, tier 2 (1 left); market ADP 2; fills an open RB starter slot; 61% to last until pick 3",
+   "platform_ids": {
+    "sleeper": "9221",
+    "espn": "4429795"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 194.2 with 39% modeled room urgency.",
+    "projection_summary": "324.3 consensus; 317.3-331.4 modeled range.",
+    "projection_consensus": 324.3,
+    "projection_low": 317.3,
+    "projection_high": 331.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "39% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 194.2."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 60.2"
+    ],
+    "status": "Active; injury: Questionable",
+    "risks": [
+     "Sleeper injury designation: Questionable."
+    ],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 2
+  },
+  {
+   "canonical_id": "848",
+   "name": "Ja'Marr Chase",
+   "position": "WR",
+   "team": "CIN",
+   "points": 325.6,
+   "vor": 143.8,
+   "value": 173.4,
+   "score": 339.7,
+   "tier": 1,
+   "tier_remaining": 1,
+   "adp": 3.4,
+   "survival": 0.609,
+   "disappearance_probability": 0.391,
+   "at_risk": false,
+   "vona": 10.1,
+   "opportunity_cost": 10.1,
+   "expected_next_turn_value": 195.7,
+   "reach_penalty": 0.0,
+   "reason": "proj WR1, tier 1 (1 left); market ADP 3; fills an open WR starter slot; 61% to last until pick 3; waiting at WR costs ~10 pts",
+   "platform_ids": {
+    "sleeper": "7564",
+    "espn": "4362628"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 173.4 with 39% modeled room urgency.",
+    "projection_summary": "325.6 consensus; 311.1-340.0 modeled range.",
+    "projection_consensus": 325.6,
+    "projection_low": 311.1,
+    "projection_high": 340.0,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "39% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 173.4."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 60.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 1
+  }
+ ],
+ "board": [
+  {
+   "canonical_id": "478",
+   "name": "Bijan Robinson",
+   "position": "RB",
+   "team": "ATL",
+   "points": 332.1,
+   "vor": 173.1,
+   "value": 209.1,
+   "score": 364.0,
+   "tier": 1,
+   "tier_remaining": 1,
+   "adp": 1.8,
+   "survival": 0.453,
+   "disappearance_probability": 0.547,
+   "at_risk": false,
+   "vona": 10.9,
+   "opportunity_cost": 10.9,
+   "expected_next_turn_value": 182.3,
+   "reach_penalty": 0.0,
+   "reason": "proj RB1, tier 1 (1 left); market ADP 2; fills an open RB starter slot; 45% to last until pick 3; waiting at RB costs ~11 pts",
+   "platform_ids": {
+    "sleeper": "9509",
+    "espn": "4430807"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 209.1 with 55% modeled room urgency.",
+    "projection_summary": "332.1 consensus; 324.9-339.4 modeled range.",
+    "projection_consensus": 332.1,
+    "projection_low": 324.9,
+    "projection_high": 339.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "55% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 209.1."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 60.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 1
+  },
+  {
+   "canonical_id": "479",
+   "name": "Jahmyr Gibbs",
+   "position": "RB",
+   "team": "DET",
+   "points": 324.3,
+   "vor": 165.3,
+   "value": 194.2,
+   "score": 355.8,
+   "tier": 2,
+   "tier_remaining": 1,
+   "adp": 1.6,
+   "survival": 0.609,
+   "disappearance_probability": 0.391,
+   "at_risk": false,
+   "vona": -4.0,
+   "opportunity_cost": -4.0,
+   "expected_next_turn_value": 190.0,
+   "reach_penalty": 0.0,
+   "reason": "proj RB2, tier 2 (1 left); market ADP 2; fills an open RB starter slot; 61% to last until pick 3",
+   "platform_ids": {
+    "sleeper": "9221",
+    "espn": "4429795"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 194.2 with 39% modeled room urgency.",
+    "projection_summary": "324.3 consensus; 317.3-331.4 modeled range.",
+    "projection_consensus": 324.3,
+    "projection_low": 317.3,
+    "projection_high": 331.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "39% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 194.2."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 60.2"
+    ],
+    "status": "Active; injury: Questionable",
+    "risks": [
+     "Sleeper injury designation: Questionable."
+    ],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 2
+  },
+  {
+   "canonical_id": "848",
+   "name": "Ja'Marr Chase",
+   "position": "WR",
+   "team": "CIN",
+   "points": 325.6,
+   "vor": 143.8,
+   "value": 173.4,
+   "score": 339.7,
+   "tier": 1,
+   "tier_remaining": 1,
+   "adp": 3.4,
+   "survival": 0.609,
+   "disappearance_probability": 0.391,
+   "at_risk": false,
+   "vona": 10.1,
+   "opportunity_cost": 10.1,
+   "expected_next_turn_value": 195.7,
+   "reach_penalty": 0.0,
+   "reason": "proj WR1, tier 1 (1 left); market ADP 3; fills an open WR starter slot; 61% to last until pick 3; waiting at WR costs ~10 pts",
+   "platform_ids": {
+    "sleeper": "7564",
+    "espn": "4362628"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 173.4 with 39% modeled room urgency.",
+    "projection_summary": "325.6 consensus; 311.1-340.0 modeled range.",
+    "projection_consensus": 325.6,
+    "projection_low": 311.1,
+    "projection_high": 340.0,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "39% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 173.4."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 60.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 1
+  },
+  {
+   "canonical_id": "1541",
+   "name": "Christian McCaffrey",
+   "position": "RB",
+   "team": "SF",
+   "points": 304.7,
+   "vor": 145.6,
+   "value": 176.7,
+   "score": 339.4,
+   "tier": 3,
+   "tier_remaining": 1,
+   "adp": 5.0,
+   "survival": 0.844,
+   "disappearance_probability": 0.156,
+   "at_risk": false,
+   "vona": -21.5,
+   "opportunity_cost": -21.5,
+   "expected_next_turn_value": 191.4,
+   "reach_penalty": 0.0,
+   "reason": "proj RB3, tier 3 (1 left); market ADP 5; fills an open RB starter slot; 84% to last until pick 3",
+   "platform_ids": {
+    "sleeper": "4034",
+    "espn": "3117251"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 176.7 with 16% modeled room urgency.",
+    "projection_summary": "304.7 consensus; 291.0-318.4 modeled range.",
+    "projection_consensus": 304.7,
+    "projection_low": 291.0,
+    "projection_high": 318.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "16% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 176.7."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 62.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 3
+  },
+  {
+   "canonical_id": "528",
+   "name": "Puka Nacua",
+   "position": "WR",
+   "team": "LAR",
+   "points": 305.6,
+   "vor": 123.8,
+   "value": 150.0,
+   "score": 317.0,
+   "tier": 2,
+   "tier_remaining": 1,
+   "adp": 4.9,
+   "survival": 0.859,
+   "disappearance_probability": 0.141,
+   "at_risk": false,
+   "vona": -13.2,
+   "opportunity_cost": -13.2,
+   "expected_next_turn_value": 196.5,
+   "reach_penalty": 0.0,
+   "reason": "proj WR2, tier 2 (1 left); market ADP 5; fills an open WR starter slot; 86% to last until pick 3",
+   "platform_ids": {
+    "sleeper": "9493",
+    "espn": "4426515"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 150.0 with 14% modeled room urgency.",
+    "projection_summary": "305.6 consensus; 298.6-312.5 modeled range.",
+    "projection_consensus": 305.6,
+    "projection_low": 298.6,
+    "projection_high": 312.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "14% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 150.0."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 62.5"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 2
+  },
+  {
+   "canonical_id": "984",
+   "name": "Jonathan Taylor",
+   "position": "RB",
+   "team": "IND",
+   "points": 280.5,
+   "vor": 121.5,
+   "value": 148.0,
+   "score": 316.1,
+   "tier": 4,
+   "tier_remaining": 4,
+   "adp": 7.7,
+   "survival": 0.969,
+   "disappearance_probability": 0.031,
+   "at_risk": false,
+   "vona": -50.2,
+   "opportunity_cost": -50.2,
+   "expected_next_turn_value": 197.8,
+   "reach_penalty": 0.0,
+   "reason": "proj RB6, tier 4 (4 left); market ADP 8; fills an open RB starter slot; 97% to last until pick 3",
+   "platform_ids": {
+    "sleeper": "6813",
+    "espn": "4242335"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 148.0 with 3% modeled room urgency.",
+    "projection_summary": "280.5 consensus; 272.3-288.8 modeled range.",
+    "projection_consensus": 280.5,
+    "projection_low": 272.3,
+    "projection_high": 288.8,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "3% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 148.0."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 58.2"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 6
+  },
+  {
+   "canonical_id": "1350",
+   "name": "Saquon Barkley",
+   "position": "RB",
+   "team": "PHI",
+   "points": 286.3,
+   "vor": 127.3,
+   "value": 149.3,
+   "score": 315.9,
+   "tier": 4,
+   "tier_remaining": 4,
+   "adp": 16.6,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -49.0,
+   "opportunity_cost": -49.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 1.9,
+   "reason": "proj RB4, tier 4 (4 left); market ADP 17; fills an open RB starter slot; 100% to last until pick 3",
+   "platform_ids": {
+    "sleeper": "4866",
+    "espn": "3929630"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 149.3 with 0% modeled room urgency.",
+    "projection_summary": "286.3 consensus; 246.7-326.0 modeled range.",
+    "projection_consensus": 286.3,
+    "projection_low": 246.7,
+    "projection_high": 326.0,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 149.3."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 57.4"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 4
+  },
+  {
+   "canonical_id": "154",
+   "name": "Ashton Jeanty",
+   "position": "RB",
+   "team": "LV",
+   "points": 280.8,
+   "vor": 121.7,
+   "value": 144.3,
+   "score": 311.2,
+   "tier": 4,
+   "tier_remaining": 4,
+   "adp": 15.4,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -53.9,
+   "opportunity_cost": -53.9,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 1.6,
+   "reason": "proj RB5, tier 4 (4 left); market ADP 15; fills an open RB starter slot; 100% to last until pick 3",
+   "platform_ids": {
+    "sleeper": "12527",
+    "espn": "4890973"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 144.3 with 0% modeled room urgency.",
+    "projection_summary": "280.8 consensus; 259.5-302.0 modeled range.",
+    "projection_consensus": 280.8,
+    "projection_low": 259.5,
+    "projection_high": 302.0,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 144.3."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 52.0"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 5
+  },
+  {
+   "canonical_id": "484",
+   "name": "De'Von Achane",
+   "position": "RB",
+   "team": "MIA",
+   "points": 276.5,
+   "vor": 117.4,
+   "value": 138.7,
+   "score": 306.3,
+   "tier": 4,
+   "tier_remaining": 4,
+   "adp": 12.5,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -59.5,
+   "opportunity_cost": -59.5,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 0.9,
+   "reason": "proj RB7, tier 4 (4 left); market ADP 12; fills an open RB starter slot; 100% to last until pick 3",
+   "platform_ids": {
+    "sleeper": "9226",
+    "espn": "4429160"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 138.7 with 0% modeled room urgency.",
+    "projection_summary": "276.5 consensus; 245.4-307.5 modeled range.",
+    "projection_consensus": 276.5,
+    "projection_low": 245.4,
+    "projection_high": 307.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 138.7."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 53.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 7
+  },
+  {
+   "canonical_id": "1014",
+   "name": "CeeDee Lamb",
+   "position": "WR",
+   "team": "DAL",
+   "points": 294.0,
+   "vor": 112.2,
+   "value": 133.6,
+   "score": 301.7,
+   "tier": 3,
+   "tier_remaining": 1,
+   "adp": 10.6,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -29.6,
+   "opportunity_cost": -29.6,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 0.4,
+   "reason": "proj WR3, tier 3 (1 left); market ADP 11; fills an open WR starter slot; 100% to last until pick 3",
+   "platform_ids": {
+    "sleeper": "6786",
+    "espn": "4241389"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 133.6 with 0% modeled room urgency.",
+    "projection_summary": "294.0 consensus; 270.5-317.5 modeled range.",
+    "projection_consensus": 294.0,
+    "projection_low": 270.5,
+    "projection_high": 317.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 133.6."
+    ],
+    "usage": [
+     "games: 13"
+    ],
+    "team_context": [
+     "plays per game: 64.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 3
+  },
+  {
+   "canonical_id": "652",
+   "name": "James Cook",
+   "position": "RB",
+   "team": "BUF",
+   "points": 265.3,
+   "vor": 106.3,
+   "value": 128.8,
+   "score": 296.4,
+   "tier": 5,
+   "tier_remaining": 4,
+   "adp": 12.7,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -69.4,
+   "opportunity_cost": -69.4,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 0.9,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8138",
+    "espn": "4379399"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 128.8 with 0% modeled room urgency.",
+    "projection_summary": "265.3 consensus; 260.8-269.9 modeled range.",
+    "projection_consensus": 265.3,
+    "projection_low": 260.8,
+    "projection_high": 269.9,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 128.8."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 61.3"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 9
+  },
+  {
+   "canonical_id": "498",
+   "name": "Chase Brown",
+   "position": "RB",
+   "team": "CIN",
+   "points": 268.2,
+   "vor": 109.1,
+   "value": 130.0,
+   "score": 296.0,
+   "tier": 5,
+   "tier_remaining": 4,
+   "adp": 19.0,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -68.2,
+   "opportunity_cost": -68.2,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 2.5,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "9224",
+    "espn": "4362238"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 130.0 with 0% modeled room urgency.",
+    "projection_summary": "268.2 consensus; 255.2-281.2 modeled range.",
+    "projection_consensus": 268.2,
+    "projection_low": 255.2,
+    "projection_high": 281.2,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 130.0."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 60.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 8
+  },
+  {
+   "canonical_id": "853",
+   "name": "Amon-Ra St. Brown",
+   "position": "WR",
+   "team": "DET",
+   "points": 285.6,
+   "vor": 103.8,
+   "value": 126.8,
+   "score": 295.3,
+   "tier": 4,
+   "tier_remaining": 2,
+   "adp": 8.1,
+   "survival": 0.891,
+   "disappearance_probability": 0.109,
+   "at_risk": false,
+   "vona": -36.4,
+   "opportunity_cost": -36.4,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 0.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "7547",
+    "espn": "4374302"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 126.8 with 11% modeled room urgency.",
+    "projection_summary": "285.6 consensus; 280.5-290.6 modeled range.",
+    "projection_consensus": 285.6,
+    "projection_low": 280.5,
+    "projection_high": 290.6,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "11% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 126.8."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 60.2"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 4
+  },
+  {
+   "canonical_id": "1733",
+   "name": "Derrick Henry",
+   "position": "RB",
+   "team": "BAL",
+   "points": 264.3,
+   "vor": 105.2,
+   "value": 124.7,
+   "score": 289.3,
+   "tier": 5,
+   "tier_remaining": 4,
+   "adp": 24.6,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -73.6,
+   "opportunity_cost": -73.6,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 3.9,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "3198",
+    "espn": "3043078"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 124.7 with 0% modeled room urgency.",
+    "projection_summary": "264.3 consensus; 246.9-281.7 modeled range.",
+    "projection_consensus": 264.3,
+    "projection_low": 246.9,
+    "projection_high": 281.7,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 124.7."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 54.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 10
+  },
+  {
+   "canonical_id": "1018",
+   "name": "Justin Jefferson",
+   "position": "WR",
+   "team": "MIN",
+   "points": 283.1,
+   "vor": 101.3,
+   "value": 118.7,
+   "score": 286.4,
+   "tier": 4,
+   "tier_remaining": 2,
+   "adp": 12.4,
+   "survival": 0.984,
+   "disappearance_probability": 0.016,
+   "at_risk": false,
+   "vona": -44.5,
+   "opportunity_cost": -44.5,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 0.8,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "6794",
+    "espn": "4262921"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 118.7 with 2% modeled room urgency.",
+    "projection_summary": "283.1 consensus; 250.4-315.9 modeled range.",
+    "projection_consensus": 283.1,
+    "projection_low": 250.4,
+    "projection_high": 315.9,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "2% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 118.7."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 52.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 5
+  },
+  {
+   "canonical_id": "10",
+   "name": "Jeremiyah Love",
+   "position": "RB",
+   "team": "ARI",
+   "points": 258.7,
+   "vor": 99.6,
+   "value": 116.5,
+   "score": 282.3,
+   "tier": 5,
+   "tier_remaining": 4,
+   "adp": 19.7,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -81.7,
+   "opportunity_cost": -81.7,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 2.7,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "13287",
+    "espn": "4870808"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 116.5 with 0% modeled room urgency.",
+    "projection_summary": "258.7 consensus; 238.5-278.8 modeled range.",
+    "projection_consensus": 258.7,
+    "projection_low": 238.5,
+    "projection_high": 278.8,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 116.5."
+    ],
+    "usage": [],
+    "team_context": [
+     "plays per game: 59.7"
+    ],
+    "status": "Active",
+    "risks": [
+     "Advanced usage context is not available."
+    ],
+    "data_freshness": "sleeper: 2026-08-04T15:04:04.314374-04:00; nflverse: 2026-08-04T14:46:30-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 11
+  },
+  {
+   "canonical_id": "156",
+   "name": "Omarion Hampton",
+   "position": "RB",
+   "team": "LAC",
+   "points": 251.2,
+   "vor": 92.1,
+   "value": 109.3,
+   "score": 275.3,
+   "tier": 6,
+   "tier_remaining": 5,
+   "adp": 18.8,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -89.0,
+   "opportunity_cost": -89.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 2.5,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "12507",
+    "espn": "4685382"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 109.3 with 0% modeled room urgency.",
+    "projection_summary": "251.2 consensus; 242.9-259.4 modeled range.",
+    "projection_consensus": 251.2,
+    "projection_low": 242.9,
+    "projection_high": 259.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 109.3."
+    ],
+    "usage": [
+     "games: 9"
+    ],
+    "team_context": [
+     "plays per game: 60.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 12
+  },
+  {
+   "canonical_id": "856",
+   "name": "Nico Collins",
+   "position": "WR",
+   "team": "HOU",
+   "points": 270.3,
+   "vor": 88.5,
+   "value": 106.4,
+   "score": 270.9,
+   "tier": 5,
+   "tier_remaining": 5,
+   "adp": 25.2,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -56.8,
+   "opportunity_cost": -56.8,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 4.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "7569",
+    "espn": "4258173"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 106.4 with 0% modeled room urgency.",
+    "projection_summary": "270.3 consensus; 251.5-289.1 modeled range.",
+    "projection_consensus": 270.3,
+    "projection_low": 251.5,
+    "projection_high": 289.1,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 106.4."
+    ],
+    "usage": [
+     "games: 15"
+    ],
+    "team_context": [
+     "plays per game: 62.2"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 6
+  },
+  {
+   "canonical_id": "375",
+   "name": "Brock Bowers",
+   "position": "TE",
+   "team": "LV",
+   "points": 257.8,
+   "vor": 102.8,
+   "value": 104.1,
+   "score": 269.8,
+   "tier": 1,
+   "tier_remaining": 1,
+   "adp": 20.2,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -0.0,
+   "opportunity_cost": -0.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 2.8,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "11604",
+    "espn": "4432665"
+   },
+   "analysis": {
+    "headline": "TE adjusted value 104.1 with 0% modeled room urgency.",
+    "projection_summary": "257.8 consensus; 253.5-262.2 modeled range.",
+    "projection_consensus": 257.8,
+    "projection_low": 253.5,
+    "projection_high": 262.2,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: 104.1."
+    ],
+    "usage": [
+     "games: 12"
+    ],
+    "team_context": [
+     "plays per game: 52.0"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 1
+  },
+  {
+   "canonical_id": "502",
+   "name": "Jaxon Smith-Njigba",
+   "position": "WR",
+   "team": "SEA",
+   "points": 262.8,
+   "vor": 81.0,
+   "value": 96.9,
+   "score": 265.4,
+   "tier": 5,
+   "tier_remaining": 5,
+   "adp": 5.4,
+   "survival": 0.859,
+   "disappearance_probability": 0.141,
+   "at_risk": false,
+   "vona": -66.3,
+   "opportunity_cost": -66.3,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 0.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "9488",
+    "espn": "4430878"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 96.9 with 14% modeled room urgency.",
+    "projection_summary": "262.8 consensus; 240.9-284.6 modeled range.",
+    "projection_consensus": 262.8,
+    "projection_low": 240.9,
+    "projection_high": 284.6,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "14% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 96.9."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 58.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 8
+  },
+  {
+   "canonical_id": "1181",
+   "name": "A.J. Brown",
+   "position": "WR",
+   "team": "NE",
+   "points": 262.6,
+   "vor": 80.8,
+   "value": 99.0,
+   "score": 264.9,
+   "tier": 5,
+   "tier_remaining": 5,
+   "adp": 19.4,
+   "survival": 0.984,
+   "disappearance_probability": 0.016,
+   "at_risk": false,
+   "vona": -64.2,
+   "opportunity_cost": -64.2,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 2.6,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "5859",
+    "espn": "4047646"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 99.0 with 2% modeled room urgency.",
+    "projection_summary": "262.6 consensus; 249.5-275.6 modeled range.",
+    "projection_consensus": 262.6,
+    "projection_low": 249.5,
+    "projection_high": 275.6,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "2% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 99.0."
+    ],
+    "usage": [
+     "games: 15"
+    ],
+    "team_context": [
+     "plays per game: 58.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 9
+  },
+  {
+   "canonical_id": "648",
+   "name": "Kenneth Walker III",
+   "position": "RB",
+   "team": "KC",
+   "points": 241.4,
+   "vor": 82.3,
+   "value": 99.4,
+   "score": 264.4,
+   "tier": 6,
+   "tier_remaining": 5,
+   "adp": 22.9,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -98.8,
+   "opportunity_cost": -98.8,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 3.5,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8151",
+    "espn": "4567048"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 99.4 with 0% modeled room urgency.",
+    "projection_summary": "241.4 consensus; 238.8-244.0 modeled range.",
+    "projection_consensus": 241.4,
+    "projection_low": 238.8,
+    "projection_high": 244.0,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 99.4."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 59.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 15
+  },
+  {
+   "canonical_id": "647",
+   "name": "Kyren Williams",
+   "position": "RB",
+   "team": "LAR",
+   "points": 246.0,
+   "vor": 86.9,
+   "value": 100.6,
+   "score": 264.1,
+   "tier": 6,
+   "tier_remaining": 5,
+   "adp": 32.2,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -97.6,
+   "opportunity_cost": -97.6,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8150",
+    "espn": "4430737"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 100.6 with 0% modeled room urgency.",
+    "projection_summary": "246.0 consensus; 208.0-284.0 modeled range.",
+    "projection_consensus": 246.0,
+    "projection_low": 208.0,
+    "projection_high": 284.0,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 100.6."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 62.5"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 13
+  },
+  {
+   "canonical_id": "688",
+   "name": "Drake London",
+   "position": "WR",
+   "team": "ATL",
+   "points": 258.8,
+   "vor": 77.0,
+   "value": 94.1,
+   "score": 261.3,
+   "tier": 5,
+   "tier_remaining": 5,
+   "adp": 14.1,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -69.1,
+   "opportunity_cost": -69.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 1.3,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8112",
+    "espn": "4426502"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 94.1 with 0% modeled room urgency.",
+    "projection_summary": "258.8 consensus; 250.2-267.4 modeled range.",
+    "projection_consensus": 258.8,
+    "projection_low": 250.2,
+    "projection_high": 267.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 94.1."
+    ],
+    "usage": [
+     "games: 12"
+    ],
+    "team_context": [
+     "plays per game: 60.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 10
+  },
+  {
+   "canonical_id": "349",
+   "name": "Malik Nabers",
+   "position": "WR",
+   "team": "NYG",
+   "points": 267.3,
+   "vor": 85.5,
+   "value": 96.5,
+   "score": 260.5,
+   "tier": 5,
+   "tier_remaining": 5,
+   "adp": 27.3,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -66.7,
+   "opportunity_cost": -66.7,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 4.6,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "11632",
+    "espn": "4595348"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 96.5 with 0% modeled room urgency.",
+    "projection_summary": "267.3 consensus; 233.3-301.4 modeled range.",
+    "projection_consensus": 267.3,
+    "projection_low": 233.3,
+    "projection_high": 301.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 96.5."
+    ],
+    "usage": [
+     "games: 4"
+    ],
+    "team_context": [
+     "plays per game: 61.0"
+    ],
+    "status": "Active; injury: Questionable",
+    "risks": [
+     "Sleeper injury designation: Questionable."
+    ],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 7
+  },
+  {
+   "canonical_id": "1150",
+   "name": "Josh Jacobs",
+   "position": "RB",
+   "team": "GB",
+   "points": 242.7,
+   "vor": 83.7,
+   "value": 96.4,
+   "score": 260.2,
+   "tier": 6,
+   "tier_remaining": 5,
+   "adp": 27.6,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -101.9,
+   "opportunity_cost": -101.9,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 4.7,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "5850",
+    "espn": "4047365"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 96.4 with 0% modeled room urgency.",
+    "projection_summary": "242.7 consensus; 202.6-282.9 modeled range.",
+    "projection_consensus": 242.7,
+    "projection_low": 202.6,
+    "projection_high": 282.9,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 96.4."
+    ],
+    "usage": [
+     "games: 15"
+    ],
+    "team_context": [
+     "plays per game: 57.7"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 14
+  },
+  {
+   "canonical_id": "730",
+   "name": "Trey McBride",
+   "position": "TE",
+   "team": "ARI",
+   "points": 247.1,
+   "vor": 92.0,
+   "value": 93.1,
+   "score": 259.2,
+   "tier": 2,
+   "tier_remaining": 1,
+   "adp": 18.7,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -11.0,
+   "opportunity_cost": -11.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 2.4,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8130",
+    "espn": "4361307"
+   },
+   "analysis": {
+    "headline": "TE adjusted value 93.1 with 0% modeled room urgency.",
+    "projection_summary": "247.1 consensus; 234.9-259.2 modeled range.",
+    "projection_consensus": 247.1,
+    "projection_low": 234.9,
+    "projection_high": 259.2,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: 93.1."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 59.7"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 2
+  },
+  {
+   "canonical_id": "332",
+   "name": "Bucky Irving",
+   "position": "RB",
+   "team": "TB",
+   "points": 240.4,
+   "vor": 81.3,
+   "value": 92.1,
+   "score": 255.6,
+   "tier": 6,
+   "tier_remaining": 5,
+   "adp": 34.4,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -106.1,
+   "opportunity_cost": -106.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "11584",
+    "espn": "4596448"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 92.1 with 0% modeled room urgency.",
+    "projection_summary": "240.4 consensus; 197.3-283.5 modeled range.",
+    "projection_consensus": 240.4,
+    "projection_low": 197.3,
+    "projection_high": 283.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 92.1."
+    ],
+    "usage": [
+     "games: 10"
+    ],
+    "team_context": [
+     "plays per game: 60.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 16
+  },
+  {
+   "canonical_id": "1335",
+   "name": "Josh Allen",
+   "position": "QB",
+   "team": "BUF",
+   "points": 364.7,
+   "vor": 73.3,
+   "value": 75.3,
+   "score": 239.0,
+   "tier": 1,
+   "tier_remaining": 1,
+   "adp": 28.2,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": 0.0,
+   "opportunity_cost": 0.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 4.8,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "4984",
+    "espn": "3918298"
+   },
+   "analysis": {
+    "headline": "QB adjusted value 75.3 with 0% modeled room urgency.",
+    "projection_summary": "364.7 consensus; 361.5-367.9 modeled range.",
+    "projection_consensus": 364.7,
+    "projection_low": 361.5,
+    "projection_high": 367.9,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: 75.3."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 61.3"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 1
+  },
+  {
+   "canonical_id": "645",
+   "name": "Breece Hall",
+   "position": "RB",
+   "team": "NYJ",
+   "points": 220.3,
+   "vor": 61.2,
+   "value": 72.6,
+   "score": 236.1,
+   "tier": 7,
+   "tier_remaining": 6,
+   "adp": 32.3,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -125.6,
+   "opportunity_cost": -125.6,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8155",
+    "espn": "4427366"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 72.6 with 0% modeled room urgency.",
+    "projection_summary": "220.3 consensus; 214.6-226.0 modeled range.",
+    "projection_consensus": 220.3,
+    "projection_low": 214.6,
+    "projection_high": 226.0,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 72.6."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 55.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 17
+  },
+  {
+   "canonical_id": "1017",
+   "name": "Tee Higgins",
+   "position": "WR",
+   "team": "CIN",
+   "points": 240.4,
+   "vor": 58.6,
+   "value": 68.1,
+   "score": 231.6,
+   "tier": 6,
+   "tier_remaining": 12,
+   "adp": 35.5,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -95.1,
+   "opportunity_cost": -95.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "6801",
+    "espn": "4239993"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 68.1 with 0% modeled room urgency.",
+    "projection_summary": "240.4 consensus; 215.4-265.4 modeled range.",
+    "projection_consensus": 240.4,
+    "projection_low": 215.4,
+    "projection_high": 265.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 68.1."
+    ],
+    "usage": [
+     "games: 15"
+    ],
+    "team_context": [
+     "plays per game: 60.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 11
+  },
+  {
+   "canonical_id": "979",
+   "name": "D'Andre Swift",
+   "position": "RB",
+   "team": "CHI",
+   "points": 216.2,
+   "vor": 57.2,
+   "value": 68.0,
+   "score": 231.5,
+   "tier": 7,
+   "tier_remaining": 6,
+   "adp": 65.1,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -130.2,
+   "opportunity_cost": -130.2,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "6790",
+    "espn": "4259545"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 68.0 with 0% modeled room urgency.",
+    "projection_summary": "216.2 consensus; 205.7-226.8 modeled range.",
+    "projection_consensus": 216.2,
+    "projection_low": 205.7,
+    "projection_high": 226.8,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 68.0."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 63.5"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 18
+  },
+  {
+   "canonical_id": "690",
+   "name": "Garrett Wilson",
+   "position": "WR",
+   "team": "NYJ",
+   "points": 236.2,
+   "vor": 54.5,
+   "value": 66.6,
+   "score": 230.1,
+   "tier": 6,
+   "tier_remaining": 12,
+   "adp": 40.9,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -96.6,
+   "opportunity_cost": -96.6,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8146",
+    "espn": "4569618"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 66.6 with 0% modeled room urgency.",
+    "projection_summary": "236.2 consensus; 231.1-241.4 modeled range.",
+    "projection_consensus": 236.2,
+    "projection_low": 231.1,
+    "projection_high": 241.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 66.6."
+    ],
+    "usage": [
+     "games: 7"
+    ],
+    "team_context": [
+     "plays per game: 55.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 12
+  },
+  {
+   "canonical_id": "699",
+   "name": "George Pickens",
+   "position": "WR",
+   "team": "DAL",
+   "points": 233.5,
+   "vor": 51.7,
+   "value": 64.3,
+   "score": 229.3,
+   "tier": 6,
+   "tier_remaining": 12,
+   "adp": 23.1,
+   "survival": 0.984,
+   "disappearance_probability": 0.016,
+   "at_risk": false,
+   "vona": -98.9,
+   "opportunity_cost": -98.9,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 3.5,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8137",
+    "espn": "4426354"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 64.3 with 2% modeled room urgency.",
+    "projection_summary": "233.5 consensus; 221.4-245.7 modeled range.",
+    "projection_consensus": 233.5,
+    "projection_low": 221.4,
+    "projection_high": 245.7,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "2% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 64.3."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 64.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 13
+  },
+  {
+   "canonical_id": "823",
+   "name": "Javonte Williams",
+   "position": "RB",
+   "team": "DAL",
+   "points": 212.3,
+   "vor": 53.2,
+   "value": 65.1,
+   "score": 228.6,
+   "tier": 7,
+   "tier_remaining": 6,
+   "adp": 38.3,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -133.2,
+   "opportunity_cost": -133.2,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "7588",
+    "espn": "4361579"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 65.1 with 0% modeled room urgency.",
+    "projection_summary": "212.3 consensus; 207.3-217.2 modeled range.",
+    "projection_consensus": 212.3,
+    "projection_low": 207.3,
+    "projection_high": 217.2,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 65.1."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 64.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 19
+  },
+  {
+   "canonical_id": "507",
+   "name": "Zay Flowers",
+   "position": "WR",
+   "team": "BAL",
+   "points": 230.4,
+   "vor": 48.6,
+   "value": 61.0,
+   "score": 224.5,
+   "tier": 6,
+   "tier_remaining": 12,
+   "adp": 43.8,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -102.2,
+   "opportunity_cost": -102.2,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "9997",
+    "espn": "4429615"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 61.0 with 0% modeled room urgency.",
+    "projection_summary": "230.4 consensus; 228.2-232.5 modeled range.",
+    "projection_consensus": 230.4,
+    "projection_low": 228.2,
+    "projection_high": 232.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 61.0."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 54.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 16
+  },
+  {
+   "canonical_id": "1186",
+   "name": "Terry McLaurin",
+   "position": "WR",
+   "team": "WAS",
+   "points": 231.9,
+   "vor": 50.1,
+   "value": 59.3,
+   "score": 222.8,
+   "tier": 6,
+   "tier_remaining": 12,
+   "adp": 56.6,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -103.9,
+   "opportunity_cost": -103.9,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "5927",
+    "espn": "3121422"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 59.3 with 0% modeled room urgency.",
+    "projection_summary": "231.9 consensus; 216.2-247.7 modeled range.",
+    "projection_consensus": 231.9,
+    "projection_low": 216.2,
+    "projection_high": 247.7,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 59.3."
+    ],
+    "usage": [
+     "games: 10"
+    ],
+    "team_context": [
+     "plays per game: 56.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 15
+  },
+  {
+   "canonical_id": "352",
+   "name": "Brian Thomas Jr.",
+   "position": "WR",
+   "team": "JAX",
+   "points": 232.7,
+   "vor": 50.9,
+   "value": 57.0,
+   "score": 220.5,
+   "tier": 6,
+   "tier_remaining": 12,
+   "adp": 69.6,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -106.2,
+   "opportunity_cost": -106.2,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "11631",
+    "espn": "4432773"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 57.0 with 0% modeled room urgency.",
+    "projection_summary": "232.7 consensus; 195.4-270.0 modeled range.",
+    "projection_consensus": 232.7,
+    "projection_low": 195.4,
+    "projection_high": 270.0,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 57.0."
+    ],
+    "usage": [
+     "games: 14"
+    ],
+    "team_context": [
+     "plays per game: 61.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 14
+  },
+  {
+   "canonical_id": "679",
+   "name": "Jaylen Warren",
+   "position": "RB",
+   "team": "PIT",
+   "points": 210.4,
+   "vor": 51.3,
+   "value": 56.6,
+   "score": 220.1,
+   "tier": 7,
+   "tier_remaining": 6,
+   "adp": 74.8,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -141.6,
+   "opportunity_cost": -141.6,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8228",
+    "espn": "4569987"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 56.6 with 0% modeled room urgency.",
+    "projection_summary": "210.4 consensus; 170.6-250.2 modeled range.",
+    "projection_consensus": 210.4,
+    "projection_low": 170.6,
+    "projection_high": 250.2,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 56.6."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 56.3"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 21
+  },
+  {
+   "canonical_id": "1148",
+   "name": "David Montgomery",
+   "position": "RB",
+   "team": "HOU",
+   "points": 207.8,
+   "vor": 48.7,
+   "value": 56.1,
+   "score": 219.5,
+   "tier": 7,
+   "tier_remaining": 6,
+   "adp": 56.3,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -142.2,
+   "opportunity_cost": -142.2,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "5892",
+    "espn": "4035538"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 56.1 with 0% modeled room urgency.",
+    "projection_summary": "207.8 consensus; 202.1-213.4 modeled range.",
+    "projection_consensus": 207.8,
+    "projection_low": 202.1,
+    "projection_high": 213.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 56.1."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 62.2"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 22
+  },
+  {
+   "canonical_id": "361",
+   "name": "Ladd McConkey",
+   "position": "WR",
+   "team": "LAC",
+   "points": 226.8,
+   "vor": 45.0,
+   "value": 54.5,
+   "score": 218.0,
+   "tier": 6,
+   "tier_remaining": 12,
+   "adp": 41.9,
+   "survival": 0.984,
+   "disappearance_probability": 0.016,
+   "at_risk": false,
+   "vona": -108.7,
+   "opportunity_cost": -108.7,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "11635",
+    "espn": "4612826"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 54.5 with 2% modeled room urgency.",
+    "projection_summary": "226.8 consensus; 210.3-243.2 modeled range.",
+    "projection_consensus": 226.8,
+    "projection_low": 210.3,
+    "projection_high": 243.2,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "2% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 54.5."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 60.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 18
+  },
+  {
+   "canonical_id": "828",
+   "name": "Chuba Hubbard",
+   "position": "RB",
+   "team": "CAR",
+   "points": 210.7,
+   "vor": 51.6,
+   "value": 53.8,
+   "score": 217.3,
+   "tier": 7,
+   "tier_remaining": 6,
+   "adp": 74.9,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -144.4,
+   "opportunity_cost": -144.4,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "7594",
+    "espn": "4241416"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 53.8 with 0% modeled room urgency.",
+    "projection_summary": "210.7 consensus; 162.9-258.5 modeled range.",
+    "projection_consensus": 210.7,
+    "projection_low": 162.9,
+    "projection_high": 258.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 53.8."
+    ],
+    "usage": [
+     "games: 15"
+    ],
+    "team_context": [
+     "plays per game: 57.4"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 20
+  },
+  {
+   "canonical_id": "2127",
+   "name": "Mike Evans",
+   "position": "WR",
+   "team": "SF",
+   "points": 228.6,
+   "vor": 46.8,
+   "value": 53.8,
+   "score": 217.2,
+   "tier": 6,
+   "tier_remaining": 12,
+   "adp": 57.8,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -109.5,
+   "opportunity_cost": -109.5,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "2216",
+    "espn": "16737"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 53.8 with 0% modeled room urgency.",
+    "projection_summary": "228.6 consensus; 222.2-235.1 modeled range.",
+    "projection_consensus": 228.6,
+    "projection_low": 222.2,
+    "projection_high": 235.1,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 53.8."
+    ],
+    "usage": [
+     "games: 8"
+    ],
+    "team_context": [
+     "plays per game: 62.1"
+    ],
+    "status": "Active; injury: Questionable",
+    "risks": [
+     "Sleeper injury designation: Questionable."
+    ],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 17
+  },
+  {
+   "canonical_id": "183",
+   "name": "Tetairoa McMillan",
+   "position": "WR",
+   "team": "CAR",
+   "points": 225.6,
+   "vor": 43.8,
+   "value": 53.1,
+   "score": 216.6,
+   "tier": 6,
+   "tier_remaining": 12,
+   "adp": 37.3,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -110.1,
+   "opportunity_cost": -110.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "12526",
+    "espn": "4685472"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 53.1 with 0% modeled room urgency.",
+    "projection_summary": "225.6 consensus; 215.9-235.3 modeled range.",
+    "projection_consensus": 225.6,
+    "projection_low": 215.9,
+    "projection_high": 235.3,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 53.1."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 57.4"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 20
+  },
+  {
+   "canonical_id": "1339",
+   "name": "Lamar Jackson",
+   "position": "QB",
+   "team": "BAL",
+   "points": 344.9,
+   "vor": 53.5,
+   "value": 52.2,
+   "score": 215.7,
+   "tier": 2,
+   "tier_remaining": 3,
+   "adp": 37.9,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -23.1,
+   "opportunity_cost": -23.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "4881",
+    "espn": "3916387"
+   },
+   "analysis": {
+    "headline": "QB adjusted value 52.2 with 0% modeled room urgency.",
+    "projection_summary": "344.9 consensus; 326.0-363.8 modeled range.",
+    "projection_consensus": 344.9,
+    "projection_low": 326.0,
+    "projection_high": 363.8,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: 52.2."
+    ],
+    "usage": [
+     "games: 13"
+    ],
+    "team_context": [
+     "plays per game: 54.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 2
+  },
+  {
+   "canonical_id": "849",
+   "name": "DeVonta Smith",
+   "position": "WR",
+   "team": "PHI",
+   "points": 226.1,
+   "vor": 44.3,
+   "value": 51.7,
+   "score": 215.2,
+   "tier": 6,
+   "tier_remaining": 12,
+   "adp": 44.9,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -111.5,
+   "opportunity_cost": -111.5,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "7525",
+    "espn": "4241478"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 51.7 with 0% modeled room urgency.",
+    "projection_summary": "226.1 consensus; 223.0-229.2 modeled range.",
+    "projection_consensus": 226.1,
+    "projection_low": 223.0,
+    "projection_high": 229.2,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 51.7."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 57.4"
+    ],
+    "status": "Active; injury: Questionable",
+    "risks": [
+     "Sleeper injury designation: Questionable."
+    ],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 19
+  },
+  {
+   "canonical_id": "155",
+   "name": "TreVeyon Henderson",
+   "position": "RB",
+   "team": "NE",
+   "points": 201.7,
+   "vor": 42.6,
+   "value": 49.8,
+   "score": 213.3,
+   "tier": 8,
+   "tier_remaining": 2,
+   "adp": 47.8,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -148.4,
+   "opportunity_cost": -148.4,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "12529",
+    "espn": "4432710"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 49.8 with 0% modeled room urgency.",
+    "projection_summary": "201.7 consensus; 179.5-223.8 modeled range.",
+    "projection_consensus": 201.7,
+    "projection_low": 179.5,
+    "projection_high": 223.8,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 49.8."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 58.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 23
+  },
+  {
+   "canonical_id": "315",
+   "name": "Jayden Daniels",
+   "position": "QB",
+   "team": "WAS",
+   "points": 342.7,
+   "vor": 51.3,
+   "value": 48.4,
+   "score": 211.9,
+   "tier": 2,
+   "tier_remaining": 3,
+   "adp": 62.1,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -26.9,
+   "opportunity_cost": -26.9,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "11566",
+    "espn": "4426348"
+   },
+   "analysis": {
+    "headline": "QB adjusted value 48.4 with 0% modeled room urgency.",
+    "projection_summary": "342.7 consensus; 313.7-371.6 modeled range.",
+    "projection_consensus": 342.7,
+    "projection_low": 313.7,
+    "projection_high": 371.6,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: 48.4."
+    ],
+    "usage": [
+     "games: 7"
+    ],
+    "team_context": [
+     "plays per game: 56.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 3
+  },
+  {
+   "canonical_id": "691",
+   "name": "Chris Olave",
+   "position": "WR",
+   "team": "NO",
+   "points": 220.8,
+   "vor": 39.0,
+   "value": 47.2,
+   "score": 211.3,
+   "tier": 6,
+   "tier_remaining": 12,
+   "adp": 26.4,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -116.0,
+   "opportunity_cost": -116.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 4.3,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8144",
+    "espn": "4361370"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 47.2 with 0% modeled room urgency.",
+    "projection_summary": "220.8 consensus; 209.8-231.8 modeled range.",
+    "projection_consensus": 220.8,
+    "projection_low": 209.8,
+    "projection_high": 231.8,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 47.2."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 60.4"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 22
+  },
+  {
+   "canonical_id": "2131",
+   "name": "Davante Adams",
+   "position": "WR",
+   "team": "LAR",
+   "points": 222.6,
+   "vor": 40.9,
+   "value": 46.4,
+   "score": 209.8,
+   "tier": 6,
+   "tier_remaining": 12,
+   "adp": 46.9,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -116.9,
+   "opportunity_cost": -116.9,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "2133",
+    "espn": "16800"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 46.4 with 0% modeled room urgency.",
+    "projection_summary": "222.6 consensus; 188.2-257.1 modeled range.",
+    "projection_consensus": 222.6,
+    "projection_low": 188.2,
+    "projection_high": 257.1,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 46.4."
+    ],
+    "usage": [
+     "games: 14"
+    ],
+    "team_context": [
+     "plays per game: 62.5"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 21
+  },
+  {
+   "canonical_id": "820",
+   "name": "Travis Etienne",
+   "position": "RB",
+   "team": "NO",
+   "points": 197.9,
+   "vor": 38.8,
+   "value": 45.1,
+   "score": 208.6,
+   "tier": 8,
+   "tier_remaining": 2,
+   "adp": 36.7,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -153.1,
+   "opportunity_cost": -153.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "7543",
+    "espn": "4239996"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 45.1 with 0% modeled room urgency.",
+    "projection_summary": "197.9 consensus; 188.1-207.7 modeled range.",
+    "projection_consensus": 197.9,
+    "projection_low": 188.1,
+    "projection_high": 207.7,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 45.1."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 60.4"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 24
+  },
+  {
+   "canonical_id": "965",
+   "name": "Jalen Hurts",
+   "position": "QB",
+   "team": "PHI",
+   "points": 338.0,
+   "vor": 46.6,
+   "value": 44.0,
+   "score": 207.5,
+   "tier": 2,
+   "tier_remaining": 3,
+   "adp": 67.2,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -31.3,
+   "opportunity_cost": -31.3,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "6904",
+    "espn": "4040715"
+   },
+   "analysis": {
+    "headline": "QB adjusted value 44.0 with 0% modeled room urgency.",
+    "projection_summary": "338.0 consensus; 310.5-365.5 modeled range.",
+    "projection_consensus": 338.0,
+    "projection_low": 310.5,
+    "projection_high": 365.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: 44.0."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 57.4"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 4
+  },
+  {
+   "canonical_id": "531",
+   "name": "Sam LaPorta",
+   "position": "TE",
+   "team": "DET",
+   "points": 194.1,
+   "vor": 39.0,
+   "value": 40.2,
+   "score": 203.7,
+   "tier": 3,
+   "tier_remaining": 2,
+   "adp": 76.4,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -63.9,
+   "opportunity_cost": -63.9,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "10859",
+    "espn": "4430027"
+   },
+   "analysis": {
+    "headline": "TE adjusted value 40.2 with 0% modeled room urgency.",
+    "projection_summary": "194.1 consensus; 191.8-196.5 modeled range.",
+    "projection_consensus": 194.1,
+    "projection_low": 191.8,
+    "projection_high": 196.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: 40.2."
+    ],
+    "usage": [
+     "games: 9"
+    ],
+    "team_context": [
+     "plays per game: 60.2"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 4
+  },
+  {
+   "canonical_id": "850",
+   "name": "Jaylen Waddle",
+   "position": "WR",
+   "team": "DEN",
+   "points": 212.6,
+   "vor": 30.8,
+   "value": 37.9,
+   "score": 201.4,
+   "tier": 7,
+   "tier_remaining": 6,
+   "adp": 46.2,
+   "survival": 0.984,
+   "disappearance_probability": 0.016,
+   "at_risk": false,
+   "vona": -125.3,
+   "opportunity_cost": -125.3,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "7526",
+    "espn": "4372016"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 37.9 with 2% modeled room urgency.",
+    "projection_summary": "212.6 consensus; 198.7-226.5 modeled range.",
+    "projection_consensus": 212.6,
+    "projection_low": 198.7,
+    "projection_high": 226.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "2% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 37.9."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 62.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 24
+  },
+  {
+   "canonical_id": "693",
+   "name": "Jameson Williams",
+   "position": "WR",
+   "team": "DET",
+   "points": 212.4,
+   "vor": 30.6,
+   "value": 37.3,
+   "score": 200.8,
+   "tier": 7,
+   "tier_remaining": 6,
+   "adp": 51.6,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -125.9,
+   "opportunity_cost": -125.9,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8148",
+    "espn": "4426388"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 37.3 with 0% modeled room urgency.",
+    "projection_summary": "212.4 consensus; 206.2-218.6 modeled range.",
+    "projection_consensus": 212.4,
+    "projection_low": 206.2,
+    "projection_high": 218.6,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 37.3."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 60.2"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 25
+  },
+  {
+   "canonical_id": "350",
+   "name": "Rome Odunze",
+   "position": "WR",
+   "team": "CHI",
+   "points": 209.5,
+   "vor": 27.7,
+   "value": 35.1,
+   "score": 198.6,
+   "tier": 7,
+   "tier_remaining": 6,
+   "adp": 64.2,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -128.1,
+   "opportunity_cost": -128.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "11620",
+    "espn": "4431299"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 35.1 with 0% modeled room urgency.",
+    "projection_summary": "209.5 consensus; 201.9-217.1 modeled range.",
+    "projection_consensus": 209.5,
+    "projection_low": 201.9,
+    "projection_high": 217.1,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 35.1."
+    ],
+    "usage": [
+     "games: 12"
+    ],
+    "team_context": [
+     "plays per game: 63.5"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 27
+  },
+  {
+   "canonical_id": "1179",
+   "name": "DK Metcalf",
+   "position": "WR",
+   "team": "PIT",
+   "points": 211.9,
+   "vor": 30.1,
+   "value": 34.9,
+   "score": 198.3,
+   "tier": 7,
+   "tier_remaining": 6,
+   "adp": 74.4,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -128.4,
+   "opportunity_cost": -128.4,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "5846",
+    "espn": "4047650"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 34.9 with 0% modeled room urgency.",
+    "projection_summary": "211.9 consensus; 183.3-240.5 modeled range.",
+    "projection_consensus": 211.9,
+    "projection_low": 183.3,
+    "projection_high": 240.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 34.9."
+    ],
+    "usage": [
+     "games: 15"
+    ],
+    "team_context": [
+     "plays per game: 56.3"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 26
+  },
+  {
+   "canonical_id": "1162",
+   "name": "Tony Pollard",
+   "position": "RB",
+   "team": "TEN",
+   "points": 191.1,
+   "vor": 32.0,
+   "value": 33.8,
+   "score": 197.3,
+   "tier": 9,
+   "tier_remaining": 1,
+   "adp": 85.6,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -164.4,
+   "opportunity_cost": -164.4,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "5967",
+    "espn": "3916148"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 33.8 with 0% modeled room urgency.",
+    "projection_summary": "191.1 consensus; 160.1-222.1 modeled range.",
+    "projection_consensus": 191.1,
+    "projection_low": 160.1,
+    "projection_high": 222.1,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 33.8."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 55.8"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 25
+  },
+  {
+   "canonical_id": "348",
+   "name": "Marvin Harrison Jr.",
+   "position": "WR",
+   "team": "ARI",
+   "points": 213.1,
+   "vor": 31.3,
+   "value": 33.5,
+   "score": 197.0,
+   "tier": 7,
+   "tier_remaining": 6,
+   "adp": 75.8,
+   "survival": 0.984,
+   "disappearance_probability": 0.016,
+   "at_risk": false,
+   "vona": -129.7,
+   "opportunity_cost": -129.7,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "11628",
+    "espn": "4432708"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 33.5 with 2% modeled room urgency.",
+    "projection_summary": "213.1 consensus; 186.2-240.0 modeled range.",
+    "projection_consensus": 213.1,
+    "projection_low": 186.2,
+    "projection_high": 240.0,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "2% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 33.5."
+    ],
+    "usage": [
+     "games: 12"
+    ],
+    "team_context": [
+     "plays per game: 59.7"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 23
+  },
+  {
+   "canonical_id": "1381",
+   "name": "D.J. Moore",
+   "position": "WR",
+   "team": "BUF",
+   "points": 208.5,
+   "vor": 26.7,
+   "value": 30.1,
+   "score": 193.6,
+   "tier": 7,
+   "tier_remaining": 6,
+   "adp": 59.3,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -133.1,
+   "opportunity_cost": -133.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "4983",
+    "espn": "3915416"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 30.1 with 0% modeled room urgency.",
+    "projection_summary": "208.5 consensus; 179.0-237.9 modeled range.",
+    "projection_consensus": 208.5,
+    "projection_low": 179.0,
+    "projection_high": 237.9,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 30.1."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 61.3"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 28
+  },
+  {
+   "canonical_id": "213",
+   "name": "Tyler Warren",
+   "position": "TE",
+   "team": "IND",
+   "points": 183.6,
+   "vor": 28.5,
+   "value": 29.9,
+   "score": 193.4,
+   "tier": 4,
+   "tier_remaining": 2,
+   "adp": 50.1,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -74.2,
+   "opportunity_cost": -74.2,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "12518",
+    "espn": "4431459"
+   },
+   "analysis": {
+    "headline": "TE adjusted value 29.9 with 0% modeled room urgency.",
+    "projection_summary": "183.6 consensus; 166.1-201.1 modeled range.",
+    "projection_consensus": 183.6,
+    "projection_low": 166.1,
+    "projection_high": 201.1,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: 29.9."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 58.2"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 6
+  },
+  {
+   "canonical_id": "959",
+   "name": "Joe Burrow",
+   "position": "QB",
+   "team": "CIN",
+   "points": 318.3,
+   "vor": 26.9,
+   "value": 26.6,
+   "score": 190.1,
+   "tier": 3,
+   "tier_remaining": 1,
+   "adp": 57.1,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -48.7,
+   "opportunity_cost": -48.7,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "6770",
+    "espn": "3915511"
+   },
+   "analysis": {
+    "headline": "QB adjusted value 26.6 with 0% modeled room urgency.",
+    "projection_summary": "318.3 consensus; 306.1-330.5 modeled range.",
+    "projection_consensus": 318.3,
+    "projection_low": 306.1,
+    "projection_high": 330.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: 26.6."
+    ],
+    "usage": [
+     "games: 8"
+    ],
+    "team_context": [
+     "plays per game: 60.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 5
+  },
+  {
+   "canonical_id": "11",
+   "name": "Jadarian Price",
+   "position": "RB",
+   "team": "SEA",
+   "points": 182.0,
+   "vor": 23.0,
+   "value": 25.7,
+   "score": 189.2,
+   "tier": 10,
+   "tier_remaining": 10,
+   "adp": 80.3,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -172.5,
+   "opportunity_cost": -172.5,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "13286",
+    "espn": "4685512"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 25.7 with 0% modeled room urgency.",
+    "projection_summary": "182.0 consensus; 170.0-194.1 modeled range.",
+    "projection_consensus": 182.0,
+    "projection_low": 170.0,
+    "projection_high": 194.1,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 25.7."
+    ],
+    "usage": [],
+    "team_context": [
+     "plays per game: 58.1"
+    ],
+    "status": "Active",
+    "risks": [
+     "Advanced usage context is not available."
+    ],
+    "data_freshness": "sleeper: 2026-08-04T15:04:04.314374-04:00; nflverse: 2026-08-04T14:46:30-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 26
+  },
+  {
+   "canonical_id": "215",
+   "name": "Colston Loveland",
+   "position": "TE",
+   "team": "CHI",
+   "points": 185.3,
+   "vor": 30.2,
+   "value": 25.7,
+   "score": 189.2,
+   "tier": 4,
+   "tier_remaining": 2,
+   "adp": 41.2,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -78.4,
+   "opportunity_cost": -78.4,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "12517",
+    "espn": "4723086"
+   },
+   "analysis": {
+    "headline": "TE adjusted value 25.7 with 0% modeled room urgency.",
+    "projection_summary": "185.3 consensus; 155.2-215.4 modeled range.",
+    "projection_consensus": 185.3,
+    "projection_low": 155.2,
+    "projection_high": 215.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: 25.7."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 63.5"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 5
+  },
+  {
+   "canonical_id": "1623",
+   "name": "George Kittle",
+   "position": "TE",
+   "team": "SF",
+   "points": 198.5,
+   "vor": 43.4,
+   "value": 25.0,
+   "score": 188.5,
+   "tier": 3,
+   "tier_remaining": 2,
+   "adp": 97.4,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -79.1,
+   "opportunity_cost": -79.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "4217",
+    "espn": "3040151"
+   },
+   "analysis": {
+    "headline": "TE adjusted value 25.0 with 0% modeled room urgency.",
+    "projection_summary": "198.5 consensus; 169.3-227.7 modeled range.",
+    "projection_consensus": 198.5,
+    "projection_low": 169.3,
+    "projection_high": 227.7,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: 25.0."
+    ],
+    "usage": [
+     "games: 11"
+    ],
+    "team_context": [
+     "plays per game: 62.1"
+    ],
+    "status": "Active; injury: PUP",
+    "risks": [
+     "Sleeper injury designation: PUP."
+    ],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 3
+  },
+  {
+   "canonical_id": "2372",
+   "name": "Travis Kelce",
+   "position": "TE",
+   "team": "KC",
+   "points": 176.2,
+   "vor": 21.2,
+   "value": 23.4,
+   "score": 186.9,
+   "tier": 5,
+   "tier_remaining": 1,
+   "adp": 107.1,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -80.7,
+   "opportunity_cost": -80.7,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "1466",
+    "espn": "15847"
+   },
+   "analysis": {
+    "headline": "TE adjusted value 23.4 with 0% modeled room urgency.",
+    "projection_summary": "176.2 consensus; 171.4-181.1 modeled range.",
+    "projection_consensus": 176.2,
+    "projection_low": 171.4,
+    "projection_high": 181.1,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: 23.4."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 59.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 7
+  },
+  {
+   "canonical_id": "1376",
+   "name": "Courtland Sutton",
+   "position": "WR",
+   "team": "DEN",
+   "points": 200.9,
+   "vor": 19.2,
+   "value": 22.0,
+   "score": 185.5,
+   "tier": 8,
+   "tier_remaining": 6,
+   "adp": 77.9,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -141.2,
+   "opportunity_cost": -141.2,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "5045",
+    "espn": "3128429"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 22.0 with 0% modeled room urgency.",
+    "projection_summary": "200.9 consensus; 174.3-227.6 modeled range.",
+    "projection_consensus": 200.9,
+    "projection_low": 174.3,
+    "projection_high": 227.6,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 22.0."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 62.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 30
+  },
+  {
+   "canonical_id": "511",
+   "name": "Rashee Rice",
+   "position": "WR",
+   "team": "KC",
+   "points": 201.3,
+   "vor": 19.5,
+   "value": 19.2,
+   "score": 184.3,
+   "tier": 8,
+   "tier_remaining": 6,
+   "adp": 22.7,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -144.0,
+   "opportunity_cost": -144.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 3.4,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "10229",
+    "espn": "4428331"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 19.2 with 0% modeled room urgency.",
+    "projection_summary": "201.3 consensus; 163.1-239.6 modeled range.",
+    "projection_consensus": 201.3,
+    "projection_low": 163.1,
+    "projection_high": 239.6,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 19.2."
+    ],
+    "usage": [
+     "games: 8"
+    ],
+    "team_context": [
+     "plays per game: 59.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 29
+  },
+  {
+   "canonical_id": "35",
+   "name": "Carnell Tate",
+   "position": "WR",
+   "team": "TEN",
+   "points": 200.7,
+   "vor": 18.9,
+   "value": 20.2,
+   "score": 183.7,
+   "tier": 8,
+   "tier_remaining": 6,
+   "adp": 62.9,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -143.0,
+   "opportunity_cost": -143.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "13279",
+    "espn": "4871023"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 20.2 with 0% modeled room urgency.",
+    "projection_summary": "200.7 consensus; 190.3-211.2 modeled range.",
+    "projection_consensus": 200.7,
+    "projection_low": 190.3,
+    "projection_high": 211.2,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 20.2."
+    ],
+    "usage": [],
+    "team_context": [
+     "plays per game: 55.8"
+    ],
+    "status": "Active",
+    "risks": [
+     "Advanced usage context is not available."
+    ],
+    "data_freshness": "sleeper: 2026-08-04T15:04:04.314374-04:00; nflverse: 2026-08-04T14:46:30-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 31
+  },
+  {
+   "canonical_id": "193",
+   "name": "Emeka Egbuka",
+   "position": "WR",
+   "team": "TB",
+   "points": 198.0,
+   "vor": 16.2,
+   "value": 19.2,
+   "score": 182.7,
+   "tier": 8,
+   "tier_remaining": 6,
+   "adp": 45.8,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -144.1,
+   "opportunity_cost": -144.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "12514",
+    "espn": "4567750"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 19.2 with 0% modeled room urgency.",
+    "projection_summary": "198.0 consensus; 176.0-220.0 modeled range.",
+    "projection_consensus": 198.0,
+    "projection_low": 176.0,
+    "projection_high": 220.0,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 19.2."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 60.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 33
+  },
+  {
+   "canonical_id": "636",
+   "name": "Brock Purdy",
+   "position": "QB",
+   "team": "SF",
+   "points": 304.7,
+   "vor": 13.3,
+   "value": 15.6,
+   "score": 179.1,
+   "tier": 4,
+   "tier_remaining": 10,
+   "adp": 103.5,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -59.7,
+   "opportunity_cost": -59.7,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8183",
+    "espn": "4361741"
+   },
+   "analysis": {
+    "headline": "QB adjusted value 15.6 with 0% modeled room urgency.",
+    "projection_summary": "304.7 consensus; 303.2-306.2 modeled range.",
+    "projection_consensus": 304.7,
+    "projection_low": 303.2,
+    "projection_high": 306.2,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: 15.6."
+    ],
+    "usage": [
+     "games: 9"
+    ],
+    "team_context": [
+     "plays per game: 62.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 7
+  },
+  {
+   "canonical_id": "1204",
+   "name": "Jakobi Meyers",
+   "position": "WR",
+   "team": "JAX",
+   "points": 194.5,
+   "vor": 12.7,
+   "value": 14.4,
+   "score": 177.9,
+   "tier": 8,
+   "tier_remaining": 6,
+   "adp": 87.6,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -148.8,
+   "opportunity_cost": -148.8,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "5947",
+    "espn": "3916433"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 14.4 with 0% modeled room urgency.",
+    "projection_summary": "194.5 consensus; 169.3-219.6 modeled range.",
+    "projection_consensus": 194.5,
+    "projection_low": 169.3,
+    "projection_high": 219.6,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 14.4."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 61.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 34
+  },
+  {
+   "canonical_id": "1629",
+   "name": "Aaron Jones",
+   "position": "RB",
+   "team": "MIN",
+   "points": 176.7,
+   "vor": 17.6,
+   "value": 14.2,
+   "score": 177.7,
+   "tier": 10,
+   "tier_remaining": 10,
+   "adp": 108.8,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -184.0,
+   "opportunity_cost": -184.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "4199",
+    "espn": "3042519"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 14.2 with 0% modeled room urgency.",
+    "projection_summary": "176.7 consensus; 137.1-216.3 modeled range.",
+    "projection_consensus": 176.7,
+    "projection_low": 137.1,
+    "projection_high": 216.3,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 14.2."
+    ],
+    "usage": [
+     "games: 12"
+    ],
+    "team_context": [
+     "plays per game: 52.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 27
+  },
+  {
+   "canonical_id": "180",
+   "name": "RJ Harvey",
+   "position": "RB",
+   "team": "DEN",
+   "points": 175.7,
+   "vor": 16.6,
+   "value": 13.7,
+   "score": 177.2,
+   "tier": 10,
+   "tier_remaining": 10,
+   "adp": 68.4,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -184.5,
+   "opportunity_cost": -184.5,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "12489",
+    "espn": "4568490"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 13.7 with 0% modeled room urgency.",
+    "projection_summary": "175.7 consensus; 144.1-207.3 modeled range.",
+    "projection_consensus": 175.7,
+    "projection_low": 144.1,
+    "projection_high": 207.3,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 13.7."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 62.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 28
+  },
+  {
+   "canonical_id": "822",
+   "name": "Kenneth Gainwell",
+   "position": "RB",
+   "team": "TB",
+   "points": 172.7,
+   "vor": 13.7,
+   "value": 13.3,
+   "score": 176.8,
+   "tier": 10,
+   "tier_remaining": 10,
+   "adp": 106.9,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -184.9,
+   "opportunity_cost": -184.9,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "7567",
+    "espn": "4371733"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 13.3 with 0% modeled room urgency.",
+    "projection_summary": "172.7 consensus; 152.3-193.2 modeled range.",
+    "projection_consensus": 172.7,
+    "projection_low": 152.3,
+    "projection_high": 193.2,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 13.3."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 60.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 30
+  },
+  {
+   "canonical_id": "826",
+   "name": "Rhamondre Stevenson",
+   "position": "RB",
+   "team": "NE",
+   "points": 169.7,
+   "vor": 10.6,
+   "value": 13.2,
+   "score": 176.7,
+   "tier": 10,
+   "tier_remaining": 10,
+   "adp": 82.7,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -185.0,
+   "opportunity_cost": -185.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "7611",
+    "espn": "4569173"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 13.2 with 0% modeled room urgency.",
+    "projection_summary": "169.7 consensus; 166.3-173.1 modeled range.",
+    "projection_consensus": 169.7,
+    "projection_low": 166.3,
+    "projection_high": 173.1,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 13.2."
+    ],
+    "usage": [
+     "games: 14"
+    ],
+    "team_context": [
+     "plays per game: 58.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 31
+  },
+  {
+   "canonical_id": "157",
+   "name": "Cam Skattebo",
+   "position": "RB",
+   "team": "NYG",
+   "points": 174.4,
+   "vor": 15.3,
+   "value": 13.1,
+   "score": 176.6,
+   "tier": 10,
+   "tier_remaining": 10,
+   "adp": 48.7,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -185.1,
+   "opportunity_cost": -185.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "12481",
+    "espn": "4696981"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 13.1 with 0% modeled room urgency.",
+    "projection_summary": "174.4 consensus; 139.3-209.5 modeled range.",
+    "projection_consensus": 174.4,
+    "projection_low": 139.3,
+    "projection_high": 209.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 13.1."
+    ],
+    "usage": [
+     "games: 8"
+    ],
+    "team_context": [
+     "plays per game: 61.0"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 29
+  },
+  {
+   "canonical_id": "1215",
+   "name": "T.J. Hockenson",
+   "position": "TE",
+   "team": "MIN",
+   "points": 169.8,
+   "vor": 14.7,
+   "value": 13.0,
+   "score": 176.5,
+   "tier": 6,
+   "tier_remaining": 3,
+   "adp": 141.2,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -91.1,
+   "opportunity_cost": -91.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "5844",
+    "espn": "4036133"
+   },
+   "analysis": {
+    "headline": "TE adjusted value 13.0 with 0% modeled room urgency.",
+    "projection_summary": "169.8 consensus; 155.0-184.5 modeled range.",
+    "projection_consensus": 169.8,
+    "projection_low": 155.0,
+    "projection_high": 184.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: 13.0."
+    ],
+    "usage": [
+     "games: 15"
+    ],
+    "team_context": [
+     "plays per game: 52.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 8
+  },
+  {
+   "canonical_id": "1417",
+   "name": "Mark Andrews",
+   "position": "TE",
+   "team": "BAL",
+   "points": 167.9,
+   "vor": 12.8,
+   "value": 12.0,
+   "score": 175.5,
+   "tier": 6,
+   "tier_remaining": 3,
+   "adp": 110.7,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -92.1,
+   "opportunity_cost": -92.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "5012",
+    "espn": "3116365"
+   },
+   "analysis": {
+    "headline": "TE adjusted value 12.0 with 0% modeled room urgency.",
+    "projection_summary": "167.9 consensus; 162.5-173.4 modeled range.",
+    "projection_consensus": 167.9,
+    "projection_low": 162.5,
+    "projection_high": 173.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: 12.0."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 54.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 9
+  },
+  {
+   "canonical_id": "314",
+   "name": "Drake Maye",
+   "position": "QB",
+   "team": "NE",
+   "points": 303.0,
+   "vor": 11.6,
+   "value": 11.5,
+   "score": 175.0,
+   "tier": 4,
+   "tier_remaining": 10,
+   "adp": 51.2,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -63.9,
+   "opportunity_cost": -63.9,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "11564",
+    "espn": "4431452"
+   },
+   "analysis": {
+    "headline": "QB adjusted value 11.5 with 0% modeled room urgency.",
+    "projection_summary": "303.0 consensus; 285.3-320.8 modeled range.",
+    "projection_consensus": 303.0,
+    "projection_low": 285.3,
+    "projection_high": 320.8,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: 11.5."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 58.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 8
+  },
+  {
+   "canonical_id": "539",
+   "name": "Tucker Kraft",
+   "position": "TE",
+   "team": "GB",
+   "points": 167.2,
+   "vor": 12.1,
+   "value": 9.5,
+   "score": 173.0,
+   "tier": 6,
+   "tier_remaining": 3,
+   "adp": 67.3,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -94.6,
+   "opportunity_cost": -94.6,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "9484",
+    "espn": "4572680"
+   },
+   "analysis": {
+    "headline": "TE adjusted value 9.5 with 0% modeled room urgency.",
+    "projection_summary": "167.2 consensus; 160.0-174.4 modeled range.",
+    "projection_consensus": 167.2,
+    "projection_low": 160.0,
+    "projection_high": 174.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: 9.5."
+    ],
+    "usage": [
+     "games: 8"
+    ],
+    "team_context": [
+     "plays per game: 57.7"
+    ],
+    "status": "Active; injury: Questionable",
+    "risks": [
+     "Sleeper injury designation: Questionable."
+    ],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 10
+  },
+  {
+   "canonical_id": "1527",
+   "name": "Patrick Mahomes",
+   "position": "QB",
+   "team": "KC",
+   "points": 305.8,
+   "vor": 14.4,
+   "value": 9.1,
+   "score": 172.6,
+   "tier": 4,
+   "tier_remaining": 10,
+   "adp": 100.1,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -66.3,
+   "opportunity_cost": -66.3,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "4046",
+    "espn": "3139477"
+   },
+   "analysis": {
+    "headline": "QB adjusted value 9.1 with 0% modeled room urgency.",
+    "projection_summary": "305.8 consensus; 286.7-324.9 modeled range.",
+    "projection_consensus": 305.8,
+    "projection_low": 286.7,
+    "projection_high": 324.9,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: 9.1."
+    ],
+    "usage": [
+     "games: 14"
+    ],
+    "team_context": [
+     "plays per game: 59.6"
+    ],
+    "status": "Active; injury: Questionable",
+    "risks": [
+     "Sleeper injury designation: Questionable."
+    ],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 6
+  },
+  {
+   "canonical_id": "316",
+   "name": "Bo Nix",
+   "position": "QB",
+   "team": "DEN",
+   "points": 298.8,
+   "vor": 7.4,
+   "value": 8.5,
+   "score": 172.0,
+   "tier": 4,
+   "tier_remaining": 10,
+   "adp": 118.7,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -66.9,
+   "opportunity_cost": -66.9,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "11563",
+    "espn": "4426338"
+   },
+   "analysis": {
+    "headline": "QB adjusted value 8.5 with 0% modeled room urgency.",
+    "projection_summary": "298.8 consensus; 295.7-301.9 modeled range.",
+    "projection_consensus": 298.8,
+    "projection_low": 295.7,
+    "projection_high": 301.9,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: 8.5."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 62.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 9
+  },
+  {
+   "canonical_id": "982",
+   "name": "J.K. Dobbins",
+   "position": "RB",
+   "team": "DEN",
+   "points": 165.8,
+   "vor": 6.7,
+   "value": 7.2,
+   "score": 170.7,
+   "tier": 10,
+   "tier_remaining": 10,
+   "adp": 92.5,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -191.0,
+   "opportunity_cost": -191.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "6806",
+    "espn": "4241985"
+   },
+   "analysis": {
+    "headline": "RB adjusted value 7.2 with 0% modeled room urgency.",
+    "projection_summary": "165.8 consensus; 160.2-171.4 modeled range.",
+    "projection_consensus": 165.8,
+    "projection_low": 160.2,
+    "projection_high": 171.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: 7.2."
+    ],
+    "usage": [
+     "games: 10"
+    ],
+    "team_context": [
+     "plays per game: 62.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 32
+  },
+  {
+   "canonical_id": "1024",
+   "name": "Michael Pittman",
+   "position": "WR",
+   "team": "PIT",
+   "points": 186.0,
+   "vor": 4.2,
+   "value": 5.8,
+   "score": 169.3,
+   "tier": 9,
+   "tier_remaining": 27,
+   "adp": 102.9,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -157.4,
+   "opportunity_cost": -157.4,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "6819",
+    "espn": "4035687"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 5.8 with 0% modeled room urgency.",
+    "projection_summary": "186.0 consensus; 170.9-201.1 modeled range.",
+    "projection_consensus": 186.0,
+    "projection_low": 170.9,
+    "projection_high": 201.1,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 5.8."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 56.3"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 35
+  },
+  {
+   "canonical_id": "1727",
+   "name": "Dak Prescott",
+   "position": "QB",
+   "team": "DAL",
+   "points": 294.8,
+   "vor": 3.5,
+   "value": 4.6,
+   "score": 168.1,
+   "tier": 4,
+   "tier_remaining": 10,
+   "adp": 90.3,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -70.7,
+   "opportunity_cost": -70.7,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "3294",
+    "espn": "2577417"
+   },
+   "analysis": {
+    "headline": "QB adjusted value 4.6 with 0% modeled room urgency.",
+    "projection_summary": "294.8 consensus; 285.8-303.9 modeled range.",
+    "projection_consensus": 294.8,
+    "projection_low": 285.8,
+    "projection_high": 303.9,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: 4.6."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 64.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 10
+  },
+  {
+   "canonical_id": "356",
+   "name": "Ricky Pearsall",
+   "position": "WR",
+   "team": "SF",
+   "points": 198.4,
+   "vor": 16.6,
+   "value": 4.4,
+   "score": 167.9,
+   "tier": 8,
+   "tier_remaining": 6,
+   "adp": 109.6,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -158.8,
+   "opportunity_cost": -158.8,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "11638",
+    "espn": "4428209"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 4.4 with 0% modeled room urgency.",
+    "projection_summary": "198.4 consensus; 182.5-214.2 modeled range (placeholder).",
+    "projection_consensus": 198.4,
+    "projection_low": 182.5,
+    "projection_high": 214.2,
+    "projection_is_placeholder": true,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 4.4."
+    ],
+    "usage": [
+     "games: 9"
+    ],
+    "team_context": [
+     "plays per game: 62.1"
+    ],
+    "status": "Inactive; injury: IR",
+    "risks": [
+     "Sleeper injury designation: IR."
+    ],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 32
+  },
+  {
+   "canonical_id": "895",
+   "name": "Kyle Pitts",
+   "position": "TE",
+   "team": "ATL",
+   "points": 157.3,
+   "vor": 2.2,
+   "value": 3.1,
+   "score": 166.6,
+   "tier": 7,
+   "tier_remaining": 7,
+   "adp": 71.3,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -101.0,
+   "opportunity_cost": -101.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "7553",
+    "espn": "4360248"
+   },
+   "analysis": {
+    "headline": "TE adjusted value 3.1 with 0% modeled room urgency.",
+    "projection_summary": "157.3 consensus; 143.1-171.6 modeled range.",
+    "projection_consensus": 157.3,
+    "projection_low": 143.1,
+    "projection_high": 171.6,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: 3.1."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 60.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 11
+  },
+  {
+   "canonical_id": "36",
+   "name": "Jordyn Tyson",
+   "position": "WR",
+   "team": "NO",
+   "points": 183.5,
+   "vor": 1.8,
+   "value": 0.4,
+   "score": 163.9,
+   "tier": 9,
+   "tier_remaining": 27,
+   "adp": 69.0,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -162.8,
+   "opportunity_cost": -162.8,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "13281",
+    "espn": "4880281"
+   },
+   "analysis": {
+    "headline": "WR adjusted value 0.4 with 0% modeled room urgency.",
+    "projection_summary": "183.5 consensus; 178.6-188.5 modeled range.",
+    "projection_consensus": 183.5,
+    "projection_low": 178.6,
+    "projection_high": 188.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: 0.4."
+    ],
+    "usage": [],
+    "team_context": [
+     "plays per game: 60.4"
+    ],
+    "status": "Active",
+    "risks": [
+     "Advanced usage context is not available."
+    ],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 36
+  },
+  {
+   "canonical_id": "735",
+   "name": "Jake Ferguson",
+   "position": "TE",
+   "team": "DAL",
+   "points": 155.1,
+   "vor": 0.0,
+   "value": 0.3,
+   "score": 163.8,
+   "tier": 7,
+   "tier_remaining": 7,
+   "adp": 104.0,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -103.8,
+   "opportunity_cost": -103.8,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8110",
+    "espn": "4242355"
+   },
+   "analysis": {
+    "headline": "TE adjusted value 0.3 with 0% modeled room urgency.",
+    "projection_summary": "155.1 consensus; 150.4-159.8 modeled range.",
+    "projection_consensus": 155.1,
+    "projection_low": 150.4,
+    "projection_high": 159.8,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: 0.3."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 64.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 13
+  },
+  {
+   "canonical_id": "1336",
+   "name": "Baker Mayfield",
+   "position": "QB",
+   "team": "TB",
+   "points": 292.9,
+   "vor": 1.5,
+   "value": 0.3,
+   "score": 163.8,
+   "tier": 4,
+   "tier_remaining": 10,
+   "adp": 140.9,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -75.0,
+   "opportunity_cost": -75.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "4892",
+    "espn": "3052587"
+   },
+   "analysis": {
+    "headline": "QB adjusted value 0.3 with 0% modeled room urgency.",
+    "projection_summary": "292.9 consensus; 274.9-311.0 modeled range.",
+    "projection_consensus": 292.9,
+    "projection_low": 274.9,
+    "projection_high": 311.0,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: 0.3."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 60.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 11
+  },
+  {
+   "canonical_id": "698",
+   "name": "Khalil Shakir",
+   "position": "WR",
+   "team": "BUF",
+   "points": 181.4,
+   "vor": -0.4,
+   "value": -0.2,
+   "score": 163.3,
+   "tier": 9,
+   "tier_remaining": 27,
+   "adp": 133.8,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -163.4,
+   "opportunity_cost": -163.4,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8134",
+    "espn": "4373678"
+   },
+   "analysis": {
+    "headline": "WR adjusted value -0.2 with 0% modeled room urgency.",
+    "projection_summary": "181.4 consensus; 166.5-196.4 modeled range.",
+    "projection_consensus": 181.4,
+    "projection_low": 166.5,
+    "projection_high": 196.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: -0.2."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 61.3"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 38
+  },
+  {
+   "canonical_id": "804",
+   "name": "Trevor Lawrence",
+   "position": "QB",
+   "team": "JAX",
+   "points": 291.4,
+   "vor": 0.0,
+   "value": -0.3,
+   "score": 163.2,
+   "tier": 4,
+   "tier_remaining": 10,
+   "adp": 92.3,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -75.6,
+   "opportunity_cost": -75.6,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "7523",
+    "espn": "4360310"
+   },
+   "analysis": {
+    "headline": "QB adjusted value -0.3 with 0% modeled room urgency.",
+    "projection_summary": "291.4 consensus; 279.3-303.4 modeled range.",
+    "projection_consensus": 291.4,
+    "projection_low": 279.3,
+    "projection_high": 303.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: -0.3."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 61.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 12
+  },
+  {
+   "canonical_id": "961",
+   "name": "Justin Herbert",
+   "position": "QB",
+   "team": "LAC",
+   "points": 290.0,
+   "vor": -1.4,
+   "value": -0.7,
+   "score": 162.8,
+   "tier": 4,
+   "tier_remaining": 10,
+   "adp": 83.7,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -76.1,
+   "opportunity_cost": -76.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "6797",
+    "espn": "4038941"
+   },
+   "analysis": {
+    "headline": "QB adjusted value -0.7 with 0% modeled room urgency.",
+    "projection_summary": "290.0 consensus; 284.5-295.5 modeled range.",
+    "projection_consensus": 290.0,
+    "projection_low": 284.5,
+    "projection_high": 295.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: -0.7."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 60.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 13
+  },
+  {
+   "canonical_id": "501",
+   "name": "Jayden Reed",
+   "position": "WR",
+   "team": "GB",
+   "points": 181.8,
+   "vor": 0.0,
+   "value": -1.1,
+   "score": 162.4,
+   "tier": 9,
+   "tier_remaining": 27,
+   "adp": 116.0,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -164.3,
+   "opportunity_cost": -164.3,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "10222",
+    "espn": "4362249"
+   },
+   "analysis": {
+    "headline": "WR adjusted value -1.1 with 0% modeled room urgency.",
+    "projection_summary": "181.8 consensus; 177.8-185.8 modeled range.",
+    "projection_consensus": 181.8,
+    "projection_low": 177.8,
+    "projection_high": 185.8,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: -1.1."
+    ],
+    "usage": [
+     "games: 5"
+    ],
+    "team_context": [
+     "plays per game: 57.7"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 37
+  },
+  {
+   "canonical_id": "530",
+   "name": "Dalton Kincaid",
+   "position": "TE",
+   "team": "BUF",
+   "points": 155.2,
+   "vor": 0.1,
+   "value": -1.6,
+   "score": 161.9,
+   "tier": 7,
+   "tier_remaining": 7,
+   "adp": 97.1,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -105.7,
+   "opportunity_cost": -105.7,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "10236",
+    "espn": "4385690"
+   },
+   "analysis": {
+    "headline": "TE adjusted value -1.6 with 0% modeled room urgency.",
+    "projection_summary": "155.2 consensus; 146.8-163.6 modeled range.",
+    "projection_consensus": 155.2,
+    "projection_low": 146.8,
+    "projection_high": 163.6,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: -1.6."
+    ],
+    "usage": [
+     "games: 12"
+    ],
+    "team_context": [
+     "plays per game: 61.3"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 12
+  },
+  {
+   "canonical_id": "313",
+   "name": "Caleb Williams",
+   "position": "QB",
+   "team": "CHI",
+   "points": 289.6,
+   "vor": -1.8,
+   "value": -1.8,
+   "score": 161.7,
+   "tier": 4,
+   "tier_remaining": 10,
+   "adp": 82.9,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -77.1,
+   "opportunity_cost": -77.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "11560",
+    "espn": "4431611"
+   },
+   "analysis": {
+    "headline": "QB adjusted value -1.8 with 0% modeled room urgency.",
+    "projection_summary": "289.6 consensus; 279.8-299.3 modeled range.",
+    "projection_consensus": 289.6,
+    "projection_low": 279.8,
+    "projection_high": 299.3,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: -1.8."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 63.5"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 14
+  },
+  {
+   "canonical_id": "1782",
+   "name": "Hunter Henry",
+   "position": "TE",
+   "team": "NE",
+   "points": 150.8,
+   "vor": -4.3,
+   "value": -2.2,
+   "score": 161.3,
+   "tier": 7,
+   "tier_remaining": 7,
+   "adp": 106.2,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -106.3,
+   "opportunity_cost": -106.3,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "3214",
+    "espn": "3046439"
+   },
+   "analysis": {
+    "headline": "TE adjusted value -2.2 with 0% modeled room urgency.",
+    "projection_summary": "150.8 consensus; 148.1-153.5 modeled range.",
+    "projection_consensus": 150.8,
+    "projection_low": 148.1,
+    "projection_high": 153.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: -2.2."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 58.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 14
+  },
+  {
+   "canonical_id": "1574",
+   "name": "Chris Godwin",
+   "position": "WR",
+   "team": "TB",
+   "points": 180.6,
+   "vor": -1.2,
+   "value": -2.5,
+   "score": 161.0,
+   "tier": 9,
+   "tier_remaining": 27,
+   "adp": 92.6,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -165.7,
+   "opportunity_cost": -165.7,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "4037",
+    "espn": "3116165"
+   },
+   "analysis": {
+    "headline": "WR adjusted value -2.5 with 0% modeled room urgency.",
+    "projection_summary": "180.6 consensus; 173.6-187.6 modeled range.",
+    "projection_consensus": 180.6,
+    "projection_low": 173.6,
+    "projection_high": 187.6,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: -2.5."
+    ],
+    "usage": [
+     "games: 9"
+    ],
+    "team_context": [
+     "plays per game: 60.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 40
+  },
+  {
+   "canonical_id": "187",
+   "name": "Matthew Golden",
+   "position": "WR",
+   "team": "GB",
+   "points": 181.1,
+   "vor": -0.7,
+   "value": -3.2,
+   "score": 160.3,
+   "tier": 9,
+   "tier_remaining": 27,
+   "adp": 134.1,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -166.4,
+   "opportunity_cost": -166.4,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "12501",
+    "espn": "4701936"
+   },
+   "analysis": {
+    "headline": "WR adjusted value -3.2 with 0% modeled room urgency.",
+    "projection_summary": "181.1 consensus; 158.8-203.3 modeled range.",
+    "projection_consensus": 181.1,
+    "projection_low": 158.8,
+    "projection_high": 203.3,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: -3.2."
+    ],
+    "usage": [
+     "games: 14"
+    ],
+    "team_context": [
+     "plays per game: 57.7"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 39
+  },
+  {
+   "canonical_id": "1213",
+   "name": "Deebo Samuel",
+   "position": "WR",
+   "team": "SF",
+   "points": 179.4,
+   "vor": -2.4,
+   "value": -3.9,
+   "score": 159.6,
+   "tier": 9,
+   "tier_remaining": 27,
+   "adp": 164.3,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -167.1,
+   "opportunity_cost": -167.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "5872",
+    "espn": "3126486"
+   },
+   "analysis": {
+    "headline": "WR adjusted value -3.9 with 0% modeled room urgency.",
+    "projection_summary": "179.4 consensus; 155.7-203.1 modeled range.",
+    "projection_consensus": 179.4,
+    "projection_low": 155.7,
+    "projection_high": 203.1,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: -3.9."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 62.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 41
+  },
+  {
+   "canonical_id": "395",
+   "name": "Tyrone Tracy",
+   "position": "RB",
+   "team": "NYG",
+   "points": 159.1,
+   "vor": 0.0,
+   "value": -6.2,
+   "score": 157.3,
+   "tier": 10,
+   "tier_remaining": 10,
+   "adp": 145.3,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -204.4,
+   "opportunity_cost": -204.4,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "11655",
+    "espn": "4360516"
+   },
+   "analysis": {
+    "headline": "RB adjusted value -6.2 with 0% modeled room urgency.",
+    "projection_summary": "159.1 consensus; 111.3-206.9 modeled range.",
+    "projection_consensus": 159.1,
+    "projection_low": 111.3,
+    "projection_high": 206.9,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: -6.2."
+    ],
+    "usage": [
+     "games: 15"
+    ],
+    "team_context": [
+     "plays per game: 61.0"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 34
+  },
+  {
+   "canonical_id": "542",
+   "name": "Brenton Strange",
+   "position": "TE",
+   "team": "JAX",
+   "points": 150.2,
+   "vor": -4.9,
+   "value": -6.5,
+   "score": 157.0,
+   "tier": 7,
+   "tier_remaining": 7,
+   "adp": 128.8,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -110.6,
+   "opportunity_cost": -110.6,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "9480",
+    "espn": "4430539"
+   },
+   "analysis": {
+    "headline": "TE adjusted value -6.5 with 0% modeled room urgency.",
+    "projection_summary": "150.2 consensus; 139.5-161.0 modeled range.",
+    "projection_consensus": 150.2,
+    "projection_low": 139.5,
+    "projection_high": 161.0,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: -6.5."
+    ],
+    "usage": [
+     "games: 12"
+    ],
+    "team_context": [
+     "plays per game: 61.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 15
+  },
+  {
+   "canonical_id": "504",
+   "name": "Josh Downs",
+   "position": "WR",
+   "team": "IND",
+   "points": 175.7,
+   "vor": -6.0,
+   "value": -6.7,
+   "score": 156.7,
+   "tier": 9,
+   "tier_remaining": 27,
+   "adp": 125.1,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -170.0,
+   "opportunity_cost": -170.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "9500",
+    "espn": "4688813"
+   },
+   "analysis": {
+    "headline": "WR adjusted value -6.7 with 0% modeled room urgency.",
+    "projection_summary": "175.7 consensus; 172.4-179.1 modeled range.",
+    "projection_consensus": 175.7,
+    "projection_low": 172.4,
+    "projection_high": 179.1,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: -6.7."
+    ],
+    "usage": [
+     "games: 16"
+    ],
+    "team_context": [
+     "plays per game: 58.2"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 43
+  },
+  {
+   "canonical_id": "1420",
+   "name": "Dallas Goedert",
+   "position": "TE",
+   "team": "PHI",
+   "points": 146.4,
+   "vor": -8.7,
+   "value": -7.2,
+   "score": 156.3,
+   "tier": 7,
+   "tier_remaining": 7,
+   "adp": 109.1,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -111.3,
+   "opportunity_cost": -111.3,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "5022",
+    "espn": "3121023"
+   },
+   "analysis": {
+    "headline": "TE adjusted value -7.2 with 0% modeled room urgency.",
+    "projection_summary": "146.4 consensus; 136.0-156.9 modeled range.",
+    "projection_consensus": 146.4,
+    "projection_low": 136.0,
+    "projection_high": 156.9,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: -7.2."
+    ],
+    "usage": [
+     "games: 15"
+    ],
+    "team_context": [
+     "plays per game: 57.4"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 17
+  },
+  {
+   "canonical_id": "1133",
+   "name": "Kyler Murray",
+   "position": "QB",
+   "team": "MIN",
+   "points": 286.1,
+   "vor": -5.3,
+   "value": -7.9,
+   "score": 155.6,
+   "tier": 4,
+   "tier_remaining": 10,
+   "adp": 142.2,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -83.3,
+   "opportunity_cost": -83.3,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "5849",
+    "espn": "3917315"
+   },
+   "analysis": {
+    "headline": "QB adjusted value -7.9 with 0% modeled room urgency.",
+    "projection_summary": "286.1 consensus; 265.2-306.9 modeled range.",
+    "projection_consensus": 286.1,
+    "projection_low": 265.2,
+    "projection_high": 306.9,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: -7.9."
+    ],
+    "usage": [
+     "games: 5"
+    ],
+    "team_context": [
+     "plays per game: 52.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 15
+  },
+  {
+   "canonical_id": "1543",
+   "name": "Alvin Kamara",
+   "position": "RB",
+   "team": "NO",
+   "points": 164.9,
+   "vor": 5.8,
+   "value": -9.4,
+   "score": 154.1,
+   "tier": 10,
+   "tier_remaining": 10,
+   "adp": 157.7,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -207.6,
+   "opportunity_cost": -207.6,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "4035",
+    "espn": "3054850"
+   },
+   "analysis": {
+    "headline": "RB adjusted value -9.4 with 0% modeled room urgency.",
+    "projection_summary": "164.9 consensus; 63.0-266.7 modeled range.",
+    "projection_consensus": 164.9,
+    "projection_low": 63.0,
+    "projection_high": 266.7,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: -9.4."
+    ],
+    "usage": [
+     "games: 11"
+    ],
+    "team_context": [
+     "plays per game: 60.4"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 33
+  },
+  {
+   "canonical_id": "2987",
+   "name": "Matthew Stafford",
+   "position": "QB",
+   "team": "LAR",
+   "points": 277.2,
+   "vor": -14.2,
+   "value": -12.2,
+   "score": 151.3,
+   "tier": 5,
+   "tier_remaining": 3,
+   "adp": 115.2,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -87.5,
+   "opportunity_cost": -87.5,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "421",
+    "espn": "12483"
+   },
+   "analysis": {
+    "headline": "QB adjusted value -12.2 with 0% modeled room urgency.",
+    "projection_summary": "277.2 consensus; 274.1-280.2 modeled range.",
+    "projection_consensus": 277.2,
+    "projection_low": 274.1,
+    "projection_high": 280.2,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: -12.2."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 62.5"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 16
+  },
+  {
+   "canonical_id": "1015",
+   "name": "Jerry Jeudy",
+   "position": "WR",
+   "team": "CLE",
+   "points": 175.5,
+   "vor": -6.3,
+   "value": -13.9,
+   "score": 149.6,
+   "tier": 9,
+   "tier_remaining": 27,
+   "adp": 173.5,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -177.1,
+   "opportunity_cost": -177.1,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "6783",
+    "espn": "4241463"
+   },
+   "analysis": {
+    "headline": "WR adjusted value -13.9 with 0% modeled room urgency.",
+    "projection_summary": "175.5 consensus; 119.6-231.4 modeled range.",
+    "projection_consensus": 175.5,
+    "projection_low": 119.6,
+    "projection_high": 231.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: -13.9."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 57.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 44
+  },
+  {
+   "canonical_id": "503",
+   "name": "Jordan Addison",
+   "position": "WR",
+   "team": "MIN",
+   "points": 169.5,
+   "vor": -12.3,
+   "value": -14.6,
+   "score": 148.9,
+   "tier": 9,
+   "tier_remaining": 27,
+   "adp": 100.7,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -177.8,
+   "opportunity_cost": -177.8,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "9756",
+    "espn": "4429205"
+   },
+   "analysis": {
+    "headline": "WR adjusted value -14.6 with 0% modeled room urgency.",
+    "projection_summary": "169.5 consensus; 167.3-171.7 modeled range.",
+    "projection_consensus": 169.5,
+    "projection_low": 167.3,
+    "projection_high": 171.7,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: -14.6."
+    ],
+    "usage": [
+     "games: 14"
+    ],
+    "team_context": [
+     "plays per game: 52.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 46
+  },
+  {
+   "canonical_id": "81",
+   "name": "Kenyon Sadiq",
+   "position": "TE",
+   "team": "NYJ",
+   "points": 146.8,
+   "vor": -8.3,
+   "value": -15.7,
+   "score": 147.8,
+   "tier": 7,
+   "tier_remaining": 7,
+   "adp": 118.2,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -119.8,
+   "opportunity_cost": -119.8,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "13330",
+    "espn": "5083315"
+   },
+   "analysis": {
+    "headline": "TE adjusted value -15.7 with 0% modeled room urgency.",
+    "projection_summary": "146.8 consensus; 131.1-162.4 modeled range.",
+    "projection_consensus": 146.8,
+    "projection_low": 131.1,
+    "projection_high": 162.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: -15.7."
+    ],
+    "usage": [],
+    "team_context": [
+     "plays per game: 55.9"
+    ],
+    "status": "Active; injury: Questionable",
+    "risks": [
+     "Sleeper injury designation: Questionable."
+    ],
+    "data_freshness": "sleeper: 2026-08-04T15:04:04.314374-04:00; nflverse: 2026-08-04T14:46:30-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 16
+  },
+  {
+   "canonical_id": "745",
+   "name": "Chigoziem Okonkwo",
+   "position": "TE",
+   "team": "WAS",
+   "points": 139.8,
+   "vor": -15.3,
+   "value": -15.9,
+   "score": 147.6,
+   "tier": 8,
+   "tier_remaining": 1,
+   "adp": 146.2,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -120.0,
+   "opportunity_cost": -120.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8210",
+    "espn": "4360635"
+   },
+   "analysis": {
+    "headline": "TE adjusted value -15.9 with 0% modeled room urgency.",
+    "projection_summary": "139.8 consensus; 135.6-144.1 modeled range.",
+    "projection_consensus": 139.8,
+    "projection_low": 135.6,
+    "projection_high": 144.1,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: -15.9."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 56.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 18
+  },
+  {
+   "canonical_id": "37",
+   "name": "Makai Lemon",
+   "position": "WR",
+   "team": "PHI",
+   "points": 170.9,
+   "vor": -10.9,
+   "value": -17.4,
+   "score": 146.0,
+   "tier": 9,
+   "tier_remaining": 27,
+   "adp": 76.6,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -180.7,
+   "opportunity_cost": -180.7,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "13294",
+    "espn": "4870795"
+   },
+   "analysis": {
+    "headline": "WR adjusted value -17.4 with 0% modeled room urgency.",
+    "projection_summary": "170.9 consensus; 168.5-173.3 modeled range.",
+    "projection_consensus": 170.9,
+    "projection_low": 168.5,
+    "projection_high": 173.3,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: -17.4."
+    ],
+    "usage": [],
+    "team_context": [
+     "plays per game: 57.4"
+    ],
+    "status": "Active; injury: Questionable",
+    "risks": [
+     "Sleeper injury designation: Questionable."
+    ],
+    "data_freshness": "sleeper: 2026-08-04T15:04:04.314374-04:00; nflverse: 2026-08-04T14:46:30-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 45
+  },
+  {
+   "canonical_id": "964",
+   "name": "Jordan Love",
+   "position": "QB",
+   "team": "GB",
+   "points": 271.5,
+   "vor": -19.8,
+   "value": -18.4,
+   "score": 145.1,
+   "tier": 5,
+   "tier_remaining": 3,
+   "adp": 124.8,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -93.7,
+   "opportunity_cost": -93.7,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "6804",
+    "espn": "4036378"
+   },
+   "analysis": {
+    "headline": "QB adjusted value -18.4 with 0% modeled room urgency.",
+    "projection_summary": "271.5 consensus; 264.6-278.5 modeled range.",
+    "projection_consensus": 271.5,
+    "projection_low": 264.6,
+    "projection_high": 278.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: -18.4."
+    ],
+    "usage": [
+     "games: 15"
+    ],
+    "team_context": [
+     "plays per game: 57.7"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 18
+  },
+  {
+   "canonical_id": "505",
+   "name": "Quentin Johnston",
+   "position": "WR",
+   "team": "LAC",
+   "points": 163.9,
+   "vor": -17.9,
+   "value": -18.5,
+   "score": 145.0,
+   "tier": 9,
+   "tier_remaining": 27,
+   "adp": 102.6,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -181.7,
+   "opportunity_cost": -181.7,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "9754",
+    "espn": "4429025"
+   },
+   "analysis": {
+    "headline": "WR adjusted value -18.5 with 0% modeled room urgency.",
+    "projection_summary": "163.9 consensus; 163.9-163.9 modeled range.",
+    "projection_consensus": 163.9,
+    "projection_low": 163.9,
+    "projection_high": 163.9,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: -18.5."
+    ],
+    "usage": [
+     "games: 13"
+    ],
+    "team_context": [
+     "plays per game: 60.9"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 48
+  },
+  {
+   "canonical_id": "1800",
+   "name": "Tyreek Hill",
+   "position": "WR",
+   "team": "FA",
+   "points": 178.7,
+   "vor": -3.1,
+   "value": -18.9,
+   "score": 144.5,
+   "tier": 9,
+   "tier_remaining": 27,
+   "adp": 174.0,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -182.2,
+   "opportunity_cost": -182.2,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "3321",
+    "espn": "3116406"
+   },
+   "analysis": {
+    "headline": "WR adjusted value -18.9 with 0% modeled room urgency.",
+    "projection_summary": "178.7 consensus; 93.7-263.7 modeled range.",
+    "projection_consensus": 178.7,
+    "projection_low": 93.7,
+    "projection_high": 263.7,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: -18.9."
+    ],
+    "usage": [
+     "games: 4"
+    ],
+    "team_context": [],
+    "status": "Active; injury: Questionable",
+    "risks": [
+     "Sleeper injury designation: Questionable."
+    ],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 42
+  },
+  {
+   "canonical_id": "1718",
+   "name": "Jared Goff",
+   "position": "QB",
+   "team": "DET",
+   "points": 272.0,
+   "vor": -19.4,
+   "value": -19.6,
+   "score": 143.8,
+   "tier": 5,
+   "tier_remaining": 3,
+   "adp": 122.0,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -95.0,
+   "opportunity_cost": -95.0,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "3163",
+    "espn": "3046779"
+   },
+   "analysis": {
+    "headline": "QB adjusted value -19.6 with 0% modeled room urgency.",
+    "projection_summary": "272.0 consensus; 260.5-283.5 modeled range.",
+    "projection_consensus": 272.0,
+    "projection_low": 260.5,
+    "projection_high": 283.5,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open QB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected QB fallback value 75.3.",
+    "model_factors": [
+     "League-adjusted value: -19.6."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 60.2"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 17
+  },
+  {
+   "canonical_id": "242",
+   "name": "Jacory Croskey-Merritt",
+   "position": "RB",
+   "team": "WAS",
+   "points": 145.8,
+   "vor": -13.3,
+   "value": -20.1,
+   "score": 143.4,
+   "tier": 11,
+   "tier_remaining": 3,
+   "adp": 114.9,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -218.3,
+   "opportunity_cost": -218.3,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "12533",
+    "espn": "4575131"
+   },
+   "analysis": {
+    "headline": "RB adjusted value -20.1 with 0% modeled room urgency.",
+    "projection_summary": "145.8 consensus; 127.9-163.8 modeled range.",
+    "projection_consensus": 145.8,
+    "projection_low": 127.9,
+    "projection_high": 163.8,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+    "model_factors": [
+     "League-adjusted value: -20.1."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 56.1"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 36
+  },
+  {
+   "canonical_id": "738",
+   "name": "Cade Otton",
+   "position": "TE",
+   "team": "TB",
+   "points": 133.2,
+   "vor": -21.9,
+   "value": -21.2,
+   "score": 142.3,
+   "tier": 9,
+   "tier_remaining": 6,
+   "adp": 162.7,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -125.3,
+   "opportunity_cost": -125.3,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "8111",
+    "espn": "4243331"
+   },
+   "analysis": {
+    "headline": "TE adjusted value -21.2 with 0% modeled room urgency.",
+    "projection_summary": "133.2 consensus; 128.0-138.3 modeled range.",
+    "projection_consensus": 133.2,
+    "projection_low": 128.0,
+    "projection_high": 138.3,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open TE starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected TE fallback value 104.1.",
+    "model_factors": [
+     "League-adjusted value: -21.2."
+    ],
+    "usage": [
+     "games: 15"
+    ],
+    "team_context": [
+     "plays per game: 60.6"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 19
+  },
+  {
+   "canonical_id": "195",
+   "name": "Jayden Higgins",
+   "position": "WR",
+   "team": "HOU",
+   "points": 163.4,
+   "vor": -18.3,
+   "value": -22.3,
+   "score": 141.2,
+   "tier": 9,
+   "tier_remaining": 27,
+   "adp": 131.1,
+   "survival": 1.0,
+   "disappearance_probability": 0.0,
+   "at_risk": false,
+   "vona": -185.5,
+   "opportunity_cost": -185.5,
+   "expected_next_turn_value": 198.2,
+   "reach_penalty": 5.0,
+   "reason": "",
+   "platform_ids": {
+    "sleeper": "12484",
+    "espn": "4877706"
+   },
+   "analysis": {
+    "headline": "WR adjusted value -22.3 with 0% modeled room urgency.",
+    "projection_summary": "163.4 consensus; 161.5-165.4 modeled range.",
+    "projection_consensus": 163.4,
+    "projection_low": 161.5,
+    "projection_high": 165.4,
+    "projection_is_placeholder": false,
+    "roster_fit": "Fills an open WR starter; value is still compared with other slots.",
+    "timing": "0% modeled chance to go before pick 3; expected WR fallback value 163.2.",
+    "model_factors": [
+     "League-adjusted value: -22.3."
+    ],
+    "usage": [
+     "games: 17"
+    ],
+    "team_context": [
+     "plays per game: 62.2"
+    ],
+    "status": "Active",
+    "risks": [],
+    "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+   },
+   "held_for_later": false,
+   "pos_rank": 49
+  }
+ ],
+ "hidden_gems": [
+  {
+   "player": {
+    "canonical_id": "1733",
+    "name": "Derrick Henry",
+    "position": "RB",
+    "team": "BAL",
+    "points": 264.3,
+    "vor": 105.2,
+    "value": 124.7,
+    "score": 289.3,
+    "tier": 5,
+    "tier_remaining": 4,
+    "adp": 24.6,
+    "survival": 1.0,
+    "disappearance_probability": 0.0,
+    "at_risk": false,
+    "vona": -73.6,
+    "opportunity_cost": -73.6,
+    "expected_next_turn_value": 198.2,
+    "reach_penalty": 3.9,
+    "reason": "",
+    "platform_ids": {
+     "sleeper": "3198",
+     "espn": "3043078"
+    },
+    "analysis": {
+     "headline": "RB adjusted value 124.7 with 0% modeled room urgency.",
+     "projection_summary": "264.3 consensus; 246.9-281.7 modeled range.",
+     "projection_consensus": 264.3,
+     "projection_low": 246.9,
+     "projection_high": 281.7,
+     "projection_is_placeholder": false,
+     "roster_fit": "Fills an open RB starter; value is still compared with other slots.",
+     "timing": "0% modeled chance to go before pick 3; expected RB fallback value 198.2.",
+     "model_factors": [
+      "League-adjusted value: 124.7."
+     ],
+     "usage": [
+      "games: 17"
+     ],
+     "team_context": [
+      "plays per game: 54.6"
+     ],
+     "status": "Active",
+     "risks": [],
+     "data_freshness": "nflverse: 2026-08-04T14:46:30-04:00; sleeper: 2026-08-04T15:04:04.314374-04:00; team: 2026-08-04T14:46:30-04:00"
+    },
+    "held_for_later": false,
+    "pos_rank": 10
+   },
+   "target_pick_min": 22,
+   "target_pick_max": 27,
+   "upside": "Role signal: games 17; projection ceiling 281.7.",
+   "risk": "Late market cost reflects uncertain role and weekly floor."
+  }
+ ],
+ "simulation": {
+  "trials": 64,
+  "seed": 2026,
+  "picks_simulated": 2,
+  "disappearance_probability": {
+   "479": 0.3906,
+   "478": 0.5469,
+   "848": 0.3906,
+   "528": 0.1406,
+   "1541": 0.1562,
+   "502": 0.1406,
+   "984": 0.0312,
+   "853": 0.1094,
+   "1014": 0.0,
+   "1018": 0.0156,
+   "484": 0.0,
+   "652": 0.0,
+   "688": 0.0,
+   "154": 0.0,
+   "1350": 0.0,
+   "730": 0.0,
+   "156": 0.0,
+   "498": 0.0,
+   "1181": 0.0156,
+   "10": 0.0,
+   "375": 0.0,
+   "511": 0.0,
+   "648": 0.0,
+   "699": 0.0156,
+   "1733": 0.0,
+   "856": 0.0,
+   "691": 0.0,
+   "349": 0.0,
+   "1150": 0.0,
+   "1335": 0.0,
+   "647": 0.0,
+   "645": 0.0,
+   "332": 0.0,
+   "1017": 0.0,
+   "820": 0.0,
+   "183": 0.0,
+   "1339": 0.0,
+   "823": 0.0,
+   "690": 0.0,
+   "182": 0.0,
+   "215": 0.0,
+   "361": 0.0156,
+   "507": 0.0,
+   "849": 0.0,
+   "193": 0.0,
+   "850": 0.0156,
+   "2131": 0.0,
+   "155": 0.0,
+   "157": 0.0,
+   "213": 0.0,
+   "314": 0.0,
+   "693": 0.0,
+   "163": 0.0,
+   "1148": 0.0,
+   "1186": 0.0,
+   "959": 0.0,
+   "2127": 0.0,
+   "1381": 0.0,
+   "164": 0.0,
+   "315": 0.0,
+   "979": 0.0,
+   "352": 0.0,
+   "679": 0.0,
+   "828": 0.0,
+   "965": 0.0,
+   "531": 0.0,
+   "350": 0.0,
+   "1179": 0.0,
+   "1162": 0.0,
+   "348": 0.0156,
+   "5794": 0.0
+  },
+  "expected_fallback_value": {
+   "K": 33.067,
+   "QB": 75.337,
+   "RB": 198.224,
+   "TE": 104.104,
+   "WR": 163.213
+  },
+  "expected_fallback_player": {
+   "K": "5794",
+   "QB": "1335",
+   "RB": "478",
+   "TE": "375",
+   "WR": "848"
+  }
+ },
+ "tier_gone_risk": 0,
+ "run_alert": null,
+ "picks_until_next": 2,
+ "on_clock": false
+}

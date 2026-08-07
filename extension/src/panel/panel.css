@@ -1,0 +1,162 @@
+:root {
+  --bg: #101418;
+  --fg: #e8ecf1;
+  --muted: #93a1b0;
+  --accent: #4cc38a;
+  --warn: #e5a13b;
+  --card: #1a2027;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font: 13px/1.45 -apple-system, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #232b34;
+}
+
+.dot { width: 9px; height: 9px; border-radius: 50%; }
+.dot-idle { background: var(--muted); }
+.dot-live { background: var(--accent); }
+.dot-error { background: var(--warn); }
+
+#config {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #232b34;
+}
+
+#config label { display: flex; flex-direction: column; gap: 3px; color: var(--muted); font-size: 11px; }
+
+#config input {
+  background: var(--card);
+  border: 1px solid #2c3540;
+  border-radius: 4px;
+  color: var(--fg);
+  padding: 5px 7px;
+  width: 110px;
+  font-size: 13px;
+}
+
+#my-slot { width: 60px; }
+
+main { flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 14px; }
+
+.label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.pick-card {
+  background: var(--card);
+  border: 1px solid #2c3540;
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.room-card { border-left-color: #6ea8fe; }
+#pick-cards { display: flex; flex-direction: column; gap: 8px; }
+#agreement-line { color: var(--muted); font-size: 11px; }
+.player-name { font-size: 18px; font-weight: 650; }
+.player-meta { color: var(--muted); margin-top: 1px; }
+.reason { margin-top: 6px; color: var(--fg); }
+details { margin-top: 8px; }
+summary { color: var(--muted); cursor: pointer; user-select: none; }
+.details { display: flex; flex-direction: column; gap: 5px; padding-top: 7px; }
+.details strong { color: var(--muted); font-weight: 600; }
+.detail-list { margin: 0; padding-left: 17px; }
+
+#alt-list { margin: 0; padding-left: 18px; }
+#alt-list li { margin: 3px 0; }
+#alt-list .meta { color: var(--muted); }
+
+#context-lines { display: flex; flex-direction: column; gap: 3px; color: var(--muted); }
+#run-line { color: var(--warn); }
+
+#gem-list { display: flex; flex-direction: column; gap: 6px; }
+.gem {
+  border: 1px solid #2c3540;
+  border-radius: 5px;
+  padding: 7px 9px;
+  background: var(--card);
+}
+.gem-title { font-weight: 650; }
+.gem-meta, .gem-risk { color: var(--muted); font-size: 11px; }
+
+#board { width: 100%; border-collapse: collapse; }
+#board td { padding: 3px 6px; border-bottom: 1px solid #1e252d; }
+#board td.num { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+#board tr.risk td { color: var(--warn); }
+
+footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-top: 1px solid #232b34;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+#mode-badge {
+  background: var(--warn);
+  color: #14100a;
+  font-weight: 700;
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+
+/* Input problems that make the advice untrustworthy -- loud on purpose. */
+.warnings {
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #b4541f;
+  background: rgb(180 84 31 / 12%);
+}
+
+.warning-line {
+  font-size: 12px;
+  line-height: 1.45;
+  color: #e8a94a;
+}
+
+.warning-line + .warning-line { margin-top: 5px; }
+
+
+/* Auto-draft arming: loud on purpose -- the user should never wonder whether
+   the extension is about to pick for them. */
+.auto-draft-toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+}
+
+.auto-draft-state {
+  padding: 1px 7px;
+  border-radius: 5px;
+  background: #b4541f;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Draft Assistant</title>
+  <link rel="stylesheet" href="panel.css" />
+</head>
+<body>
+  <header>
+    <span id="status-dot" class="dot dot-idle" title="status"></span>
+    <span id="status-text">Waiting for a draft…</span>
+  </header>
+
+  <section id="config">
+    <label title="Your seat number in this room. Used by both Sleeper and ESPN to work out which picks are yours.">
+      My draft slot
+      <input id="my-slot" type="number" min="1" max="16" placeholder="?" />
+    </label>
+    <label>
+      Sleeper Draft ID
+      <input id="draft-id" type="text" placeholder="auto-detected from tab" />
+    </label>
+    <label class="auto-draft-toggle" title="ESPN drafts only. Re-arms from off every time the panel opens.">
+      <input id="auto-draft" type="checkbox" />
+      Auto-draft my picks
+      <span id="auto-draft-state" class="auto-draft-state" hidden>ARMED</span>
+    </label>
+  </section>
+
+  <main id="content" hidden>
+    <div id="warnings" class="warnings" hidden></div>
+    <section id="pick-cards">
+      <article id="recommended-card" class="pick-card">
+        <div class="label">Recommended for your roster</div>
+        <div id="recommended-name" class="player-name"></div>
+        <div id="recommended-meta" class="player-meta"></div>
+        <div id="recommended-reason" class="reason"></div>
+        <details>
+          <summary>Draft details</summary>
+          <div id="recommended-details" class="details"></div>
+        </details>
+      </article>
+      <article id="room-card" class="pick-card room-card">
+        <div class="label">Room-aware pick</div>
+        <div id="room-name" class="player-name"></div>
+        <div id="room-meta" class="player-meta"></div>
+        <div id="room-reason" class="reason"></div>
+        <details>
+          <summary>Draft details</summary>
+          <div id="room-details" class="details"></div>
+        </details>
+      </article>
+      <div id="agreement-line"></div>
+    </section>
+
+    <section id="alternates">
+      <div class="label">Alternates</div>
+      <ol id="alt-list"></ol>
+    </section>
+
+    <section id="context-lines">
+      <div id="tier-line"></div>
+      <div id="picks-line"></div>
+      <div id="run-line" hidden></div>
+    </section>
+
+    <section id="hidden-gems">
+      <div class="label">Hidden gem right now</div>
+      <div id="gem-list"></div>
+    </section>
+
+    <section id="board-section">
+      <div class="label">Board</div>
+      <table id="board"></table>
+    </section>
+  </main>
+
+  <footer>
+    <span id="mode-badge" hidden>OFFLINE</span>
+    <span id="updated"></span>
+  </footer>
+
+  <script type="module" src="panel.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+[project]
+name = "fantasy"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.18.5",
+    "apscheduler>=3.11.3",
+    "fastapi>=0.115",
+    "httpx>=0.28.1",
+    "psycopg[binary]>=3.3.4",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.14.2",
+    "sqlalchemy>=2.0",
+    "tenacity>=9.1.4",
+    "uvicorn[standard]>=0.52.1",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3.0",
+    "pgserver>=0.1.4",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "respx>=0.23.1",
+    "ruff>=0.16.1",
+]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["api"]
+
+[[tool.mypy.overrides]]
+module = ["pgserver.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+# Alembic writes these from its own template and rewrites them on every
+# autogenerate. Linting them means 5 permanent errors per migration, which
+# drowns out real findings; excluding them makes `ruff check .` worth reading.
+exclude = ["db/migrations/versions"]
+
+[[tool.mypy.overrides]]
+module = ["apscheduler.*"]
+ignore_missing_imports = true
