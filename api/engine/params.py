@@ -29,6 +29,24 @@ class EngineParams(BaseModel):
     # slots, and penalty applied once starters (and flex) are covered.
     need_boost: float = 0.20
     surplus_penalty: float = 0.15
+    # Chance a drafted starter is unavailable in a given fantasy week: injured,
+    # inactive or on bye. Measured over 2025 weeks 4-17 against a sample chosen
+    # on weeks 1-3 production alone, so the selector cannot see what it grades.
+    # Pooled 0.2214 over 1680 player-weeks, and flat across positions (QB .223,
+    # RB .216, WR .222, TE .226 -- every pair inside one standard error), so one
+    # rate is the honest model rather than four fitted to noise.
+    #
+    # This prices bench depth. VOR has no idea only three running backs can ever
+    # be in a lineup, so a flat surplus penalty charges a seventh back the same
+    # as a fourth, and a room that lets backs fall drafts you into RB7/WR3 with
+    # a dead bench.
+    starter_unavailable_rate: float = 0.2214
+    # Floor on the divisor that demotes sub-replacement players, which bounds
+    # how far below zero a deep-bench body can be pushed. Ordering down there is
+    # cosmetic (nothing sub-replacement is getting picked over positive value),
+    # and an unbounded divisor divides by zero the moment a position is stacked
+    # past the point where any backup could be needed.
+    depth_penalty_floor: float = 0.25
 
     # Positional-run detection: flag if >= run_threshold of the last run_window
     # picks were the same position.

@@ -30,6 +30,9 @@ export interface OfflineKnobs {
   early_duplicate_qb_te_multiplier: number;
   qb_wr_stack_bonus: number;
   wr_rb_correlation_penalty: number;
+  startable_slots: Record<string, number>;
+  starter_unavailable_rate: number;
+  depth_penalty_floor: number;
 }
 
 const DEFAULT_KNOBS: OfflineKnobs = {
@@ -38,7 +41,38 @@ const DEFAULT_KNOBS: OfflineKnobs = {
   early_duplicate_qb_te_multiplier: 0.35,
   qb_wr_stack_bonus: 2.5,
   wr_rb_correlation_penalty: 2.0,
+  startable_slots: { QB: 1, RB: 3, WR: 3, TE: 2, K: 1, DEF: 1 },
+  starter_unavailable_rate: 0.2214,
+  depth_penalty_floor: 0.25,
 };
+
+/**
+ * Apply a multiplier so it demotes or promotes whatever the sign of the value.
+ * Plain multiplication inverts on the negative scores a late board is made of:
+ * a x0.35 penalty moves -20 up to -7, rewarding exactly what it should punish.
+ */
+function scaleSigned(value: number, multiplier: number, floor: number): number {
+  return value >= 0 ? value * multiplier : value / Math.max(multiplier, floor);
+}
+
+/**
+ * What one more player at this position is worth once the lineup is already
+ * full there: the chance a week calls on him. Mirrors `_depth_multiplier` on
+ * the server, including the rate fitted from 2025 availability.
+ */
+function depthMultiplier(knobs: OfflineKnobs, position: string, have: number): number {
+  const slots = knobs.startable_slots[position] ?? 0;
+  const depth = have + 1 - slots;
+  if (depth <= 0) return 1;
+  const rate = knobs.starter_unavailable_rate;
+  let total = 0;
+  for (let out = depth; out <= slots; out += 1) {
+    let ways = 1;
+    for (let step = 0; step < out; step += 1) ways = (ways * (slots - step)) / (step + 1);
+    total += ways * rate ** out * (1 - rate) ** (slots - out);
+  }
+  return total;
+}
 
 function offlineCorrelationAdjustment(
   knobs: OfflineKnobs,
@@ -132,9 +166,15 @@ export function computeOffline(inputs: OfflineInputs): Recommendation | null {
       && openLate > 0
       && inputs.myRemainingPicks <= openLate + 2;
     const correlation = offlineCorrelationAdjustment(knobs, p, rosterPositions, rosterNflTeams);
-    const multiplier = knobs.early_duplicate_qb_te_multiplier;
-    const scoreBase = earlyDuplicateQb ? p.score * multiplier : p.score;
-    const valueBase = earlyDuplicateQb ? p.value * multiplier : p.value;
+    // A player stacked past what the lineup can start is worth only the chance
+    // a week calls on him. Without this the offline board keeps climbing the
+    // same position: every remaining back outranks the receiver filling an
+    // empty starting slot, because the cached score was ranked against a roster
+    // several picks staler than the one being drafted.
+    const depth = depthMultiplier(knobs, p.position, rosterCounts.get(p.position) ?? 0);
+    const combined = (earlyDuplicateQb ? knobs.early_duplicate_qb_te_multiplier : 1) * depth;
+    const scoreBase = scaleSigned(p.score, combined, knobs.depth_penalty_floor);
+    const valueBase = scaleSigned(p.value, combined, knobs.depth_penalty_floor);
     return {
     ...p,
     score: scoreBase + correlation,
@@ -143,7 +183,9 @@ export function computeOffline(inputs: OfflineInputs): Recommendation | null {
       (p.held_for_later && !lateRelease)
       || earlyDuplicateQb
       || backupTe
-      || filledLateStreamer,
+      || filledLateStreamer
+      // Stacked so deep that no combination of absences could start him.
+      || depth === 0,
     tier_remaining: tierCounts.get(`${p.position}:${p.tier}`) ?? 0,
     at_risk:
       inputs.myNextPick !== null && p.adp !== null ? p.adp < inputs.myNextPick : p.at_risk,

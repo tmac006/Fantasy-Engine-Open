@@ -7,8 +7,8 @@ negative. All were violated in live ESPN drafts before being fixed.
 """
 
 from api.engine.params import EngineParams
-from api.engine.recommend import DraftContext, recommend
-from api.engine.vor import PoolPlayer
+from api.engine.recommend import DraftContext, _depth_multiplier, recommend
+from api.engine.vor import PoolPlayer, startable_slots
 from api.schemas import LeagueSettings
 
 PARAMS = EngineParams()
@@ -322,3 +322,88 @@ class TestMustFillSlots:
         # With four picks left and four openings (2 FLEX + K + DEF), filling a
         # required slot outranks bench value.
         assert rec.recommended_pick.position in ("K", "DEF", "RB", "WR", "TE")
+
+
+class TestBenchDepth:
+    """A pick the lineup can never start is worth what a lineup gap costs.
+
+    The live failure: a room let running backs slide, so every remaining back
+    outscored every receiver on raw VOR, and the engine took backs at rounds 4,
+    6, 8 and 9 while the second receiver slot sat empty. VOR is measured against
+    the league's starting line and has no idea only three backs can ever be in
+    a lineup, so a seventh was priced exactly like a fourth.
+    """
+
+    def test_multiplier_falls_as_a_position_stacks(self) -> None:
+        startable = {"QB": 1, "RB": 3, "WR": 3, "TE": 2}
+        rates = [
+            _depth_multiplier("RB", {"RB": float(have)}, startable, PARAMS)
+            for have in range(7)
+        ]
+        # The first three all start, so nothing is discounted.
+        assert rates[0] == rates[1] == rates[2] == 1.0
+        # Then: needed 53% of weeks, 13%, 1%, and never.
+        assert round(rates[3], 3) == 0.528
+        assert round(rates[4], 3) == 0.125
+        assert round(rates[5], 3) == 0.011
+        assert rates[6] == 0.0
+        assert rates == sorted(rates, reverse=True)
+
+    def test_backup_quarterback_is_worth_less_than_a_fourth_back(self) -> None:
+        """Not because quarterbacks get hurt less -- measured, they do not.
+
+        2025 miss rates were flat across positions (QB .223, RB .216, WR .222,
+        TE .226). What separates them is how many slots the backup covers: one
+        for a quarterback against three for a back.
+        """
+        startable = {"QB": 1, "RB": 3}
+        backup_qb = _depth_multiplier("QB", {"QB": 1.0}, startable, PARAMS)
+        fourth_rb = _depth_multiplier("RB", {"RB": 3.0}, startable, PARAMS)
+        assert backup_qb < fourth_rb
+        assert round(backup_qb, 4) == round(PARAMS.starter_unavailable_rate, 4)
+
+    def test_startable_counts_include_every_flex_slot(self) -> None:
+        slots = startable_slots(SETTINGS, PARAMS)
+        assert slots["RB"] == 3  # 2 direct + FLEX
+        assert slots["WR"] == 3
+        assert slots["TE"] == 2
+        assert slots["QB"] == 1
+
+    def test_open_starter_slot_beats_a_sixth_back(self) -> None:
+        """The exact live roster: five backs, one receiver, round 9."""
+        pool = late_pool()
+        ctx = DraftContext(
+            drafted_ids=drafted_top(pool, 103),
+            my_roster_positions=("QB", "RB", "RB", "WR", "TE", "RB", "RB", "RB"),
+            current_pick=104,
+            my_next_pick=113,
+            recent_positions=(),
+            my_remaining_picks=8,
+        )
+        rec = recommend(pool, SETTINGS, ctx, PARAMS)
+        assert rec is not None
+        assert rec.recommended_pick.position == "WR", (
+            f"WR2 is empty and a sixth back cannot start; "
+            f"got {rec.recommended_pick.position} {rec.recommended_pick.name}"
+        )
+
+    def test_a_fourth_back_is_not_banned_outright(self) -> None:
+        """The discount is graded, not a blanket rule against depth.
+
+        With every starting slot filled, the best back on the board is a fair
+        pick: he backs up three slots and plays in over half of all weeks.
+        """
+        pool = late_pool()
+        ctx = DraftContext(
+            drafted_ids=drafted_top(pool, 103),
+            my_roster_positions=("QB", "RB", "RB", "WR", "WR", "TE", "RB"),
+            current_pick=104,
+            my_next_pick=113,
+            recent_positions=(),
+            my_remaining_picks=9,
+        )
+        rec = recommend(pool, SETTINGS, ctx, PARAMS)
+        assert rec is not None
+        backs = [r for r in rec.board if r.position == "RB"]
+        assert backs, "fixture must leave backs on the board"
+        assert not any(r.held_for_later for r in backs)

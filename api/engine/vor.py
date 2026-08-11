@@ -71,6 +71,28 @@ def effective_starters(settings: LeagueSettings, params: EngineParams) -> dict[s
     return starters
 
 
+def startable_slots(settings: LeagueSettings, params: EngineParams) -> dict[str, int]:
+    """The most players at one position a legal lineup could ever field at once.
+
+    Deliberately different from `effective_starters`, which splits each flex slot
+    across positions to set a league-wide replacement level. The question here is
+    about one roster rather than the league: could this player be in my lineup at
+    all? So every flex slot he is eligible for counts in full, which is the
+    generous reading -- 2 RB + 2 WR + 1 FLEX yields 3 startable at both, though
+    only five can start together. Overstating it keeps the depth discount off
+    players who might genuinely start.
+    """
+    out: dict[str, int] = {}
+    for pos in params.positions:
+        flex = sum(
+            count
+            for slot, count in settings.roster_slots.items()
+            if slot in FLEX_ELIGIBILITY and pos in FLEX_ELIGIBILITY[slot]
+        )
+        out[pos] = settings.roster_slots.get(pos, 0) + flex
+    return out
+
+
 def replacement_ranks(settings: LeagueSettings, params: EngineParams) -> dict[str, int]:
     """Rank (1-based, within position) of the replacement-level player."""
     starters = effective_starters(settings, params)

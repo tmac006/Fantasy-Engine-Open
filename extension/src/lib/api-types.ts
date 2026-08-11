@@ -393,6 +393,16 @@ export interface components {
              */
             surplus_penalty: number;
             /**
+             * Starter Unavailable Rate
+             * @default 0.2214
+             */
+            starter_unavailable_rate: number;
+            /**
+             * Depth Penalty Floor
+             * @default 0.25
+             */
+            depth_penalty_floor: number;
+            /**
              * Run Window
              * @default 8
              */
@@ -727,6 +737,14 @@ export interface components {
             qb_wr_stack_bonus: number;
             /** Wr Rb Correlation Penalty */
             wr_rb_correlation_penalty: number;
+            /** Startable Slots */
+            startable_slots: {
+                [key: string]: number;
+            };
+            /** Starter Unavailable Rate */
+            starter_unavailable_rate: number;
+            /** Depth Penalty Floor */
+            depth_penalty_floor: number;
         };
         /**
          * OutlookOut
@@ -1130,6 +1148,8 @@ export interface operations {
                 tier_gap_rel?: number;
                 need_boost?: number;
                 surplus_penalty?: number;
+                starter_unavailable_rate?: number;
+                depth_penalty_floor?: number;
                 run_window?: number;
                 run_threshold?: number;
                 at_risk_threshold?: number;
@@ -1209,6 +1229,8 @@ export interface operations {
                 tier_gap_rel?: number;
                 need_boost?: number;
                 surplus_penalty?: number;
+                starter_unavailable_rate?: number;
+                depth_penalty_floor?: number;
                 run_window?: number;
                 run_threshold?: number;
                 at_risk_threshold?: number;

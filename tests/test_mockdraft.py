@@ -7,8 +7,8 @@ this is the harness that catches the next one first.
 """
 
 from api.engine.params import EngineParams
-from api.engine.vor import PoolPlayer
-from api.eval.mockdraft import check_invariants, simulate_draft
+from api.engine.vor import PoolPlayer, startable_slots
+from api.eval.mockdraft import check_invariants, fill_lineup, simulate_draft
 from api.schemas import LeagueSettings
 
 SETTINGS = LeagueSettings(
@@ -25,16 +25,22 @@ PARAMS = EngineParams(simulation_trials=1)
 ROUNDS = 16
 
 
-def draft_pool() -> list[PoolPlayer]:
-    """A 12-team-sized board with interleaved ADPs (block ADPs make every
-    positional test vacuous -- the lesson of the survival fixtures)."""
+def draft_pool(teams: int = 12) -> list[PoolPlayer]:
+    """A board sized for a `teams`-sized room, with interleaved ADPs.
+
+    Block ADPs make every positional test vacuous, which is the lesson of the
+    survival fixtures. Counts scale with room size for a duller reason: a
+    16-team draft spends 256 picks, and a board built for 192 simply runs out
+    partway through round 15, which reads as an engine failure and is not one.
+    """
     pool: list[PoolPlayer] = []
     cid = 1
+    scale = teams / 12
     shape = (
-        ("QB", 28, 380.0, 5.5, 20.0, 6.8),
-        ("RB", 70, 340.0, 3.4, 1.0, 2.9),
-        ("WR", 75, 330.0, 3.1, 2.0, 2.8),
-        ("TE", 26, 250.0, 6.0, 18.0, 7.5),
+        ("QB", round(28 * scale), 380.0, 5.5, 20.0, 6.8),
+        ("RB", round(70 * scale), 340.0, 3.4, 1.0, 2.9),
+        ("WR", round(75 * scale), 330.0, 3.1, 2.0, 2.8),
+        ("TE", round(26 * scale), 250.0, 6.0, 18.0, 7.5),
     )
     for pos, count, top, drop, first, gap in shape:
         for i in range(count):
@@ -50,7 +56,10 @@ def draft_pool() -> list[PoolPlayer]:
                 )
             )
             cid += 1
-    for pos, count, top, first in (("K", 16, 150.0, 165.0), ("DEF", 16, 130.0, 158.0)):
+    for pos, count, top, first in (
+        ("K", round(16 * scale), 150.0, 165.0),
+        ("DEF", round(16 * scale), 130.0, 158.0),
+    ):
         for i in range(count):
             pool.append(
                 PoolPlayer(
@@ -158,3 +167,47 @@ class TestInvariantChecker:
         result = DraftResult(my_slot=4, picks=picks)
         violations = check_invariants(result, settings, ROUNDS)
         assert any("DEF: drafted 0" in v for v in violations)
+
+
+class TestRoomSizes:
+    """Room size and roster shape are inputs, not constants.
+
+    Replacement level, startable counts and therefore the bench-depth discount
+    all move with them, so the rules have to hold somewhere other than the one
+    12-team, single-flex league every other fixture here uses.
+    """
+
+    def test_sixteen_team_room_still_builds_a_legal_roster(self) -> None:
+        pool = draft_pool(teams=16)
+        settings = SETTINGS.model_copy(update={"total_teams": 16})
+        for slot in (1, 9, 16):
+            result = simulate_draft(
+                pool, settings, my_slot=slot, rounds=ROUNDS, params=PARAMS, seed=3
+            )
+            assert len(result.my_picks) == ROUNDS
+            starters, _ = fill_lineup(
+                [p.player for p in result.my_picks], settings.roster_slots
+            )
+            assert len(starters) == 9, f"slot {slot}: lineup short at 16 teams"
+            assert not check_invariants(result, settings, ROUNDS, PARAMS)
+
+    def test_two_flex_slots_widen_what_counts_as_depth(self) -> None:
+        """A second flex makes a fourth back a starter rather than a backup."""
+        two_flex = SETTINGS.model_copy(
+            update={
+                "roster_slots": {
+                    **SETTINGS.roster_slots, "FLEX": 2, "BN": 5,
+                }
+            }
+        )
+        assert startable_slots(two_flex, PARAMS)["RB"] == 4
+        assert startable_slots(SETTINGS, PARAMS)["RB"] == 3
+        rounds = sum(two_flex.roster_slots.values())
+        result = simulate_draft(
+            draft_pool(), two_flex, my_slot=5, rounds=rounds, params=PARAMS, seed=3
+        )
+        starters, _ = fill_lineup(
+            [p.player for p in result.my_picks], two_flex.roster_slots
+        )
+        assert len(starters) == 10
+        assert not check_invariants(result, two_flex, rounds, PARAMS)

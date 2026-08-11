@@ -26,8 +26,11 @@ from api.adapters.sleeper import remaining_picks_for_slot, snake_slot_for_pick
 from api.engine.params import EngineParams
 from api.engine.recommend import DraftContext, recommend
 from api.engine.simulation import _market_weight, _roster_weight
-from api.engine.vor import PoolPlayer
+from api.engine.vor import FLEX_ELIGIBILITY, PoolPlayer, startable_slots
 from api.schemas import LeagueSettings
+
+# Slots that hold no one who scores for you.
+_NON_SCORING_SLOTS = frozenset({"BN", "IR", "TAXI"})
 
 
 @dataclass(frozen=True)
@@ -170,12 +173,85 @@ def _recent_positions(picks: list[SimulatedPick], window: int = 10) -> list[str]
     return [p.player.position for p in picks[-window:]]
 
 
-def check_invariants(result: DraftResult, settings: LeagueSettings, rounds: int) -> list[str]:
+def fill_lineup(
+    players: list[PoolPlayer], roster_slots: dict[str, int]
+) -> tuple[list[PoolPlayer], list[PoolPlayer]]:
+    """The best legal starting lineup, plus everyone left over.
+
+    Direct slots claim their own position's best first, then flex slots take the
+    best of whatever remains eligible. Greedy is exact here because every flex
+    slot's eligibility is a superset of the direct slots it competes with.
+    """
+    remaining = sorted(players, key=lambda p: p.points, reverse=True)
+    starters: list[PoolPlayer] = []
+
+    def claim(eligible: tuple[str, ...], count: int) -> None:
+        for _ in range(count):
+            pick = next((p for p in remaining if p.position in eligible), None)
+            if pick is None:
+                return
+            starters.append(pick)
+            remaining.remove(pick)
+
+    for slot, count in roster_slots.items():
+        if slot in _NON_SCORING_SLOTS or slot in FLEX_ELIGIBILITY:
+            continue
+        claim((slot,), count)
+    for slot, count in roster_slots.items():
+        if slot in FLEX_ELIGIBILITY:
+            claim(tuple(FLEX_ELIGIBILITY[slot]), count)
+    return starters, remaining
+
+
+@dataclass(frozen=True)
+class RosterGrade:
+    """What a finished roster is actually worth.
+
+    Total roster projection is the wrong objective and grading by it hid a real
+    failure: a sixth running back adds his whole projection to the total while
+    contributing nothing to any lineup you can start. Starters is the number
+    that matters; bench is reported beside it so the trade is visible.
+    """
+
+    starters: float
+    bench: float
+    slots_filled: int
+    slots_total: int
+
+
+def grade_roster(result: DraftResult, settings: LeagueSettings) -> RosterGrade:
+    starters, bench = fill_lineup(
+        [pick.player for pick in result.my_picks], settings.roster_slots
+    )
+    slots_total = sum(
+        count
+        for slot, count in settings.roster_slots.items()
+        if slot not in _NON_SCORING_SLOTS
+    )
+    return RosterGrade(
+        starters=sum(p.points for p in starters),
+        bench=sum(p.points for p in bench),
+        slots_filled=len(starters),
+        slots_total=slots_total,
+    )
+
+
+def check_invariants(
+    result: DraftResult,
+    settings: LeagueSettings,
+    rounds: int,
+    params: EngineParams | None = None,
+) -> list[str]:
     """Rules a finished roster must satisfy. Returns violations; empty is a pass.
 
     These are deliberately blunt. Each one is a bug class that actually shipped,
     so a violation is a regression, not a style disagreement.
+
+    Takes the same params the draft ran under, since startable counts are read
+    off them; grading a draft against defaults it was not played under would
+    quietly measure the wrong roster.
     """
+    params = params or EngineParams()
     violations: list[str] = []
     counts = result.my_position_counts
     picks = result.my_picks
@@ -211,6 +287,21 @@ def check_invariants(result: DraftResult, settings: LeagueSettings, rounds: int)
                 f"{pos}: drafted {counts.get(pos, 0)}, cannot fill {slot_count} starter slot(s)"
             )
 
+    # A pick no combination of absences could put in a lineup is a wasted round.
+    # Every invariant above passed while the engine drafted RB7/WR3, because
+    # each one asks whether a slot *can* be filled and none asks what the picks
+    # are for. Graded against startable count plus one full round of depth.
+    startable = startable_slots(settings, params)
+    for pos, slots in startable.items():
+        if slots <= 0:
+            continue
+        surplus = counts.get(pos, 0) - (2 * slots)
+        if surplus > 0:
+            violations.append(
+                f"{pos}: drafted {counts[pos]} for {slots} startable slot(s) -- "
+                f"{surplus} cannot enter a lineup under any absences"
+            )
+
     total_mine = len(picks)
     skill_depth = counts.get("RB", 0) + counts.get("WR", 0)
     # Whatever else happens, the bench must be built from the positions you
@@ -235,6 +326,11 @@ def _print_result(result: DraftResult, settings: LeagueSettings, rounds: int) ->
         if pick.reason:
             print(f"          {pick.reason[:96]}")
     print(f"\nRoster shape: {dict(result.my_position_counts)}")
+    grade = grade_roster(result, settings)
+    print(
+        f"Starters: {grade.starters:.0f} proj across {grade.slots_filled}/"
+        f"{grade.slots_total} slots; bench {grade.bench:.0f}"
+    )
     violations = check_invariants(result, settings, rounds)
     if violations:
         print("\nINVARIANT VIOLATIONS:")

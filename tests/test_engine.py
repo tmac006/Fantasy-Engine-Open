@@ -268,7 +268,10 @@ def test_kicker_recommended_at_endgame() -> None:
     )
     rec = recommend(pool, settings, context, PARAMS)
     assert rec is not None
-    assert not any(p.held_for_later for p in rec.board)
+    # Assert the hold this test is about. The roster carries six backs against
+    # two startable slots in a league with no FLEX, so those rows are held on
+    # their own account -- correctly, since no absence could start a seventh.
+    assert not any(p.held_for_later for p in rec.board if p.position == "K")
     assert rec.recommended_pick.position == "K"  # open starter slot + need boost wins now
 
 

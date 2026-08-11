@@ -2,6 +2,7 @@
 
 from collections import Counter
 from dataclasses import dataclass
+from math import comb
 
 from pydantic import BaseModel
 
@@ -19,6 +20,7 @@ from api.engine.vor import (
     PoolPlayer,
     replacement_points,
     replacement_ranks,
+    startable_slots,
     vor,
 )
 from api.schemas import LeagueSettings
@@ -97,6 +99,14 @@ class OfflineKnobs(BaseModel):
     early_duplicate_qb_te_multiplier: float
     qb_wr_stack_bonus: float
     wr_rb_correlation_penalty: float
+    # Bench-depth pricing. The offline path re-ranks against a roster that keeps
+    # growing after the last successful poll, so without these it happily serves
+    # a sixth running back -- the exact failure the live engine was fixed for.
+    # Shipped rather than derived because the cached board carries no league
+    # settings to compute startable counts from.
+    startable_slots: dict[str, int]
+    starter_unavailable_rate: float
+    depth_penalty_floor: float
 
 
 class Recommendation(BaseModel):
@@ -161,9 +171,45 @@ def _unfilled_starters(
     return need
 
 
+def _depth_multiplier(
+    pos: str,
+    have: dict[str, float],
+    startable: dict[str, int],
+    params: EngineParams,
+) -> float:
+    """What a player the lineup cannot start is worth: P(he is needed in a week).
+
+    A bench player only earns his slot when the starters ahead of him are out,
+    so his season VOR is scaled by the chance that happens. How many slots he
+    backs up is the whole difference between positions: a backup quarterback
+    covers one and is needed 22% of weeks, while a fourth running back covers
+    three and is needed 53%. Availability itself does not vary by position --
+    that was measured rather than assumed, so the same rate drives every one.
+
+    Past the point where no week could call on him (a seventh back at three
+    startable slots) this is exactly zero, which is the honest price of a pick
+    that cannot enter a lineup under any circumstance.
+
+    Cannot collide with the need boost: a position has an unfilled starter slot
+    exactly when it sits below its startable count, so depth is at most zero
+    wherever need is at least one.
+    """
+    slots = startable.get(pos, 0)
+    depth = int(have.get(pos, 0.0)) + 1 - slots
+    if depth <= 0:
+        return 1.0
+    rate = params.starter_unavailable_rate
+    return sum(
+        comb(slots, out) * rate**out * (1.0 - rate) ** (slots - out)
+        for out in range(depth, slots + 1)
+    )
+
+
 def _need_multiplier(
     pos: str,
     need: dict[str, float],
+    have: dict[str, float],
+    startable: dict[str, int],
     settings: LeagueSettings,
     params: EngineParams,
     *,
@@ -171,6 +217,7 @@ def _need_multiplier(
     total_teams: int,
 ) -> float:
     current_round = (current_pick - 1) // max(1, total_teams) + 1
+    depth = _depth_multiplier(pos, have, startable, params)
     if need.get(pos, 0.0) >= 1.0:
         if pos == "TE" and current_round < params.te_need_boost_after_round:
             return 1.0
@@ -192,10 +239,10 @@ def _need_multiplier(
         and need.get(pos, 0.0) < 1.0
         and current_round < params.duplicate_qb_te_after_round
     ):
-        return params.early_duplicate_qb_te_multiplier
+        return params.early_duplicate_qb_te_multiplier * depth
     if need.get(pos, 0.0) > 0.0:
-        return 1.0
-    return 1.0 - params.surplus_penalty
+        return depth
+    return depth * (1.0 - params.surplus_penalty)
 
 
 def _held_for_later(
@@ -203,6 +250,7 @@ def _held_for_later(
     settings: LeagueSettings,
     ctx: DraftContext,
     have: dict[str, float],
+    startable: dict[str, int],
     params: EngineParams,
 ) -> bool:
     """True while a position should not be surfaced as the current pick."""
@@ -210,6 +258,13 @@ def _held_for_later(
     # The league's hard cap wins over everything: the platform rejects the pick.
     cap = settings.position_limits.get(pos)
     if cap is not None and have.get(pos, 0.0) >= cap:
+        return True
+    # Stacked past the point where any combination of absences could start him.
+    # Scoring alone will not keep this pick away: the depth discount lands on
+    # exactly zero, and zero beats every negative-value player on the kind of
+    # late board where this comes up, so the engine reaches for the one player
+    # who provably cannot play. Held is the honest answer, not a low score.
+    if _depth_multiplier(pos, have, startable, params) <= 0.0:
         return True
     required = settings.roster_slots.get(pos, 0)
     if pos == "QB":
@@ -690,6 +745,7 @@ def recommend(
 
     need = _unfilled_starters(settings, ctx.my_roster_positions, params)
     have: dict[str, float] = dict(Counter(ctx.my_roster_positions))
+    startable = startable_slots(settings, params)
     capped_positions = _capped_positions(settings, have, params)
     run = _run_alert(ctx.recent_positions, params)
 
@@ -707,12 +763,18 @@ def recommend(
         for player in available
     }
 
-    def adjusted_value(player: PoolPlayer, position_need: dict[str, float]) -> float:
+    def adjusted_value(
+        player: PoolPlayer,
+        position_need: dict[str, float],
+        position_have: dict[str, float],
+    ) -> float:
         adjustment = adjustments[player.canonical_id]
         base = vor(player, repl) * params.position_discount.get(player.position, 1.0)
         multiplier = _need_multiplier(
             player.position,
             position_need,
+            position_have,
+            startable,
             settings,
             params,
             current_pick=ctx.current_pick,
@@ -724,7 +786,13 @@ def recommend(
         # toward zero (rewarding him) and the boost drags a needed player
         # further down. Dividing when the base is negative preserves the
         # intent at every sign: penalties always demote, boosts always promote.
-        weighted = base * multiplier if base >= 0 else base / multiplier
+        # The floor bounds that division, which would otherwise divide by zero
+        # against a position stacked past any use for another backup.
+        weighted = (
+            base * multiplier
+            if base >= 0
+            else base / max(multiplier, params.depth_penalty_floor)
+        )
         return (
             weighted
             - adjustment.uncertainty
@@ -732,7 +800,7 @@ def recommend(
             + adjustment.correlation
         )
 
-    values = {p.canonical_id: adjusted_value(p, need) for p in available}
+    values = {p.canonical_id: adjusted_value(p, need, have) for p in available}
     simulation = simulate_next_turn(
         available,
         values,
@@ -761,8 +829,13 @@ def recommend(
         for candidate in simulation_candidates:
             post_positions = (*ctx.my_roster_positions, candidate.position)
             post_need = _unfilled_starters(settings, post_positions, params)
+            # The hypothetical roster has to move too. Advancing need but not
+            # the position counts would let a candidate be evaluated against a
+            # next turn where he had not been drafted, so stacking a position
+            # would look free for exactly one more pick than it is.
+            post_have: dict[str, float] = dict(Counter(post_positions))
             post_values = {
-                p.canonical_id: adjusted_value(p, post_need)
+                p.canonical_id: adjusted_value(p, post_need, post_have)
                 for p in available
                 if p.canonical_id != candidate.canonical_id
             }
@@ -895,7 +968,9 @@ def recommend(
                 reach_penalty=reach_penalty,
                 next_pick=ctx.my_next_pick,
             ),
-            held_for_later=_held_for_later(p.position, settings, ctx, have, params),
+            held_for_later=_held_for_later(
+                p.position, settings, ctx, have, startable, params
+            ),
             pos_rank=pos_rank_of.get(p.canonical_id, 0),
         )
         ranked.append(rp)
@@ -1010,5 +1085,8 @@ def recommend(
             early_duplicate_qb_te_multiplier=params.early_duplicate_qb_te_multiplier,
             qb_wr_stack_bonus=params.qb_wr_stack_bonus,
             wr_rb_correlation_penalty=params.wr_rb_correlation_penalty,
+            startable_slots=startable,
+            starter_unavailable_rate=params.starter_unavailable_rate,
+            depth_penalty_floor=params.depth_penalty_floor,
         ),
     )

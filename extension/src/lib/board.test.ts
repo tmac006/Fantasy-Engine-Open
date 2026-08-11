@@ -255,3 +255,58 @@ test("offline honours engine knobs shipped on the board", () => {
   });
   assert.equal(released?.board.find((c) => c.canonical_id === "qb2")?.held_for_later, false);
 });
+
+test("offline stops climbing a position the lineup cannot start", () => {
+  // The live failure, offline: five backs rostered and the second receiver slot
+  // empty. The cached board still ranks the back higher, because it was scored
+  // against a roster several picks staler than the one being drafted.
+  const rb = player("rb6", "srb6", "RB", 7, 40, 110);
+  const wr = player("wr2", "swr2", "WR", 9, 12, 115);
+  const result = computeOffline({
+    board: [rb, wr],
+    platform: "sleeper" as const,
+    draftedPlatformIds: new Set<string>(),
+    myRosterPositions: ["QB", "RB", "RB", "WR", "TE", "RB", "RB", "RB"],
+    totalTeams: 12,
+    picksUntilNext: 0,
+    myNextPick: 104,
+    myRemainingPicks: 8,
+  });
+  assert.equal(result?.recommended_pick.canonical_id, "wr2");
+  // A sixth back at three startable slots needs all three out at once.
+  assert.ok((result?.board.find((c) => c.canonical_id === "rb6")?.score ?? 0) < 1);
+});
+
+test("offline keeps a fourth back available rather than banning depth", () => {
+  const rb = player("rb4", "srb4", "RB", 7, 40, 110);
+  const result = computeOffline({
+    board: [rb, player("wr4", "swr4", "WR", 9, 12, 115)],
+    platform: "sleeper" as const,
+    draftedPlatformIds: new Set<string>(),
+    myRosterPositions: ["QB", "RB", "RB", "WR", "WR", "TE", "RB"],
+    totalTeams: 12,
+    picksUntilNext: 0,
+    myNextPick: 104,
+    myRemainingPicks: 9,
+  });
+  const row = result?.board.find((c) => c.canonical_id === "rb4");
+  assert.equal(row?.held_for_later, false);
+  assert.equal(result?.recommended_pick.canonical_id, "rb4");
+});
+
+test("offline penalties demote a sub-replacement player instead of promoting him", () => {
+  // Multiplying a negative score by a penalty inverts it: x0.35 moves -20 up to
+  // -7 and rewards exactly what it should punish.
+  const belowReplacement = player("qb2", "sqb2", "QB", 5, -20, 60);
+  const result = computeOffline({
+    board: [belowReplacement, player("wr", "swr", "WR", 5, -25, 61)],
+    platform: "sleeper" as const,
+    draftedPlatformIds: new Set<string>(),
+    myRosterPositions: ["QB"],
+    totalTeams: 12,
+    picksUntilNext: 1,
+    myNextPick: 30,
+  });
+  const row = result?.board.find((c) => c.canonical_id === "qb2");
+  assert.ok((row?.score ?? 0) < -20, `expected demotion, got ${row?.score}`);
+});

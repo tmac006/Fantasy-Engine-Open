@@ -64,6 +64,12 @@ which prints every pick with its reasoning and then grades the finished roster:
 
     uv run python -m api.eval.mockdraft --slot 4 --seed 1
 
+Before a real draft, rehearse against the leagues you actually play in. Roster
+settings drive replacement level and how much bench depth is worth, so a league
+with a second flex slot produces different advice from one without:
+
+    uv run python -m api.eval.rehearse --seeds 3
+
 ESPN private league reads need your own session cookies in `.env`, but nothing
 about drafting requires them, because the extension uses the session you are
 already logged into.
@@ -122,6 +128,25 @@ returned a fifteen point week, against fourteen percent for plain season
 scoring. Role changes still appear on the card as context, since a human may
 know something the model does not, but they no longer move the score.
 
+### What a bench player is worth
+
+A sixth running back cannot enter a lineup that starts three, yet value over
+replacement prices him as though he could. A room that lets backs slide will
+therefore draft you a bench nobody can use, which is exactly what happened in
+testing: four backs across rounds six through nine while a starting receiver
+slot sat empty. The engine now scales a surplus player by the chance a week
+actually calls on him, so the first backup behind three startable slots keeps
+53 percent of his value, the second keeps 13 percent and the fourth keeps none.
+
+How often a starter goes missing came out of the 2025 season rather than out of
+intuition, and picking the sample turned out to matter more than the arithmetic
+did. Ranking by season total selects the players who stayed healthy, which is
+the one sample incapable of measuring injury, and it put the rate at roughly
+half its true value. Choosing on the first three weeks and grading on the rest
+gives 22 percent across 1680 player weeks. That figure barely moves between
+positions, so one number covers all four; what separates a backup quarterback
+from a fourth running back is how many lineup slots stand in front of him.
+
 ### Risk and reward
 
 Each player card carries two meters, both fitted rather than eyeballed. Risk is
@@ -152,15 +177,22 @@ The other is the full draft rehearsal mentioned above. After sixteen simulated
 rounds the finished roster gets checked against rules a human would state
 flatly: never a third quarterback, never a second defense, kickers and defenses
 only at the very end, every starting slot fillable, real depth at running back
-and receiver. Each of those is a bug that shipped at some point and got caught
-in a live mock draft. They are caught earlier now.
+and receiver, nobody stacked so deep behind a position that no lineup could
+field him. Each of those is a bug that shipped at some point and got caught in
+a live mock draft. They are caught earlier now.
+
+The rehearsal scores the finished roster on what its best legal lineup projects
+rather than on the sum of all sixteen picks. Grading by the total was itself
+hiding a failure, since a sixth running back adds his whole projection to that
+number while contributing nothing you can start.
 
 ## Known limitations
 
-Late round value is still measured against starter replacement levels, which
-structurally flatters backup quarterbacks and tight ends over bench depth at
-running back and receiver. Positional holds contain the damage, though a bench
-aware replacement model would be the real fix.
+Replacement level is a property of the league rather than of your roster, so
+the first receiver you draft and the third get measured against the same line.
+Past a full lineup the depth discount takes over, which is where the damage
+used to be, though the picks before that still lean on one baseline per
+position.
 
 The waiver and start/sit models were validated against a single season. The
 logic should transfer; the coefficients want refitting every year.

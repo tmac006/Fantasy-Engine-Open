@@ -63,8 +63,14 @@ SCENARIOS = (
     ((1, (), 16), ("RB1", "RB1")),
     ((28, ("RB", "RB"), 14), ("WR12", "WR12")),
     (
+        # Deliberate change when bench depth started being priced by how many
+        # lineup slots a backup covers: this roster holds four receivers where
+        # three can start and three backs where three can start, so the next
+        # back is the first bench body at a 3-slot position (needed 53% of
+        # weeks) while the next receiver is the second (13%). Was ("WR46",
+        # "RB46") under the flat surplus penalty, which charged both the same.
         (121, ("QB", "RB", "RB", "WR", "WR", "TE", "WR", "RB", "WR", "QB"), 6),
-        ("WR46", "RB46"),
+        ("RB46", "WR46"),
     ),
     (
         # Endgame with K and DEF open. K6 is the best kicker still on the board
