@@ -34,3 +34,25 @@ test("team ids are used only when no slot was typed", () => {
   assert.equal(isMyPick(3, null, 4, null), false);
   assert.equal(isMyPick(3, null, undefined, 4), false);
 });
+
+test("room size counts distinct team ids, not the largest one", () => {
+  // A real 16-team ESPN league: ids run to 21 and skip five values. Sizing the
+  // room off the maximum id would report 21 teams and break every snake turn.
+  const teamIds = [1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 20, 21];
+  const schedule: Record<string, number> = {};
+  let pick = 1;
+  for (let round = 0; round < 16; round++) {
+    const order = round % 2 === 0 ? teamIds : [...teamIds].reverse();
+    for (const id of order) schedule[String(pick++)] = id;
+  }
+  const size = roomSizeFromSchedule(schedule, 16, { teams: 12, rounds: 16 });
+  assert.equal(size.teams, 16);
+  assert.equal(size.rounds, 16);
+});
+
+test("a team id outside the room-size range still owns its picks", () => {
+  const owned = new Set([16, 17]);
+  assert.equal(isMyPick(15, owned, 21, 21), true);
+  assert.equal(isMyPick(15, null, 21, 21), true);
+  assert.equal(isMyPick(15, null, 20, 21), false);
+});

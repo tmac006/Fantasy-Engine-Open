@@ -50,6 +50,35 @@ def rounds_for(settings: LeagueSettings) -> int:
     return sum(settings.roster_slots.values())
 
 
+# Scoring keys whose absence changes who you should draft, not merely the totals.
+YARDAGE_KEYS = ("pass_yd", "rush_yd", "rec_yd")
+
+
+def scoring_warnings(settings: LeagueSettings) -> list[str]:
+    """Flag a scoring table that looks unfinished rather than unusual.
+
+    Wrong scoring is the quietest way to ruin a draft: every projection is
+    rescored under it, so the board looks perfectly normal while ranking the
+    wrong players. A real league came back from ESPN with no yardage items at
+    all, which is legal but rare, and far more often means a commissioner has
+    not finished setup. Worth a look either way before you draft on it.
+    """
+    warnings: list[str] = []
+    missing = [key for key in YARDAGE_KEYS if not settings.scoring.get(key)]
+    if len(missing) == len(YARDAGE_KEYS):
+        warnings.append(
+            "scores no yardage at all (no pass_yd, rush_yd or rec_yd). Confirm "
+            "with the commissioner and re-register before drafting."
+        )
+    elif missing:
+        warnings.append(f"scores no {', '.join(missing)} while scoring the others")
+    if not settings.scoring.get("rec") and not any(
+        settings.scoring.get(key) for key in YARDAGE_KEYS
+    ):
+        warnings.append("no receptions and no yardage: touchdown-only scoring")
+    return warnings
+
+
 def rehearse_league(
     name: str,
     platform: str,
@@ -70,6 +99,9 @@ def rehearse_league(
     print("  startable: " + ", ".join(
         f"{pos} {count}" for pos, count in sorted(startable.items()) if count
     ))
+    scoring_problems = scoring_warnings(settings)
+    for problem in scoring_problems:
+        print(f"  WARNING: {problem}")
 
     with get_sessionmaker()() as session:
         pool = build_pool(session, settings, platform=platform)
@@ -106,7 +138,9 @@ def rehearse_league(
             print(f"    FAIL {problem}")
     else:
         print("  all roster invariants pass")
-    return len(violations)
+    # Counted alongside violations deliberately. A clean sweep on scoring nobody
+    # has checked is a confident answer to the wrong question.
+    return len(violations) + len(scoring_problems)
 
 
 DEFAULT_SLOTS = "QB:1,RB:2,WR:2,TE:1,FLEX:1,K:1,DEF:1,BN:7"
@@ -189,7 +223,7 @@ def main() -> int:
 
     print(f"\n{'=' * 72}")
     if total:
-        print(f"{total} violation(s) across {len(rows)} league(s). Do not draft on this.")
+        print(f"{total} problem(s) across {len(rows)} league(s). Do not draft on this.")
         return 1
     print(f"{len(rows)} league(s) rehearsed clean.")
     return 0

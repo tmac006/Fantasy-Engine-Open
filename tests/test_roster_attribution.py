@@ -6,6 +6,8 @@ draft came to recommend a second quarterback in round 5 to a team that already
 had one.
 """
 
+from typing import ClassVar
+
 from api.routers.draft import _attribute_my_roster
 
 # 12-team snake. Team 4 picks 4th, then 21st, then 28th, ...
@@ -196,3 +198,65 @@ class TestExplicitPickNumbers:
         )
         assert mine == ("RB",)
         assert any("could not be matched to a player" in w for w in warnings)
+
+
+class TestNonContiguousTeamIds:
+    """ESPN team ids are identifiers, not seat numbers.
+
+    A real 16-team league came back as 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14,
+    15, 16, 20, 21: sixteen teams whose ids run past 16 and skip five values.
+    Anything that treats an id as an index into the room, or infers room size
+    from the largest id, silently attributes the wrong picks.
+    """
+
+    TEAM_IDS: ClassVar[list[int]] = [1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 20, 21]
+
+    def _snake(self, rounds: int = 3) -> dict[str, int]:
+        schedule: dict[str, int] = {}
+        pick = 1
+        for round_index in range(rounds):
+            order = (
+                self.TEAM_IDS if round_index % 2 == 0 else list(reversed(self.TEAM_IDS))
+            )
+            for team_id in order:
+                schedule[str(pick)] = team_id
+                pick += 1
+        return schedule
+
+    def test_gaps_in_the_id_range_still_attribute_correctly(self) -> None:
+        schedule = self._snake()
+        # Team 20 sits 15th in the order, so it owns picks 15, 18 and 47.
+        my_id = 20
+        owned = sorted(int(p) for p, t in schedule.items() if t == my_id)
+        assert owned == [15, 18, 47]
+
+        count = 20
+        positions: list[str | None] = ["RB"] * count
+        positions[14] = "QB"  # pick 15
+        positions[17] = "TE"  # pick 18
+        roster, _, _, warnings = _attribute_my_roster(
+            my_team_id=my_id,
+            picked_team_ids=[schedule[str(p)] for p in range(1, count + 1)],
+            schedule=schedule,
+            positions=positions,
+            nfl_teams=[None] * count,
+        )
+        assert roster == ("QB", "TE"), f"got {roster}"
+        assert not warnings
+
+    def test_an_id_above_the_room_size_is_not_out_of_range(self) -> None:
+        """Team 21 exists in a 16-team room; an index-based reading drops it."""
+        schedule = self._snake()
+        assert max(schedule.values()) == 21
+        assert len(set(schedule.values())) == 16
+        count = 16
+        positions: list[str | None] = ["RB"] * count
+        positions[15] = "WR"  # pick 16, last of round 1, owned by team 21
+        roster, _, _, _ = _attribute_my_roster(
+            my_team_id=21,
+            picked_team_ids=[schedule[str(p)] for p in range(1, count + 1)],
+            schedule=schedule,
+            positions=positions,
+            nfl_teams=[None] * count,
+        )
+        assert roster == ("WR",)
