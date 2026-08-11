@@ -43,6 +43,28 @@ STAT_ID_TO_KEY: dict[int, str] = {
     57: "bonus_rec_yd_200",
 }
 
+# ESPN expresses yardage scoring two different ways and a league uses one or the
+# other. The statIds above carry a rate per single yard ("0.04 per passing
+# yard"). These carry whole points per block of yards instead ("Every 25 passing
+# yards = 1"), under statIds the per-yard map never mentions, so the rate is
+# points divided by the block size.
+#
+# Missing this form is not a cosmetic gap. A league scoring yards this way came
+# through as scoring NO yardage at all, which silently rescored every projection
+# and reordered the board -- receivers and quarterbacks worst, since yardage is
+# most of what they do. Found in a live 16-team league, whose settings page
+# reads PY25/RY10/REY10 while the payload carries statIds 8/28/48 at 1.0 each.
+#
+# The rate is a linear approximation: ESPN truncates per game, so 274 passing
+# yards scores 10 rather than 10.96. That runs about 1% high on a season total
+# and lands almost uniformly across players, which is far smaller than the
+# alternative of dropping the category on the floor.
+STAT_ID_YARDS_PER_BLOCK: dict[int, tuple[str, int]] = {
+    8: ("pass_yd", 25),
+    28: ("rush_yd", 10),
+    48: ("rec_yd", 10),
+}
+
 # ESPN proTeamId -> our team abbreviation. Verified live against
 # site.api.espn.com/apis/site/v2/sports/football/nfl/teams (32 teams) on
 # 2026-08-05; the only divergence from our codes is Washington (ESPN "WSH").
@@ -83,13 +105,21 @@ def translate_espn_settings(payload: dict[str, Any]) -> LeagueSettings:
     scoring_items = settings["scoringSettings"]["scoringItems"]
     scoring: dict[str, float] = {}
     for item in scoring_items:
-        key = STAT_ID_TO_KEY.get(item.get("statId", -1))
+        stat_id = item.get("statId", -1)
         points = item.get("points")
-        if key is None or points is None:
+        if points is None:
             continue
+        if (blocked := STAT_ID_YARDS_PER_BLOCK.get(stat_id)) is not None:
+            key, yards_per_block = blocked
+            value = float(points) / yards_per_block
+        else:
+            mapped = STAT_ID_TO_KEY.get(stat_id)
+            if mapped is None:
+                continue
+            key, value = mapped, float(points)
         # Duplicate rec statIds (41/53): last nonzero wins.
-        if key not in scoring or float(points) != 0.0:
-            scoring[key] = float(points)
+        if key not in scoring or value != 0.0:
+            scoring[key] = value
 
     slots: dict[str, int] = {}
     for slot_id, count in settings["rosterSettings"]["lineupSlotCounts"].items():
