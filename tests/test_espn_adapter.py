@@ -3,7 +3,11 @@
 import json
 from pathlib import Path
 
+import pytest
+
 from api.adapters.espn import translate_espn_settings
+from api.eval.scoring_check import our_total
+from api.schemas import LeagueSettings
 
 FIXTURE = Path(__file__).parent / "fixtures" / "espn_leaguedefault_msettings.json"
 
@@ -102,3 +106,49 @@ class TestBlockedYardageScoring:
         """The divisor is the block size, not a hardcoded rate."""
         settings = translate_espn_settings(self._payload([{"statId": 8, "points": 2.0}]))
         assert settings.scoring["pass_yd"] == 0.08
+
+
+class TestScoringSelfCheck:
+    """Scoring ESPN's own raw projections must reproduce ESPN's own total.
+
+    This is the systematic version of the bucketed-yardage bug: rather than
+    trusting a hand-maintained statId map, score the platform's numbers and
+    compare against the platform's answer. A gap is an unmapped statId.
+    """
+
+    SETTINGS = LeagueSettings(
+        scoring={
+            "pass_yd": 0.04, "pass_td": 4.0, "pass_int": -2.0,
+            "rush_yd": 0.1, "rush_td": 6.0,
+            "rec": 1.0, "rec_yd": 0.1, "rec_td": 6.0,
+        },
+        roster_slots={"QB": 1, "RB": 2, "WR": 2, "TE": 1, "BN": 7},
+        total_teams=12,
+    )
+
+    def test_reads_yardage_from_the_per_yard_stat_ids(self) -> None:
+        """Raw stats always carry real yards; only the *scoring* form varies.
+
+        A league scoring in blocks stores both (statId 24 = 1374 yards and
+        statId 28 = 137 blocks), so reading the per-yard id and applying the
+        translated rate works for either form without special-casing.
+        """
+        raw = {24: 1000.0, 28: 100.0, 42: 500.0, 48: 50.0, 25: 10.0, 53: 60.0}
+        assert our_total(raw, self.SETTINGS) == pytest.approx(
+            1000 * 0.1 + 500 * 0.1 + 10 * 6.0 + 60 * 1.0
+        )
+
+    def test_a_stat_the_league_does_not_score_contributes_nothing(self) -> None:
+        no_ppr = self.SETTINGS.model_copy(
+            update={"scoring": {k: v for k, v in self.SETTINGS.scoring.items() if k != "rec"}}
+        )
+        raw = {42: 500.0, 53: 60.0}
+        assert our_total(raw, no_ppr) == pytest.approx(50.0)
+
+    def test_duplicate_reception_stat_ids_are_not_counted_twice(self) -> None:
+        """ESPN carries receptions under both 41 and 53; our map names both."""
+        raw = {41: 60.0, 53: 60.0}
+        assert our_total(raw, self.SETTINGS) == pytest.approx(60.0)
+
+    def test_a_missing_stat_is_absent_rather_than_zero(self) -> None:
+        assert our_total({}, self.SETTINGS) == 0.0

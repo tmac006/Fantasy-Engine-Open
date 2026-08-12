@@ -9,6 +9,7 @@ Stat IDs and lineup slot IDs verified against cwendt94/espn-api
 (espn_api/football/constant.py) and a live leaguedefaults mSettings payload.
 """
 
+import json
 from typing import Any
 
 import httpx
@@ -192,6 +193,43 @@ class EspnReadClient:
 
     def get_league_settings(self, league_id: str, season: str) -> LeagueSettings:
         return translate_espn_settings(self.league_view(league_id, season, "mSettings"))
+
+    @retry(
+        retry=retry_if_exception(_is_retryable),
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=0.5, max=4),
+        reraise=True,
+    )
+    def projected_players(
+        self, league_id: str, season: str, limit: int = 50
+    ) -> list[dict[str, Any]]:
+        """Top players by draft rank, with raw projected stats and ESPN's own total.
+
+        Scoped to the league rather than to `leaguedefaults`, so `appliedTotal`
+        is ESPN scoring its projection under *this* league's rules. That makes it
+        the answer key for our scoring translation: see `api.eval.scoring_check`.
+        """
+        resp = self._client.get(
+            f"{self._base}/seasons/{season}/segments/0/leagues/{league_id}",
+            params={"view": "kona_player_info"},
+            headers={
+                "x-fantasy-filter": json.dumps(
+                    {
+                        "players": {
+                            "limit": limit,
+                            "sortDraftRanks": {
+                                "sortPriority": 100,
+                                "sortAsc": True,
+                                "value": "STANDARD",
+                            },
+                        }
+                    }
+                )
+            },
+        )
+        resp.raise_for_status()
+        players: list[dict[str, Any]] = resp.json().get("players", [])
+        return players
 
     def get_rosters(self, league_id: str, season: str) -> dict[str, list[str]]:
         """teamId -> ESPN player ids currently rostered (starters and bench)."""

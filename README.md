@@ -70,6 +70,13 @@ with a second flex slot produces different advice from one without:
 
     uv run python -m api.eval.rehearse --seeds 3
 
+Worth running alongside it: a check that our reading of a league's scoring rules
+matches the platform's. ESPN publishes its own projection already scored under
+your league, so scoring the same raw stats and comparing the totals catches a
+misread rule before it silently reorders a board:
+
+    uv run python -m api.eval.scoring_check
+
 ESPN private league reads need your own session cookies in `.env`, but nothing
 about drafting requires them, because the extension uses the session you are
 already logged into.
