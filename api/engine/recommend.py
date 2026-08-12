@@ -231,6 +231,13 @@ def _need_multiplier(
             and current_round < params.qb_need_boost_after_round
         ):
             return 1.0
+        # Flat, deliberately. Scaling this by how many starters are missing
+        # sounds obviously right and does nothing: swept at 1.0/1.5/2.0/2.5/3.0
+        # slots over 54 drafts across a 12- and a 15-team league, finished
+        # starters moved 1976.6/1973.1/1973.5/1974.1/1974.1 with an identical
+        # worst case. The gaps that decide a pick are VOR-sized, and no
+        # multiplier in this range crosses them; the endgame must-fill rule is
+        # what actually guarantees the slots get filled.
         return 1.0 + params.need_boost
     # Backup TEs are suppressed via held_for_later (not a soft value haircut), so
     # an elite leftover TE can still win on raw board score if released.
