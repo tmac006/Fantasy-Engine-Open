@@ -43,6 +43,8 @@ const player = (
     projection_is_placeholder: true,
     roster_fit: "",
     timing: "",
+    advanced: [],
+    advanced_summary: null,
     model_factors: [],
     usage: [],
     team_context: [],

@@ -215,8 +215,15 @@ function renderAnalysis(targetId: string, analysis: PlayerAnalysis): void {
     detailRow("Roster fit", analysis.roster_fit),
     detailRow("Timing", analysis.timing),
   ];
+  // The advanced read is a second opinion, not another model factor: it is
+  // deliberately excluded from the score (it failed the predictive gate), so it
+  // gets its own row and says whose view it is.
+  if (analysis.advanced_summary) {
+    rows.push(detailRow("Advanced read", analysis.advanced_summary));
+  }
   const bullets = [
     ...analysis.model_factors.map((text) => `Model: ${text}`),
+    ...(analysis.advanced ?? []).map((text) => `Advanced: ${text}`),
     ...analysis.usage.map((text) => `Usage: ${text}`),
     ...analysis.team_context.map((text) => `Team: ${text}`),
     ...analysis.risks.map((text) => `Risk: ${text}`),
@@ -247,6 +254,8 @@ function renderPick(prefix: "recommended" | "room", player: RankedPlayer): void 
     roster_fit: "Cached board does not include current roster detail.",
     timing: player.adp === null ? "No market ADP available." : `Market ADP ${player.adp.toFixed(1)}.`,
     model_factors: [],
+    advanced: [],
+    advanced_summary: null,
     usage: [],
     team_context: [],
     status: null,

@@ -42,6 +42,11 @@ class PoolPlayer:
     projection_high: float | None = None
     projection_stdev: float | None = None
     usage: dict[str, ContextValue] = field(default_factory=dict)
+    # Advanced-stat card text, already ranked within position. Read-only: these
+    # metrics failed the predictive gate and must never enter the score.
+    advanced: tuple[str, ...] = ()
+    advanced_summary: str | None = None
+    advanced_season: str | None = None
     team_context: dict[str, ContextValue] = field(default_factory=dict)
     status: str | None = None
     risk_flags: tuple[str, ...] = ()

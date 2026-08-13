@@ -791,6 +791,10 @@ export interface components {
             usage: string[];
             /** Team Context */
             team_context: string[];
+            /** Advanced */
+            advanced: string[];
+            /** Advanced Summary */
+            advanced_summary: string | null;
             /** Status */
             status: string | null;
             /** Risks */

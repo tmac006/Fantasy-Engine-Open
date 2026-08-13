@@ -40,6 +40,9 @@ class PlayerAnalysis(BaseModel):
     model_factors: list[str]
     usage: list[str]
     team_context: list[str]
+    # What the advanced stats say, for the human to weigh. Never scored.
+    advanced: list[str]
+    advanced_summary: str | None
     status: str | None
     risks: list[str]
     data_freshness: str | None
@@ -647,6 +650,11 @@ def _analysis(
         if timestamp is not None
     )
     return PlayerAnalysis(
+        advanced=[
+            f"{line} [{player.advanced_season}]" if player.advanced_season else line
+            for line in player.advanced
+        ],
+        advanced_summary=player.advanced_summary,
         headline=(
             f"{player.position} adjusted value {value:.1f} with "
             f"{disappearance * 100:.0f}% modeled room urgency."

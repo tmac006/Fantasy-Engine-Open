@@ -7,6 +7,7 @@ from typing import Any
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from api.engine.advanced import build_profiles
 from api.engine.scoring import score_stats
 from api.engine.vor import PoolPlayer
 from api.models import Adp, PlayerContext, PlayerIds, Projection, TeamContext
@@ -98,6 +99,23 @@ def build_pool(
     team_context_rows = session.scalars(
         select(TeamContext).where(TeamContext.season == season)
     ).all()
+    # Advanced stats describe a season that has finished, so they are stored
+    # under that season rather than the one being drafted. Take the most recent
+    # completed one per player; a rookie simply has none, and the card leaves
+    # him unjudged rather than scoring him as though his numbers were bad.
+    advanced_rows = session.scalars(
+        select(PlayerContext)
+        .where(PlayerContext.source == "pfr_advstats", PlayerContext.season < season)
+        .order_by(PlayerContext.season)
+    ).all()
+    advanced_payloads: dict[str, tuple[str, dict[str, dict[str, float]]]] = {}
+    advanced_positions: dict[str, str] = {}
+    for row in advanced_rows:
+        advanced_payloads[str(row.canonical_id)] = (row.season, row.data or {})
+    for ids_row in session.scalars(select(PlayerIds)):
+        if ids_row.position:
+            advanced_positions[str(ids_row.canonical_id)] = ids_row.position
+    advanced_profiles = build_profiles(advanced_payloads, advanced_positions)
 
     contexts_by_player: dict[int, dict[str, PlayerContext]] = {}
     for context in player_context_rows:
@@ -190,6 +208,7 @@ def build_pool(
         nflverse = player_context.get("nflverse")
         sleeper = player_context.get("sleeper")
         usage = _usage_context(ids.position, nflverse.data if nflverse else {})
+        profile = advanced_profiles.get(str(canonical_id))
         team_row = team_context_by_team.get(ids.team or "")
         team_data = _team_context(team_row.data if team_row else {})
         status, risks = _status_context(sleeper.data if sleeper else {})
@@ -217,6 +236,9 @@ def build_pool(
                 projection_high=max(source_points) if has_range else None,
                 projection_stdev=statistics.pstdev(source_points) if has_range else None,
                 usage=usage,
+                advanced=tuple(profile.lines) if profile else (),
+                advanced_summary=profile.summary if profile else None,
+                advanced_season=profile.season if profile else None,
                 team_context=team_data,
                 status=status,
                 risk_flags=tuple(risks),
