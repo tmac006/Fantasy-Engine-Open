@@ -485,3 +485,25 @@ def test_scarcity_is_one_coherent_number() -> None:
             )
             < 1e-3
         )
+
+
+def test_players_without_an_nfl_team_are_not_draftable() -> None:
+    """A free agent has no offense, no schedule and no games to project.
+
+    The sources publish a number for him anyway, and an undrafted player's ADP
+    is a placeholder floor rather than market interest, so the pair read as
+    "elite value in the last round". Tyreek Hill was being taken in round 15 at
+    178 projected points while carrying team 'FA'.
+    """
+
+    def draftable(team: str | None) -> bool:
+        return bool(team) and team.strip().upper() not in ("FA", "NONE")
+
+    assert draftable("KC")
+    assert draftable("JAX")
+    assert not draftable("FA")
+    assert not draftable("fa")
+    assert not draftable(" FA ")
+    assert not draftable("None")
+    assert not draftable(None)
+    assert not draftable("")

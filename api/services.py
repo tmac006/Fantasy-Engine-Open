@@ -198,6 +198,19 @@ def build_pool(
         ids = meta[canonical_id]
         if ids.position is None:
             continue
+        # A player with no NFL team cannot be projected: no offense, no
+        # schedule, no games. The sources publish a number for him regardless,
+        # and the market's ADP for an undrafted player is a placeholder floor
+        # (~169-170 in a 12-team room) rather than real interest, so the pair
+        # read as "elite value in the last round". Tyreek Hill was being drafted
+        # in round 15 at 178 projected points while carrying team 'FA', and 35
+        # such players sat inside the top 200.
+        #
+        # Checked before enabling: every team-less player fell in that
+        # placeholder ADP band, so nothing the market actually drafts is lost.
+        # They return on their own once an ingest sees them signed.
+        if not ids.team or ids.team.strip().upper() in ("FA", "NONE"):
+            continue
         adp = adp_by_player.get(canonical_id)
         platform_ids = {
             k: v
