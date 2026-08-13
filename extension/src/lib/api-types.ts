@@ -1010,6 +1010,10 @@ export interface components {
             reasons: string[];
             /** Context */
             context: string[];
+            /** Advanced */
+            advanced: string[];
+            /** Advanced Summary */
+            advanced_summary: string | null;
         };
     };
     responses: never;
