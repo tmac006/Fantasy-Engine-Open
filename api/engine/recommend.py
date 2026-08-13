@@ -1025,10 +1025,18 @@ def recommend(
 
     # The room-aware answer is driven by modeled disappearance and the value of
     # the same-position cliff. It is intentionally distinct from roster utility.
+    # Positive adjusted value is a hard requirement, not a scoring term. The
+    # ranking below reads `max(0.0, value)`, which hides how bad a player is
+    # while still crediting his opportunity cost in full -- so a second
+    # quarterback at value -144 beat the board on "the next quarterback is even
+    # worse", and the panel showed him beside the real pick as though he were
+    # one. The room pick answers which player worth having is about to go; a
+    # player this roster cannot use is not an answer to that.
     room_candidates = [
         r
         for r in ranked
         if r.adp is not None
+        and r.value > 0
         and r.position not in capped_positions
         and (must_fill or not r.held_for_later)
     ]

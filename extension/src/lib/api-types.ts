@@ -479,7 +479,7 @@ export interface components {
             qb_need_boost_after_round: number;
             /**
              * Duplicate Qb Te After Round
-             * @default 10
+             * @default 14
              */
             duplicate_qb_te_after_round: number;
             /**

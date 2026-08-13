@@ -36,7 +36,7 @@ export interface OfflineKnobs {
 }
 
 const DEFAULT_KNOBS: OfflineKnobs = {
-  duplicate_qb_te_after_round: 10,
+  duplicate_qb_te_after_round: 14,
   duplicate_te_after_round: 13,
   early_duplicate_qb_te_multiplier: 0.35,
   qb_wr_stack_bonus: 2.5,

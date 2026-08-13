@@ -69,8 +69,12 @@ SCENARIOS = (
         # back is the first bench body at a 3-slot position (needed 53% of
         # weeks) while the next receiver is the second (13%). Was ("WR46",
         # "RB46") under the flat surplus penalty, which charged both the same.
+        # Room pick moved to RB46 when it started requiring positive adjusted
+        # value. WR46 sits below replacement here, and a player this roster does
+        # not want is not an answer to "who is about to go". With nothing on the
+        # board qualifying, it falls back to the recommended pick.
         (121, ("QB", "RB", "RB", "WR", "WR", "TE", "WR", "RB", "WR", "QB"), 6),
-        ("RB46", "WR46"),
+        ("RB46", "RB46"),
     ),
     (
         # Endgame with K and DEF open. K6 is the best kicker still on the board
@@ -81,7 +85,11 @@ SCENARIOS = (
             ("QB", "RB", "RB", "WR", "WR", "TE", "WR", "RB", "WR", "RB", "WR", "RB", "WR", "RB"),
             2,
         ),
-        ("K6", "TE18"),
+        # Room pick moved from TE18 to a kicker for the same reason as above:
+        # a third tight end is below replacement on this roster, so he no longer
+        # qualifies as a player worth losing. Both slots now name someone the
+        # endgame actually needs.
+        ("K6", "K9"),
     ),
 )
 

@@ -83,7 +83,20 @@ class EngineParams(BaseModel):
     qb_need_boost_after_round: int = 7
     # Second QB can wait until the teens; TE depth waits even longer because
     # streaming/waiver TEs are fine once a starter is rostered.
-    duplicate_qb_te_after_round: int = 10
+    #
+    # Moved 10 -> 14 on measurement. Swept over 27 drafts across a 12- and a
+    # 15-team league, finished starters were 1985.1 / 1985.1 / 1985.0 / 1985.0
+    # at holds of 10 / 12 / 14 / never, with an identical worst case and no
+    # invariant failures anywhere -- while the share of drafts spending a pick
+    # on a backup quarterback fell 44% / 30% / 11% / 0%. So the pick was free to
+    # skip and the engine was taking it in nearly half of all drafts.
+    #
+    # Not pushed to "never": the rehearsal grades the best legal lineup from
+    # season projections, which structurally cannot see bye-week or injury
+    # insurance at a position where only one player starts. 14 keeps a backup
+    # available in the endgame, where he competes with the dregs rather than
+    # with real starters, without pretending the metric measured his worth.
+    duplicate_qb_te_after_round: int = 14
     duplicate_te_after_round: int = 13
     # A held backup TE may still win if it clearly crushes every non-held option.
     duplicate_te_exception_margin: float = 8.0

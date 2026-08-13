@@ -7,7 +7,12 @@ negative. All were violated in live ESPN drafts before being fixed.
 """
 
 from api.engine.params import EngineParams
-from api.engine.recommend import DraftContext, _depth_multiplier, recommend
+from api.engine.recommend import (
+    DraftContext,
+    _depth_multiplier,
+    _held_for_later,
+    recommend,
+)
 from api.engine.vor import PoolPlayer, startable_slots
 from api.schemas import LeagueSettings
 
@@ -103,8 +108,13 @@ class TestThirdQuarterback:
         assert qb_rows, "fixture must leave QBs on the board"
         assert all(r.held_for_later for r in qb_rows)
 
-    def test_second_qb_is_still_allowed_late(self) -> None:
-        """One QB rostered after the hold lifts: a backup is a fair pick."""
+    def test_second_qb_is_still_held_in_the_middle_rounds(self) -> None:
+        """Round 11 is no longer late enough.
+
+        The hold moved from round 10 to 14 on measurement: skipping the backup
+        entirely cost 0.1 finished-lineup points out of 1985 while cutting the
+        share of drafts that spent a pick on one from 44% to 11%.
+        """
         pool = late_pool()
         ctx = DraftContext(
             drafted_ids=drafted_top(pool, 120),
@@ -117,7 +127,33 @@ class TestThirdQuarterback:
         rec = recommend(pool, SETTINGS, ctx, PARAMS)
         assert rec is not None
         qb_rows = [r for r in rec.board if r.position == "QB"]
-        assert any(not r.held_for_later for r in qb_rows), "a 2nd QB may surface"
+        assert qb_rows, "fixture must leave QBs on the board"
+        assert all(r.held_for_later for r in qb_rows)
+
+    def test_second_qb_is_allowed_once_the_hold_lifts(self) -> None:
+        """The rule itself, at the boundary.
+
+        Asserted through `_held_for_later` rather than a board outcome: the
+        fixture drafts its quarterbacks out before round 14, so a board-level
+        check there passes vacuously whatever the rule says.
+        """
+        have = {"QB": 1.0, "RB": 4.0, "WR": 4.0, "TE": 1.0}
+        startable = startable_slots(SETTINGS, PARAMS)
+
+        def held_at(round_no: int) -> bool:
+            ctx = DraftContext(
+                drafted_ids=frozenset(),
+                my_roster_positions=("QB",),
+                current_pick=(round_no - 1) * SETTINGS.total_teams + 1,
+                my_next_pick=None,
+                recent_positions=(),
+                my_remaining_picks=4,
+            )
+            return _held_for_later("QB", SETTINGS, ctx, have, startable, PARAMS)
+
+        assert held_at(PARAMS.duplicate_qb_te_after_round - 1)
+        assert not held_at(PARAMS.duplicate_qb_te_after_round)
+        assert PARAMS.duplicate_qb_te_after_round == 14
 
 
 class TestSecondDefense:
@@ -407,3 +443,42 @@ class TestBenchDepth:
         backs = [r for r in rec.board if r.position == "RB"]
         assert backs, "fixture must leave backs on the board"
         assert not any(r.held_for_later for r in backs)
+
+
+class TestRoomPickIsAlsoARecommendation:
+    """The room pick sits beside the real pick in the panel, so it must obey
+    roster construction too.
+
+    Live failure: with a quarterback already rostered, the room pick surfaced a
+    second one at adjusted value -144. The ranking read `max(0.0, value)`, which
+    erased how bad he was while still crediting his opportunity cost in full, so
+    "the next quarterback is even worse" carried a player the roster could not
+    use to the top of the board.
+    """
+
+    def _context(self, roster: tuple[str, ...], pick: int, remaining: int) -> DraftContext:
+        return DraftContext(
+            drafted_ids=drafted_top(late_pool(), pick - 1),
+            my_roster_positions=roster,
+            current_pick=pick,
+            my_next_pick=pick + 11,
+            recent_positions=(),
+            my_remaining_picks=remaining,
+        )
+
+    def test_the_room_pick_is_always_worth_having(self) -> None:
+        """Whatever else it is, it must not be a player of negative value."""
+        pool = late_pool()
+        for roster, pick, remaining in (
+            (("QB", "RB", "RB"), 49, 13),
+            (("QB", "RB", "RB", "WR", "WR", "TE", "RB", "WR"), 109, 8),
+            (("QB", "RB", "RB", "WR", "WR", "TE", "RB", "WR", "WR", "RB", "TE"), 133, 5),
+        ):
+            rec = recommend(pool, SETTINGS, self._context(roster, pick, remaining), PARAMS)
+            assert rec is not None
+            # Either a genuinely wanted player, or it falls back to the
+            # recommended pick when nothing on the board qualifies.
+            assert (
+                rec.room_pick.value > 0
+                or rec.room_pick.canonical_id == rec.recommended_pick.canonical_id
+            ), f"pick {pick}: room pick {rec.room_pick.name} value {rec.room_pick.value}"
