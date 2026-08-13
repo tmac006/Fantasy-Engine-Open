@@ -57,6 +57,8 @@ class WaiverTargetOut(BaseModel):
     outlook: OutlookOut | None
     reasons: list[str]
     context: list[str]
+    advanced: list[str]
+    advanced_summary: str | None
 
 
 class WaiverResponse(BaseModel):
@@ -156,6 +158,8 @@ def waiver_targets(
                 outlook=OutlookOut(**vars(t.outlook)) if t.outlook else None,
                 reasons=t.reasons,
                 context=t.context,
+                advanced=t.advanced,
+                advanced_summary=t.advanced_summary,
             )
             for t in ranked
         ],

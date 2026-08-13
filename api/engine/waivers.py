@@ -138,6 +138,11 @@ class WaiverTarget:
     outlook: Outlook | None
     reasons: list[str] = field(default_factory=list)
     context: list[str] = field(default_factory=list)
+    # Advanced-stat read, passed straight through from the candidate. Reported
+    # beside the score, never inside it: these metrics failed the predictive
+    # gate (see api.eval.advanced_fit), so they inform you, not the ranking.
+    advanced: list[str] = field(default_factory=list)
+    advanced_summary: str | None = None
 
 
 @dataclass(frozen=True)
@@ -150,6 +155,8 @@ class Candidate:
     team: str | None
     form: PlayerForm
     context_notes: tuple[str, ...] = ()
+    advanced: tuple[str, ...] = ()
+    advanced_summary: str | None = None
 
 
 def _reasons(candidate: Candidate, season_ppg: float, role_intact: bool) -> list[str]:
@@ -259,6 +266,8 @@ def score_candidate(candidate: Candidate) -> WaiverTarget | None:
         outlook=outlook(form, candidate.position),
         reasons=_reasons(candidate, season_ppg, role_intact),
         context=_context(candidate, fpoe),
+        advanced=list(candidate.advanced),
+        advanced_summary=candidate.advanced_summary,
     )
 
 

@@ -61,13 +61,28 @@ import { Api, type WaiverTarget } from '../services/api';
                 }
               </div>
             }
+            @if (target.advanced?.length) {
+              <details class="advanced">
+                <summary>
+                  {{ target.advanced_summary || 'Advanced stats' }}
+                </summary>
+                @for (line of target.advanced; track line) {
+                  <div class="note">{{ line }}</div>
+                }
+                <div class="note muted">
+                  Prior season, shown for context. Not part of the score.
+                </div>
+              </details>
+            }
           </div>
         }
       </div>
       <p class="muted" style="margin-top:14px">
         Ranked by points per game with the role still intact. Role changes and
         regression risk are shown as context because both scored worse than the
-        plain rate when tested against last season.
+        plain rate when tested against last season. Advanced stats are shown the
+        same way: they did not predict next season beyond a player's own scoring
+        when tested out of sample, so they inform you rather than the ranking.
       </p>
     }
   `,

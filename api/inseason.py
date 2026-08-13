@@ -18,11 +18,21 @@ from statistics import median
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from api.engine.advanced import AdvancedProfile, build_profiles
 from api.engine.outlook import outlook
 from api.engine.startsit import GameEnvironment, LineupCandidate
 from api.engine.usage import WeeklyRow, player_form
 from api.engine.waivers import Candidate
-from api.models import GameLine, League, LeagueRoster, Player, Projection, WeeklyStat
+from api.models import (
+    GameLine,
+    League,
+    LeagueRoster,
+    Player,
+    PlayerContext,
+    PlayerIds,
+    Projection,
+    WeeklyStat,
+)
 
 log = logging.getLogger("api.inseason")
 
@@ -112,11 +122,13 @@ def waiver_candidates(
     owned = rostered_ids(session, league)
     players = load_players(session, set(history) - owned)
 
+    profiles = advanced_profiles(session, season)
     candidates: list[Candidate] = []
     for canonical_id, player in players.items():
         rows = history.get(canonical_id)
         if not rows:
             continue
+        profile = profiles.get(str(canonical_id))
         candidates.append(
             Candidate(
                 canonical_id=canonical_id,
@@ -124,9 +136,39 @@ def waiver_candidates(
                 position=player.position,
                 team=player.team,
                 form=player_form(rows, as_of_week=week),
+                advanced=tuple(profile.lines) if profile else (),
+                advanced_summary=profile.summary if profile else None,
             )
         )
     return candidates
+
+
+def advanced_profiles(session: Session, season: str) -> dict[str, AdvancedProfile]:
+    """Advanced-stat cards from the most recent completed season.
+
+    Strictly PRIOR seasons. PFR publishes these as one row per completed
+    season, so the current season's row is a full-year aggregate -- reading it
+    during week 9 would show numbers built partly from weeks 9 to 18 and quietly
+    reintroduce the lookahead that `api.engine.usage` exists to prevent. It also
+    silently invalidates any backtest run through this path.
+
+    The practical effect is that an in-season waiver card describes last year's
+    body of work. That is the honest version: the form numbers beside it already
+    cover the present, and this covers how he gets his production.
+    """
+    payloads: dict[str, tuple[str, dict[str, dict[str, float]]]] = {}
+    for row in session.scalars(
+        select(PlayerContext)
+        .where(PlayerContext.source == "pfr_advstats", PlayerContext.season < season)
+        .order_by(PlayerContext.season)
+    ):
+        payloads[str(row.canonical_id)] = (row.season, row.data or {})
+    positions = {
+        str(row.canonical_id): row.position
+        for row in session.scalars(select(PlayerIds))
+        if row.position
+    }
+    return build_profiles(payloads, positions)
 
 
 def _game_index(session: Session, season: str, week: int) -> dict[str, GameLine]:

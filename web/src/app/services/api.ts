@@ -67,6 +67,9 @@ export interface WaiverTarget {
   outlook: Outlook | null;
   reasons: string[];
   context: string[];
+  /** Prior-season advanced profile. Context only; never part of `score`. */
+  advanced: string[];
+  advanced_summary: string | null;
 }
 
 export interface WaiverResponse {
