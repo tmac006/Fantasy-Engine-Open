@@ -514,3 +514,41 @@ def test_noise_sized_gains_are_not_proposed() -> None:
         for anchor in (_find_anchor(mine.players, "RB", rank=3),):
             for pkg in packages_around(anchor, mine, others, SETTINGS, pool, mode=mode):
                 assert pkg.my_gain >= MIN_GAIN
+
+
+def test_a_qb_or_kicker_upgrade_is_priced_against_the_waiver_wire() -> None:
+    """Week 8 2026: Maye + Aubrey came back as fair value for CeeDee Lamb,
+    because each was priced against the other team's own backup (Shough,
+    Jason Myers) rather than the streamer they could add for free."""
+    from api.engine.trades import attach_waiver, evaluate_package
+
+    mine = roster("me", [*BALANCED, ("QB", 290.0), ("K", 150.0)], mine=True)
+    them = roster(
+        "them",
+        [("QB", 200.0), ("RB", 260.0), ("RB", 230.0), ("WR", 330.0), ("WR", 220.0),
+         ("WR", 200.0), ("WR", 180.0), ("TE", 180.0), ("K", 50.0), ("DEF", 110.0)],
+    )
+    free_qb = player("fa-qb", "QB", 245.0, adp=150.0)
+    free_k = player("fa-k", "K", 135.0, adp=160.0)
+    pool = [*mine.players, *them.players, free_qb, free_k]
+    give = (mine.players[-2], mine.players[-1])  # backup QB + spare K
+    receive = (them.players[3],)  # their WR1
+    curve = {}
+
+    _, blind_gain, _ = evaluate_package(mine, them, give, receive, SETTINGS, curve)
+    mine_w, them_w = attach_waiver([mine, them], pool, SETTINGS)
+    _, honest_gain, _ = evaluate_package(mine_w, them_w, give, receive, SETTINGS, curve)
+
+    assert blind_gain > 0, "against his own backups the QB+K pair looks like a win"
+    assert honest_gain < -MAX_THEIR_LOSS, "against the wire it costs him his WR1 for little"
+
+
+def test_waiver_never_includes_a_rostered_player() -> None:
+    from api.engine.trades import attach_waiver
+
+    mine = roster("me", BALANCED, mine=True)
+    them = roster("them", BALANCED)
+    free = player("fa", "WR", 90.0)
+    pool = [*mine.players, *them.players, free]
+    for team in attach_waiver([mine, them], pool, SETTINGS):
+        assert [p.canonical_id for p in team.waiver] == ["fa"]

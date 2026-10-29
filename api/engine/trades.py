@@ -23,11 +23,11 @@ answers a need they urgently have. What makes it a fleece is that the value we
 receive exceeds the value we give by more than the market's pricing suggests.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from itertools import combinations
 
 from api.engine.lineup import lineup_points
-from api.engine.vor import PoolPlayer
+from api.engine.vor import FLEX_ELIGIBILITY, PoolPlayer
 from api.schemas import LeagueSettings
 
 # How many players from each side are considered as trade chips. Enumerating
@@ -83,6 +83,10 @@ class TeamRoster:
     name: str
     players: tuple[PoolPlayer, ...]
     is_mine: bool = False
+    # The best unrostered players, which this team could add for nothing.
+    # Every lineup is valued with these available, so an "upgrade" is measured
+    # against the waiver wire rather than against the team's own backup.
+    waiver: tuple[PoolPlayer, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -177,6 +181,45 @@ def market_premium(player: PoolPlayer, curve: dict[str, float]) -> float:
     return market - player.points
 
 
+def attach_waiver(
+    rosters: list[TeamRoster], pool: list[PoolPlayer], settings: LeagueSettings
+) -> list[TeamRoster]:
+    """Give every roster the same free-agent fallback.
+
+    Without it a QB or kicker "upgrade" was priced against the team's own
+    backup: Maye over Shough read as +28 and Aubrey over Jason Myers as +31,
+    so Maye + a kicker came back as fair value for CeeDee Lamb -- when a
+    streamer off waivers would have closed most of either gap for free.
+    Only enough players to fill every slot are kept, since the best legal
+    lineup never reaches further down the wire than that.
+    """
+    rostered = {p.canonical_id for r in rosters for p in r.players}
+    flex = sum(
+        count for slot, count in settings.roster_slots.items() if slot in FLEX_ELIGIBILITY
+    )
+    keep: list[PoolPlayer] = []
+    for position in ("QB", "RB", "WR", "TE", "K", "DEF"):
+        depth = settings.roster_slots.get(position, 0) + flex
+        available = sorted(
+            (
+                p
+                for p in pool
+                if p.position == position and p.canonical_id not in rostered and p.points > 0
+            ),
+            key=lambda p: -p.points,
+        )
+        keep.extend(available[:depth])
+    waiver = tuple(keep)
+    return [replace(r, waiver=waiver) for r in rosters]
+
+
+def roster_points(
+    roster: TeamRoster, players: list[PoolPlayer], settings: LeagueSettings
+) -> float:
+    """Best legal lineup from these players plus the free agents he could add."""
+    return lineup_points([*players, *roster.waiver], settings.roster_slots)
+
+
 def starter_benchmarks(pool: list[PoolPlayer], settings: LeagueSettings) -> dict[str, float]:
     """A solidly-above-average starter's projection at each position.
 
@@ -215,7 +258,7 @@ def team_needs(
     gains a lot. That difference is the need, and it is what the other side of
     a trade is actually buying.
     """
-    base = lineup_points(list(roster.players), settings.roster_slots)
+    base = roster_points(roster, list(roster.players), settings)
     needs: list[PositionNeed] = []
     for position, benchmark in benchmarks.items():
         probe = PoolPlayer(
@@ -225,7 +268,7 @@ def team_needs(
             team=None,
             points=benchmark,
         )
-        upgraded = lineup_points([*roster.players, probe], settings.roster_slots)
+        upgraded = roster_points(roster, [*roster.players, probe], settings)
         needs.append(
             PositionNeed(
                 position=position,
@@ -245,9 +288,8 @@ def _swap(players: tuple[PoolPlayer, ...], out: tuple[PoolPlayer, ...], into: tu
 
 def _cost_to_move(roster: TeamRoster, settings: LeagueSettings, player: PoolPlayer, base: float) -> float:
     """Lineup points this roster loses by giving the player up."""
-    without = lineup_points(
-        [p for p in roster.players if p.canonical_id != player.canonical_id],
-        settings.roster_slots,
+    without = roster_points(
+        roster, [p for p in roster.players if p.canonical_id != player.canonical_id], settings
     )
     return base - without
 
@@ -331,14 +373,14 @@ def _send_chips(
     Fleece mode ranks instead by reputation we can convert -- players the market
     prices above their projection, discounted by what losing them really costs.
     """
-    my_base = lineup_points(list(mine.players), settings.roster_slots)
-    their_base = lineup_points(list(theirs.players), settings.roster_slots)
+    my_base = roster_points(mine, list(mine.players), settings)
+    their_base = roster_points(theirs, list(theirs.players), settings)
 
     def cost_to_me(player: PoolPlayer) -> float:
         return _cost_to_move(mine, settings, player, my_base)
 
     def gain_to_them(player: PoolPlayer) -> float:
-        return lineup_points([*theirs.players, player], settings.roster_slots) - their_base
+        return roster_points(theirs, [*theirs.players, player], settings) - their_base
 
     if mode == "fleece":
         return sorted(
@@ -356,11 +398,11 @@ def _target_chips(
 ) -> list[PoolPlayer]:
     """What is worth asking them for: what we most want, blended with what they
     can most afford to lose. Same reasoning as the sending side."""
-    their_base = lineup_points(list(theirs.players), settings.roster_slots)
-    my_base = lineup_points(list(mine.players), settings.roster_slots)
+    their_base = roster_points(theirs, list(theirs.players), settings)
+    my_base = roster_points(mine, list(mine.players), settings)
 
     def gain_to_me(player: PoolPlayer) -> float:
-        return lineup_points([*mine.players, player], settings.roster_slots) - my_base
+        return roster_points(mine, [*mine.players, player], settings) - my_base
 
     def cost_to_them(player: PoolPlayer) -> float:
         return _cost_to_move(theirs, settings, player, their_base)
@@ -386,13 +428,10 @@ def evaluate_package(
 ) -> tuple[float, float, float]:
     """(my gain, their gain, market edge) for one concrete swap."""
 
-    def points(players: list[PoolPlayer]) -> float:
-        return lineup_points(players, settings.roster_slots)
-
-    my_before = points(list(mine.players))
-    my_after = points(_swap(mine.players, give, receive))
-    their_before = points(list(theirs.players))
-    their_after = points(_swap(theirs.players, receive, give))
+    my_before = roster_points(mine, list(mine.players), settings)
+    my_after = roster_points(mine, _swap(mine.players, give, receive), settings)
+    their_before = roster_points(theirs, list(theirs.players), settings)
+    their_after = roster_points(theirs, _swap(theirs.players, receive, give), settings)
     # Total market value on each side, NOT the sum of premiums. Summing
     # premiums made a one-for-two heist read as fair, because each individual
     # player's over/under-valuation is small even when the packages are wildly

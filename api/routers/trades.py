@@ -20,16 +20,18 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from api.db import get_sessionmaker
-from api.engine.lineup import fill_lineup, lineup_points
+from api.engine.lineup import fill_lineup
 from api.engine.restofseason import RestOfSeason
 from api.engine.trades import (
     TeamRoster,
+    attach_waiver,
     evaluate_package,
     generate_packages,
     is_seriously_hurt,
     market_premium,
     market_value_curve,
     packages_around,
+    roster_points,
     starter_benchmarks,
     team_needs,
 )
@@ -256,6 +258,7 @@ def league_trades(
                 is_mine=bool(row.is_mine),
             )
         )
+    rosters = attach_waiver(rosters, pool, settings)
     mine = next((r for r in rosters if r.is_mine), None)
     if mine is None:
         raise HTTPException(
@@ -388,6 +391,7 @@ def _context(
         )
         for row in roster_rows
     ]
+    rosters = attach_waiver(rosters, pool, settings)
     mine = next((r for r in rosters if r.is_mine), None)
     if mine is None or not mine.players:
         raise HTTPException(
@@ -402,13 +406,13 @@ def _context(
         str(row.canonical_id): row.espn_id
         for row in session.scalars(select(PlayerIds).where(PlayerIds.canonical_id.in_(all_ids)))
     }
-    base = lineup_points(list(mine.players), settings.roster_slots)
+    base = roster_points(mine, list(mine.players), settings)
 
     def card(player: PoolPlayer, *, with_gain: bool = False) -> PlayerCard:
         gain = None
         if with_gain:
             gain = round(
-                lineup_points([*mine.players, player], settings.roster_slots) - base, 1
+                roster_points(mine, [*mine.players, player], settings) - base, 1
             )
         return PlayerCard(
             canonical_id=player.canonical_id,
@@ -635,10 +639,9 @@ def evaluate_trade(
         verdict = "loses you points"
 
     def side(roster: TeamRoster, players: tuple[PoolPlayer, ...], swap_in: tuple[PoolPlayer, ...]) -> TradeSideOut:
-        start = lineup_points(list(roster.players), settings.roster_slots)
-        end = lineup_points(
-            [p for p in roster.players if p not in players] + list(swap_in),
-            settings.roster_slots,
+        start = roster_points(roster, list(roster.players), settings)
+        end = roster_points(
+            roster, [p for p in roster.players if p not in players] + list(swap_in), settings
         )
         return TradeSideOut(
             team_id=roster.team_id,
