@@ -129,6 +129,20 @@ def test_normal_mode_requires_both_sides_to_gain() -> None:
         assert package.their_gain >= MIN_GAIN
 
 
+def test_normal_mode_never_asks_them_to_overpay_on_market_value() -> None:
+    """Week 8 2026: Henderson + Bryce Young for Jeremiyah Love + Luther Burden.
+    Both lineups gained, but they would have handed over 20 more points of
+    draft-market value -- an offer no manager answers."""
+    from api.engine.trades import is_acceptable_offer
+
+    qb = player("q", "QB", 170.0, adp=137.0)
+    assert not is_acceptable_offer("normal", (qb,), 55.1, 24.3, -20.2, [], set())
+    assert is_acceptable_offer("normal", (qb,), 55.1, 24.3, 0.0, [], set())
+    mine, others, pool = _around_setup()
+    for package in generate_packages(mine, others, SETTINGS, pool, mode="normal"):
+        assert package.market_edge >= 0.0
+
+
 def test_fleece_never_proposes_transparent_theft() -> None:
     """The "answers a need" branch once bypassed every sanity check and offered
     one bench receiver for two studs, costing the other side 177 points."""

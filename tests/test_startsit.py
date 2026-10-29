@@ -147,6 +147,18 @@ class TestLineup:
         slot = optimize_lineup(roster, {"TE": 1, "BN": 1}).slots[0]
         assert slot.starter.name == "Available"
 
+    def test_player_without_a_team_loses_his_slot(self) -> None:
+        """Tyreek Hill, week 8 2026: unsigned, yet started at FLEX on his 2025
+        scoring rate over an active McConkey."""
+        roster = [
+            LineupCandidate(
+                1, "Cut Veteran", "WR", 13.4, baseline_source="2025 scoring rate", has_no_team=True
+            ),
+            player("Active", "WR", 10.5),
+        ]
+        slot = optimize_lineup(roster, {"WR": 1, "BN": 1}).slots[0]
+        assert slot.starter.name == "Active"
+
 
 # -- preseason baselines ----------------------------------------------------
 

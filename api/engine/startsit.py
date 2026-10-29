@@ -120,6 +120,9 @@ class LineupCandidate:
     baseline_source: str = ""
     environment: GameEnvironment = field(default_factory=GameEnvironment)
     is_on_bye: bool = False
+    # Released or unsigned. The scoring-rate fallback still has his old games,
+    # so without this a cut veteran outranks every active bench player.
+    has_no_team: bool = False
     injury_status: str | None = None
     # Floor/ceiling context. Does not move the projection -- it is there so a
     # close call can be broken on which risk you want this week.
@@ -187,6 +190,8 @@ def score_player(candidate: LineupCandidate) -> ScoredPlayer:
 
     if candidate.is_on_bye:
         return ScoredPlayer(candidate, 0.0, [Adjustment("on bye", -candidate.baseline)])
+    if candidate.has_no_team:
+        return ScoredPlayer(candidate, 0.0, [Adjustment("no NFL team", -candidate.baseline)])
     # The scoring-rate fallback knows nothing about this week's availability,
     # so without this an IR back's healthy-week rate outranks every active
     # player. A weekly projection usually already reads zero; the rate never does.

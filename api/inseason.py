@@ -453,6 +453,7 @@ def lineup_candidates(
                 advanced=tuple(profile.lines) if (profile := profiles.get(str(canonical_id))) else (),
                 advanced_summary=profile.summary if profile else None,
                 is_on_bye=player.team is not None and player.team not in games,
+                has_no_team=player.team is None,
                 injury_status=statuses.get(canonical_id),
             )
         )

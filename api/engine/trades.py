@@ -303,7 +303,11 @@ def is_acceptable_offer(
         return False
     if mode == "normal":
         # Both sides must actually gain, or it is a message that gets ignored.
-        return their_gain >= MIN_GAIN
+        # And they must not pay more in market value than they receive: lineup
+        # points alone price their bench at ~zero, so this once asked a manager
+        # for his 49th- and 81st-pick youngsters in exchange for a QB upgrade
+        # worth 1.4 a week. Leaning on the room's pricing is fleece mode's job.
+        return their_gain >= MIN_GAIN and edge >= 0.0
     # A fleece still has to LOOK fair or answer a hole they urgently need
     # filled -- managers judge by market value and need, not our projections.
     answers_need = any(p.position in urgent for p in give) or any(
