@@ -231,13 +231,65 @@ class EspnReadClient:
         players: list[dict[str, Any]] = resp.json().get("players", [])
         return players
 
+    def get_team_names(self, league_id: str, season: str) -> dict[str, str]:
+        """teamId -> the manager's own team name.
+
+        Worth a separate view call: every trade the engine proposes is addressed
+        to one of these teams, and "Team 8" tells the user nothing about who
+        they would actually be messaging.
+        """
+        payload = self.league_view(league_id, season, "mTeam")
+        names: dict[str, str] = {}
+        for team in payload.get("teams") or []:
+            label = (team.get("name") or "").strip()
+            if not label:
+                # Older payloads split the name into location + nickname.
+                label = " ".join(
+                    part
+                    for part in ((team.get("location") or ""), (team.get("nickname") or ""))
+                    if part
+                ).strip()
+            if label:
+                names[str(team.get("id"))] = label[:128]
+        return names
+
     def get_rosters(self, league_id: str, season: str) -> dict[str, list[str]]:
         """teamId -> ESPN player ids currently rostered (starters and bench)."""
+        rosters, _ = self.get_rosters_with_status(league_id, season)
+        return rosters
+
+    def get_rosters_with_status(
+        self, league_id: str, season: str
+    ) -> tuple[dict[str, list[str]], dict[str, str]]:
+        """Rosters plus each rostered player's ESPN injury status, from one call."""
         payload = self.league_view(league_id, season, "mRoster")
-        out: dict[str, list[str]] = {}
-        for team in payload.get("teams") or []:
-            entries = (team.get("roster") or {}).get("entries") or []
-            out[str(team.get("id"))] = [
-                str(entry["playerId"]) for entry in entries if entry.get("playerId") is not None
-            ]
-        return out
+        return parse_rosters(payload), parse_roster_injury_statuses(payload)
+
+
+def parse_rosters(payload: dict[str, Any]) -> dict[str, list[str]]:
+    """teamId -> ESPN player ids, from an mRoster view."""
+    out: dict[str, list[str]] = {}
+    for team in payload.get("teams") or []:
+        entries = (team.get("roster") or {}).get("entries") or []
+        out[str(team.get("id"))] = [
+            str(entry["playerId"]) for entry in entries if entry.get("playerId") is not None
+        ]
+    return out
+
+
+def parse_roster_injury_statuses(payload: dict[str, Any]) -> dict[str, str]:
+    """ESPN player id -> injuryStatus (ACTIVE, OUT, INJURY_RESERVE, ...).
+
+    Read from `playerPoolEntry.player.injuryStatus`, the league's own view of
+    the player. This is what moves a player to the IR slot on ESPN, and it is
+    fresher than the daily Sleeper player dump the draft board reads.
+    """
+    out: dict[str, str] = {}
+    for team in payload.get("teams") or []:
+        for entry in (team.get("roster") or {}).get("entries") or []:
+            player_id = entry.get("playerId")
+            player = (entry.get("playerPoolEntry") or {}).get("player") or {}
+            status = player.get("injuryStatus") or entry.get("injuryStatus")
+            if player_id is not None and status:
+                out[str(player_id)] = str(status)
+    return out

@@ -109,6 +109,23 @@ class EngineParams(BaseModel):
     qb_wr_stack_bonus: float = 2.5
     wr_rb_correlation_penalty: float = 2.0
 
+    # Bye-week concentration. A roster is drafted one player at a time, so
+    # nothing stops it becoming individually excellent and collectively
+    # unstartable in one week -- a real 2026 draft finished with 7 of 16 players
+    # (5 of 9 starters) idle in week 11 and only 7 of 9 slots fillable.
+    #
+    # Deliberately small and escalating rather than a hard rule. The first
+    # shared bye is free (unavoidable in a 12-team room), and each one after
+    # that costs more, so the penalty is negligible against a genuine talent gap
+    # early and decisive between near-equal streamers late -- which is exactly
+    # where bye conflicts are cheap to avoid.
+    bye_stack_tolerance: int = 1
+    bye_stack_penalty: float = 4.0
+    # Sharing a bye with someone at your OWN position is worse: a backup whose
+    # bye matches the starter he backs up provides no bye cover at all, which is
+    # most of why a second quarterback is on the roster.
+    bye_same_position_penalty: float = 6.0
+
     # Market timing guard: a high-survival player can usually be taken later.
     # This is a soft opportunity-cost penalty, not a hard ADP reach ban.
     reach_grace_picks: float = 8.0

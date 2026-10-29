@@ -359,6 +359,26 @@ input::placeholder { color: var(--muted); }
   padding-left: 9px; border-left: 2px solid var(--line);
 }
 
+/* Advanced reads are a second opinion, deliberately collapsed: they never enter
+   the projection, so they must not compete with it for attention. */
+.advanced { margin-top: 8px; }
+.advanced > summary {
+  cursor: pointer; font-size: 12.5px; color: var(--muted);
+  list-style: none; padding: 2px 0;
+}
+.advanced > summary::-webkit-details-marker { display: none; }
+.advanced > summary::before { content: "▸ "; font-size: 10px; }
+.advanced[open] > summary::before { content: "▾ "; }
+.advanced > summary:hover { color: var(--fg); }
+.advanced > .note { margin-top: 4px; }
+
+/* Where the number came from. Before week 1 it leans on a season projection
+   rather than form, and that must be visible rather than implied. */
+.source {
+  margin-top: 7px; font-size: 11.5px; color: var(--muted);
+  opacity: 0.85; font-variant: small-caps; letter-spacing: 0.02em;
+}
+
 /* A close call is flagged rather than hidden: the border is the whole point. */
 .card.toss-up { border-left: 3px solid var(--warn); }
 

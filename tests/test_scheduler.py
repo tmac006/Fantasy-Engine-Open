@@ -62,3 +62,22 @@ def test_jobs_are_registered_and_unique() -> None:
     for job in JOBS:
         assert job.interval > timedelta(0)
         assert job.description
+
+
+def test_unfinished_run_does_not_hide_a_later_success(session: Session) -> None:
+    """Observed 2026-09-15: a news run killed mid-flight left status='ok' with no
+    finish time. Postgres sorts NULL first in DESC order, so that orphan row was
+    returned as the "latest" success and the job read as never run for weeks."""
+    started = datetime.now(UTC) - timedelta(days=20)
+    session.add(IngestRun(job="players", status="ok", started_at=started, finished_at=None))
+    session.commit()
+    record(session, "players", hours_ago=1)
+    assert last_success(session, "players") is not None
+    assert not is_due(session, JOB)
+
+
+def test_lines_catch_up_before_projections() -> None:
+    # The weekly projection window comes from which games have final scores;
+    # refreshing projections against a stale schedule skips the current week.
+    names = [job.name for job in JOBS]
+    assert names.index("lines") < names.index("projections")

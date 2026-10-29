@@ -258,6 +258,95 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/leagues/{league_id}/trades": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** League Trades */
+        get: operations["league_trades_leagues__league_id__trades_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/leagues/{league_id}/trades/rosters": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * League Rosters
+         * @description Every team's roster, with opponents' players scored against MY lineup.
+         *
+         *     This is the browsing view behind the trade builder: pick a team, see who on
+         *     it would genuinely improve your starting eleven rather than who merely has
+         *     the biggest projection.
+         */
+        get: operations["league_rosters_leagues__league_id__trades_rosters_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/leagues/{league_id}/trades/evaluate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Evaluate Trade
+         * @description Value a trade the user built by hand.
+         *
+         *     Reported on three axes because they routinely disagree, and a trade that
+         *     looks good on one can be bad on another: lineup gain (what actually scores),
+         *     market edge (whether the other manager will entertain it), and the bye-week
+         *     picture (whether the gain survives contact with the schedule).
+         */
+        post: operations["evaluate_trade_leagues__league_id__trades_evaluate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/leagues/{league_id}/trades/around/{canonical_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Build Around
+         * @description What would it take to trade for (or away) this specific player.
+         *
+         *     The player is fixed and only the other side of the deal is searched, which
+         *     is the question a manager actually asks once he has decided who he wants.
+         */
+        get: operations["build_around_leagues__league_id__trades_around__canonical_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/": {
         parameters: {
             query?: never;
@@ -314,6 +403,21 @@ export interface components {
             /** Projected */
             projected: number;
             outlook: components["schemas"]["OutlookOut"] | null;
+        };
+        /**
+         * BuildAroundOut
+         * @description Offers constructed around one player the user picked.
+         */
+        BuildAroundOut: {
+            /** League Id */
+            league_id: number;
+            anchor: components["schemas"]["PlayerCard"];
+            /** Anchor Is Mine */
+            anchor_is_mine: boolean;
+            /** Mode */
+            mode: string;
+            /** Packages */
+            packages: components["schemas"]["PackageOut"][];
         };
         /** DraftPick */
         DraftPick: {
@@ -508,6 +612,21 @@ export interface components {
              */
             wr_rb_correlation_penalty: number;
             /**
+             * Bye Stack Tolerance
+             * @default 1
+             */
+            bye_stack_tolerance: number;
+            /**
+             * Bye Stack Penalty
+             * @default 4
+             */
+            bye_stack_penalty: number;
+            /**
+             * Bye Same Position Penalty
+             * @default 6
+             */
+            bye_same_position_penalty: number;
+            /**
              * Reach Grace Picks
              * @default 8
              */
@@ -672,6 +791,15 @@ export interface components {
             /** Toss Ups */
             toss_ups: number;
         };
+        /** NeedOut */
+        NeedOut: {
+            /** Position */
+            position: string;
+            /** Upgrade Value */
+            upgrade_value: number;
+            /** Owned */
+            owned: number;
+        };
         /** NewsEntry */
         NewsEntry: {
             /** Id */
@@ -764,6 +892,25 @@ export interface components {
             /** Drivers */
             drivers: string[];
         };
+        /** PackageOut */
+        PackageOut: {
+            /** Their Team Id */
+            their_team_id: string;
+            /** Their Team Name */
+            their_team_name: string;
+            /** Give */
+            give: components["schemas"]["PlayerCard"][];
+            /** Receive */
+            receive: components["schemas"]["PlayerCard"][];
+            /** My Gain */
+            my_gain: number;
+            /** Their Gain */
+            their_gain: number;
+            /** Market Edge */
+            market_edge: number;
+            /** Rationale */
+            rationale: string[];
+        };
         /**
          * PlayerAnalysis
          * @description Expandable, source-honest context for a recommendation.
@@ -801,6 +948,38 @@ export interface components {
             risks: string[];
             /** Data Freshness */
             data_freshness: string | null;
+        };
+        /** PlayerCard */
+        PlayerCard: {
+            /** Canonical Id */
+            canonical_id: string;
+            /** Name */
+            name: string;
+            /** Position */
+            position: string;
+            /** Team */
+            team: string | null;
+            /** Points */
+            points: number;
+            /** Adp */
+            adp: number | null;
+            /** Bye Week */
+            bye_week: number | null;
+            /** Market Value */
+            market_value: number;
+            /** Market Premium */
+            market_premium: number;
+            /** Headshot Url */
+            headshot_url: string | null;
+            /** News */
+            news?: string | null;
+            /** Solo Gain */
+            solo_gain?: number | null;
+            /**
+             * Recommended
+             * @default false
+             */
+            recommended: boolean;
         };
         /** RankedPlayer */
         RankedPlayer: {
@@ -922,6 +1101,28 @@ export interface components {
             /** Sync Error */
             sync_error?: string | null;
         };
+        /** RosterOut */
+        RosterOut: {
+            /** Team Id */
+            team_id: string;
+            /** Team Name */
+            team_name: string;
+            /** Is Mine */
+            is_mine: boolean;
+            /** Players */
+            players: components["schemas"]["PlayerCard"][];
+        };
+        /** RostersOut */
+        RostersOut: {
+            /** League Id */
+            league_id: number;
+            /** My Team Id */
+            my_team_id: string;
+            /** My Needs */
+            my_needs: components["schemas"]["NeedOut"][];
+            /** Rosters */
+            rosters: components["schemas"]["RosterOut"][];
+        };
         /** RunAlert */
         RunAlert: {
             /** Position */
@@ -954,6 +1155,103 @@ export interface components {
             outlook: components["schemas"]["OutlookOut"] | null;
             /** Reasons */
             reasons: string[];
+            /**
+             * Advanced
+             * @default []
+             */
+            advanced: string[];
+            /** Advanced Summary */
+            advanced_summary?: string | null;
+            /**
+             * Baseline Source
+             * @default
+             */
+            baseline_source: string;
+        };
+        /**
+         * TradeEvalOut
+         * @description A manually built trade, valued the same way generated ones are.
+         */
+        TradeEvalOut: {
+            /** League Id */
+            league_id: number;
+            /** My Team Name */
+            my_team_name: string;
+            /** Give */
+            give: components["schemas"]["PlayerCard"][];
+            /** Receive */
+            receive: components["schemas"]["PlayerCard"][];
+            /** My Gain */
+            my_gain: number;
+            /** Their Gain */
+            their_gain: number;
+            /** Market Edge */
+            market_edge: number;
+            /** Bye Adjusted Gain Per Week */
+            bye_adjusted_gain_per_week: number;
+            worst_week_before: components["schemas"]["WeekImpact"] | null;
+            worst_week_after: components["schemas"]["WeekImpact"] | null;
+            /** Roster Size After */
+            roster_size_after: number;
+            /** Roster Limit */
+            roster_limit: number;
+            /** Verdict */
+            verdict: string;
+            /** Notes */
+            notes: string[];
+            my_side: components["schemas"]["TradeSideOut"];
+            their_side: components["schemas"]["TradeSideOut"];
+        };
+        /**
+         * TradeRequest
+         * @description Canonical ids for a hand-built offer.
+         */
+        TradeRequest: {
+            /** Give */
+            give: string[];
+            /** Receive */
+            receive: string[];
+        };
+        /**
+         * TradeSideOut
+         * @description One roster's view of the swap.
+         */
+        TradeSideOut: {
+            /** Team Id */
+            team_id: string;
+            /** Team Name */
+            team_name: string;
+            /** Players */
+            players: components["schemas"]["PlayerCard"][];
+            /** Lineup Before */
+            lineup_before: number;
+            /** Lineup After */
+            lineup_after: number;
+            /** Lineup Gain */
+            lineup_gain: number;
+            /** Market Value Sent */
+            market_value_sent: number;
+        };
+        /** TradesOut */
+        TradesOut: {
+            /** League Id */
+            league_id: number;
+            /** League Name */
+            league_name: string | null;
+            /** Season */
+            season: string;
+            /** Mode */
+            mode: string;
+            /** As Of Week */
+            as_of_week: number;
+            /** My Team Name */
+            my_team_name: string;
+            /** My Needs */
+            my_needs: components["schemas"]["NeedOut"][];
+            /** Packages */
+            packages: components["schemas"]["PackageOut"][];
+            /** Injury Signals */
+            injury_signals: string[];
         };
         /** ValidationError */
         ValidationError: {
@@ -1014,6 +1312,21 @@ export interface components {
             advanced: string[];
             /** Advanced Summary */
             advanced_summary: string | null;
+            /** Headshot Url */
+            headshot_url?: string | null;
+        };
+        /** WeekImpact */
+        WeekImpact: {
+            /** Week */
+            week: number;
+            /** Before */
+            before: number;
+            /** After */
+            after: number;
+            /** Slots Before */
+            slots_before: number;
+            /** Slots After */
+            slots_after: number;
         };
     };
     responses: never;
@@ -1179,6 +1492,9 @@ export interface operations {
                 early_duplicate_qb_te_multiplier?: number;
                 qb_wr_stack_bonus?: number;
                 wr_rb_correlation_penalty?: number;
+                bye_stack_tolerance?: number;
+                bye_stack_penalty?: number;
+                bye_same_position_penalty?: number;
                 reach_grace_picks?: number;
                 reach_penalty_per_pick?: number;
                 max_reach_penalty?: number;
@@ -1260,6 +1576,9 @@ export interface operations {
                 early_duplicate_qb_te_multiplier?: number;
                 qb_wr_stack_bonus?: number;
                 wr_rb_correlation_penalty?: number;
+                bye_stack_tolerance?: number;
+                bye_stack_penalty?: number;
+                bye_same_position_penalty?: number;
                 reach_grace_picks?: number;
                 reach_penalty_per_pick?: number;
                 max_reach_penalty?: number;
@@ -1484,6 +1803,141 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LineupResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    league_trades_leagues__league_id__trades_get: {
+        parameters: {
+            query?: {
+                mode?: "normal" | "fleece";
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                league_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TradesOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    league_rosters_leagues__league_id__trades_rosters_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                league_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RostersOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    evaluate_trade_leagues__league_id__trades_evaluate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                league_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TradeRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TradeEvalOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    build_around_leagues__league_id__trades_around__canonical_id__get: {
+        parameters: {
+            query?: {
+                mode?: "normal" | "fleece";
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                league_id: number;
+                canonical_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BuildAroundOut"];
                 };
             };
             /** @description Validation Error */

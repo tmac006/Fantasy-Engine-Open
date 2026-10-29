@@ -49,6 +49,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from api.engine.outlook import Outlook
+from api.engine.restofseason import misses_this_week
 
 # League-average implied team total. Adjustments are relative to this.
 NEUTRAL_IMPLIED_TOTAL = 22.5
@@ -114,12 +115,20 @@ class LineupCandidate:
     name: str
     position: str
     baseline: float  # projection if we have one, else season scoring rate
+    # Where `baseline` came from, for the card. Week 1 has no current-season
+    # form, so the number is only trustworthy if its provenance is visible.
+    baseline_source: str = ""
     environment: GameEnvironment = field(default_factory=GameEnvironment)
     is_on_bye: bool = False
     injury_status: str | None = None
     # Floor/ceiling context. Does not move the projection -- it is there so a
     # close call can be broken on which risk you want this week.
     outlook: Outlook | None = None
+    # How he gets his production, from last completed season. Failed the
+    # predictive gate, so it never enters the projection -- it is here to break
+    # a close call on something other than a decimal.
+    advanced: tuple[str, ...] = ()
+    advanced_summary: str | None = None
 
 
 @dataclass(frozen=True)
@@ -178,6 +187,15 @@ def score_player(candidate: LineupCandidate) -> ScoredPlayer:
 
     if candidate.is_on_bye:
         return ScoredPlayer(candidate, 0.0, [Adjustment("on bye", -candidate.baseline)])
+    # The scoring-rate fallback knows nothing about this week's availability,
+    # so without this an IR back's healthy-week rate outranks every active
+    # player. A weekly projection usually already reads zero; the rate never does.
+    if misses_this_week(candidate.injury_status):
+        return ScoredPlayer(
+            candidate,
+            0.0,
+            [Adjustment(f"ruled out ({candidate.injury_status})", -candidate.baseline)],
+        )
 
     environment = candidate.environment
     position = candidate.position.upper()

@@ -37,6 +37,111 @@ export interface JobStatus {
   due: boolean;
 }
 
+
+export interface PlayerCard {
+  canonical_id: string;
+  name: string;
+  position: string;
+  team: string | null;
+  points: number;
+  adp: number | null;
+  bye_week: number | null;
+  market_value: number;
+  market_premium: number;
+  headshot_url: string | null;
+  news: string | null;
+  /** What this player alone would add to MY starting lineup. */
+  solo_gain?: number | null;
+  recommended?: boolean;
+}
+
+export interface LeagueRosterView {
+  team_id: string;
+  team_name: string;
+  is_mine: boolean;
+  players: PlayerCard[];
+}
+
+export interface RostersResponse {
+  league_id: number;
+  my_team_id: string;
+  my_needs: TradeNeed[];
+  rosters: LeagueRosterView[];
+}
+
+export interface WeekImpact {
+  week: number;
+  before: number;
+  after: number;
+  slots_before: number;
+  slots_after: number;
+}
+
+export interface TradeSide {
+  team_id: string;
+  team_name: string;
+  players: PlayerCard[];
+  lineup_before: number;
+  lineup_after: number;
+  lineup_gain: number;
+  market_value_sent: number;
+}
+
+export interface BuildAroundResponse {
+  league_id: number;
+  anchor: PlayerCard;
+  anchor_is_mine: boolean;
+  mode: string;
+  packages: TradePackage[];
+}
+
+export interface TradeEvaluation {
+  league_id: number;
+  my_team_name: string;
+  give: PlayerCard[];
+  receive: PlayerCard[];
+  my_gain: number;
+  their_gain: number;
+  market_edge: number;
+  bye_adjusted_gain_per_week: number;
+  worst_week_before: WeekImpact | null;
+  worst_week_after: WeekImpact | null;
+  roster_size_after: number;
+  roster_limit: number;
+  verdict: string;
+  notes: string[];
+  my_side: TradeSide;
+  their_side: TradeSide;
+}
+
+export interface TradeNeed {
+  position: string;
+  upgrade_value: number;
+  owned: number;
+}
+
+export interface TradePackage {
+  their_team_id: string;
+  their_team_name: string;
+  give: PlayerCard[];
+  receive: PlayerCard[];
+  my_gain: number;
+  their_gain: number;
+  market_edge: number;
+  rationale: string[];
+}
+
+export interface TradesResponse {
+  league_id: number;
+  league_name: string | null;
+  season: string;
+  mode: string;
+  my_team_name: string;
+  my_needs: TradeNeed[];
+  packages: TradePackage[];
+  injury_signals: string[];
+}
+
 export interface NewsQuery {
   leagueId: string;
   hours: string;
@@ -57,6 +162,7 @@ export interface WaiverTarget {
   name: string;
   position: string;
   team: string | null;
+  headshot_url?: string | null;
   score: number;
   season_ppg: number | null;
   recent_ppg: number | null;
@@ -97,6 +203,9 @@ export interface Starter {
   is_toss_up: boolean;
   outlook: Outlook | null;
   reasons: string[];
+  advanced?: string[];
+  advanced_summary?: string | null;
+  baseline_source?: string;
 }
 
 export interface BenchPlayer {
@@ -203,6 +312,102 @@ export class Api {
       if (detail.status && detail.status > 0) {
         this.reachable.set(true);
         return detail.error?.detail ?? 'Could not build a lineup.';
+      }
+      this.reachable.set(false);
+      return 'Could not reach the API.';
+    }
+  }
+
+  /**
+   * Trade proposals. A failure here is usually a setup problem the user can
+   * fix (league never synced, no team marked as theirs), so the detail is
+   * surfaced instead of collapsing into "unreachable".
+   */
+  async trades(leagueId: number, mode: 'normal' | 'fleece'): Promise<TradesResponse | string> {
+    try {
+      const value = await firstValueFrom(
+        this.http.get<TradesResponse>(`/leagues/${leagueId}/trades`, {
+          params: { mode, limit: '12' },
+        }),
+      );
+      this.reachable.set(true);
+      return value;
+    } catch (error: unknown) {
+      const detail = error as { error?: { detail?: string }; status?: number };
+      if (detail.status && detail.status > 0) {
+        this.reachable.set(true);
+        return detail.error?.detail ?? 'Could not build trades.';
+      }
+      this.reachable.set(false);
+      return 'Could not reach the API.';
+    }
+  }
+
+  /** Every team's roster, opponents' players scored against my lineup. */
+  async rosters(leagueId: number): Promise<RostersResponse | string> {
+    try {
+      const value = await firstValueFrom(
+        this.http.get<RostersResponse>(`/leagues/${leagueId}/trades/rosters`),
+      );
+      this.reachable.set(true);
+      return value;
+    } catch (error: unknown) {
+      const detail = error as { error?: { detail?: string }; status?: number };
+      if (detail.status && detail.status > 0) {
+        this.reachable.set(true);
+        return detail.error?.detail ?? 'Could not load rosters.';
+      }
+      this.reachable.set(false);
+      return 'Could not reach the API.';
+    }
+  }
+
+  /** Offers built around one specific player. */
+  async buildAround(
+    leagueId: number,
+    canonicalId: string,
+    mode: 'normal' | 'fleece',
+  ): Promise<BuildAroundResponse | string> {
+    try {
+      const value = await firstValueFrom(
+        this.http.get<BuildAroundResponse>(
+          `/leagues/${leagueId}/trades/around/${canonicalId}`,
+          { params: { mode, limit: '6' } },
+        ),
+      );
+      this.reachable.set(true);
+      return value;
+    } catch (error: unknown) {
+      const detail = error as { error?: { detail?: string }; status?: number };
+      if (detail.status && detail.status > 0) {
+        this.reachable.set(true);
+        return detail.error?.detail ?? 'Could not build a trade around that player.';
+      }
+      this.reachable.set(false);
+      return 'Could not reach the API.';
+    }
+  }
+
+  /** Value a hand-built trade. */
+  async evaluateTrade(
+    leagueId: number,
+    give: string[],
+    receive: string[],
+  ): Promise<TradeEvaluation | string> {
+    try {
+      const value = await firstValueFrom(
+        this.http.post<TradeEvaluation>(`/leagues/${leagueId}/trades/evaluate`, {
+          give,
+          receive,
+        }),
+      );
+      this.reachable.set(true);
+      return value;
+    } catch (error: unknown) {
+      const detail = error as { error?: { detail?: string }; status?: number };
+      if (detail.status && detail.status > 0) {
+        this.reachable.set(true);
+        return detail.error?.detail ?? 'Could not value that trade.';
       }
       this.reachable.set(false);
       return 'Could not reach the API.';

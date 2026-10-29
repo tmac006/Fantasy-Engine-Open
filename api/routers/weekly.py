@@ -5,14 +5,15 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from api.db import get_sessionmaker
 from api.engine.startsit import optimize_lineup
 from api.engine.waivers import rank_waiver_targets
-from api.inseason import current_week, lineup_candidates, waiver_candidates
-from api.models import League, LeagueSettingsRow
+from api.headshots import headshot_url
+from api.inseason import current_week, lineup_candidates, rostered_ids, waiver_candidates
+from api.models import GameLine, League, LeagueSettingsRow, PlayerIds
 
 router = APIRouter(prefix="/weekly", tags=["weekly"])
 
@@ -23,12 +24,66 @@ DEFAULT_ROSTER_SLOTS = {"QB": 1, "RB": 2, "WR": 2, "TE": 1, "FLEX": 1}
 # has zero fantasy points). Reporting these separately keeps them from reading
 # as "your roster is short a player", which is what an undifferentiated unfilled
 # list implies.
-UNSUPPORTED_SLOTS = frozenset({"DEF", "DST", "D/ST", "DEF/ST", "K"})
+# Kickers and defenses are supported now (season projection + game environment),
+# so an empty K or DEF slot means the roster is genuinely short one, not that the
+# tool cannot answer. Kept for slot types we still do not model, e.g. IDP.
+UNSUPPORTED_SLOTS = frozenset({"DL", "LB", "DB", "IDP"})
 
 
 def db_session() -> Iterator[Session]:
     with get_sessionmaker()() as session:
         yield session
+
+
+def _no_lineup_reason(session: Session, league: League, season: str) -> str:
+    """Say which of the several possible causes actually applies.
+
+    The single catch-all message ("check that my_team_id is set and the league
+    has synced") sent the user to verify two things that were both already
+    correct, when the real reason was simply that the season had not started.
+    Each cause has a different fix, so each gets its own sentence.
+    """
+    mine = rostered_ids(session, league, mine_only=True)
+    if not mine:
+        everyone = rostered_ids(session, league)
+        if not everyone:
+            return (
+                "this league has no rosters stored yet -- it may not have drafted, "
+                "or it has not synced"
+            )
+        return (
+            "no team in this league is marked as yours -- set my_team_id on the "
+            "league and re-sync"
+        )
+    played = session.scalar(
+        select(func.count())
+        .select_from(GameLine)
+        .where(GameLine.season == season, GameLine.home_score.is_not(None))
+    )
+    if not played:
+        return (
+            f"no {season} games have been played yet, so there is no form to build a "
+            "lineup from -- start/sit turns on after week 1 kicks off"
+        )
+    return (
+        f"your {len(mine)} rostered players have no usable {season} history yet -- "
+        "the weekly stats ingest may be behind"
+    )
+
+
+def _headshots(session: Session, canonical_ids: list[int]) -> dict[int, str | None]:
+    """Portrait URL per player, resolved in one query rather than per row."""
+    if not canonical_ids:
+        return {}
+    rows = session.execute(
+        select(PlayerIds.canonical_id, PlayerIds.espn_id, PlayerIds.position, PlayerIds.team).where(
+            PlayerIds.canonical_id.in_(canonical_ids)
+        )
+    ).all()
+    return {
+        canonical_id: headshot_url(espn_id, position, team)
+        for canonical_id, espn_id, position, team in rows
+    }
 
 
 class OutlookOut(BaseModel):
@@ -59,6 +114,7 @@ class WaiverTargetOut(BaseModel):
     context: list[str]
     advanced: list[str]
     advanced_summary: str | None
+    headshot_url: str | None = None
 
 
 class WaiverResponse(BaseModel):
@@ -86,6 +142,12 @@ class StarterOut(BaseModel):
     is_toss_up: bool
     outlook: OutlookOut | None
     reasons: list[str]
+    advanced: list[str] = []
+    advanced_summary: str | None = None
+    # Which source the projection came from. Before week 1 there is no form, so
+    # the number leans on a season projection or last year's rate; saying which
+    # is the difference between a defensible call and a mystery number.
+    baseline_source: str = ""
 
 
 class BenchOut(BaseModel):
@@ -137,6 +199,7 @@ def waiver_targets(
     target_week = week if week is not None else current_week(session, target_season)
     candidates = waiver_candidates(session, league, target_week, season=target_season)
     ranked = rank_waiver_targets(candidates, limit=limit)
+    shots = _headshots(session, [t.canonical_id for t in ranked])
     return WaiverResponse(
         league_id=league.id,
         season=target_season,
@@ -160,6 +223,7 @@ def waiver_targets(
                 context=t.context,
                 advanced=t.advanced,
                 advanced_summary=t.advanced_summary,
+                headshot_url=shots.get(t.canonical_id),
             )
             for t in ranked
         ],
@@ -195,10 +259,7 @@ def recommended_lineup(
     if not candidates:
         raise HTTPException(
             status_code=409,
-            detail=(
-                "no rostered players with usable history -- check that my_team_id is set "
-                "and the league has synced"
-            ),
+            detail=_no_lineup_reason(session, league, target_season),
         )
 
     lineup = optimize_lineup(candidates, slots)
@@ -214,6 +275,9 @@ def recommended_lineup(
                 name=slot.starter.name,
                 position=slot.starter.position,
                 projected=slot.starter.projected,
+                baseline_source=slot.starter.candidate.baseline_source,
+                advanced=list(slot.starter.candidate.advanced),
+                advanced_summary=slot.starter.candidate.advanced_summary,
                 adjustments=[
                     AdjustmentOut(label=a.label, delta=round(a.delta, 2))
                     for a in slot.starter.adjustments

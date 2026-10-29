@@ -479,20 +479,77 @@ class PlayerAdjustments:
     correlation: float
     correlation_factors: list[str]
     uncertainty: float
+    bye_conflict: float
+    bye_factors: list[str]
 
 
 def _player_adjustments(
-    player: PoolPlayer, ctx: DraftContext, params: EngineParams
+    player: PoolPlayer,
+    ctx: DraftContext,
+    params: EngineParams,
+    team_byes: dict[str, int],
 ) -> PlayerAdjustments:
     correlation, factors = _correlation_adjustment(
         player, ctx.my_roster_positions, ctx.my_roster_nfl_teams, params
     )
+    bye_conflict, bye_factors = _bye_conflict_adjustment(player, ctx, params, team_byes)
     return PlayerAdjustments(
         context=_context_adjustment(player),
         correlation=correlation,
         correlation_factors=factors,
         uncertainty=_projection_uncertainty(player) * params.projection_uncertainty_weight,
+        bye_conflict=bye_conflict,
+        bye_factors=bye_factors,
     )
+
+
+def _bye_conflict_adjustment(
+    player: PoolPlayer,
+    ctx: DraftContext,
+    params: EngineParams,
+    team_byes: dict[str, int],
+) -> tuple[float, list[str]]:
+    """Cost of adding another player idle in a week this roster is already thin.
+
+    Season projections are blind to this by construction: every player's total
+    is earned across the weeks he plays, so a roster can maximise projected
+    points while being unable to field a legal lineup in some week. Only the
+    roster being built knows the overlap, so it is priced here rather than in
+    the projection.
+    """
+    bye = player.bye_week
+    if bye is None or not ctx.my_roster_positions:
+        return 0.0, []
+    same_bye_positions = [
+        position
+        for position, team in zip(
+            ctx.my_roster_positions, ctx.my_roster_nfl_teams, strict=False
+        )
+        if team is not None and team_byes.get(_normalize_nfl_team(team) or "") == bye
+    ]
+    if not same_bye_positions:
+        return 0.0, []
+    same_position = sum(1 for position in same_bye_positions if position == player.position)
+    beyond_tolerance = max(0, len(same_bye_positions) - params.bye_stack_tolerance)
+    penalty = (
+        beyond_tolerance * params.bye_stack_penalty
+        + same_position * params.bye_same_position_penalty
+    )
+    if penalty <= 0.0:
+        return 0.0, []
+    shared = len(same_bye_positions)
+    factors = [
+        (
+            f"Week {bye} bye already shared with {shared} rostered "
+            f"player{'s' if shared != 1 else ''} (-{penalty:.1f})."
+        )
+    ]
+    if same_position:
+        factors.append(
+            f"{same_position} of them {'is' if same_position == 1 else 'are'} also "
+            f"{player.position}, so this pick adds no week {bye} cover."
+        )
+    return -penalty, factors
 
 
 def _projection_uncertainty(player: PoolPlayer) -> float:
@@ -504,16 +561,15 @@ def _projection_uncertainty(player: PoolPlayer) -> float:
 
 
 def _context_adjustment(player: PoolPlayer) -> float:
-    """Small, capped role/team adjustment; projections remain the primary signal."""
-    adjustment = 0.0
-    status = (player.status or "").lower()
-    if any(flag in status for flag in ("injured reserve", " ir", "out", "pup", "reserve")):
-        adjustment -= 18.0
-    elif "doubtful" in status:
-        adjustment -= 10.0
-    elif "questionable" in status:
-        adjustment -= 4.0
+    """Small, capped role/team adjustment; projections remain the primary signal.
 
+    Deliberately no injury-status dock. Drafts happen in August, when out/PUP/
+    questionable are routine camp designations the projection sources have
+    already priced in; docking them again double-counted the injury and taxed
+    whichever teams report camp injuries honestly (Kittle lost a TE tier to a
+    camp PUP tag). The status still reaches the human via the risks list.
+    """
+    adjustment = 0.0
     snap_pct = player.usage.get("snap_pct")
     target_share = player.usage.get("target_share")
     touches = player.usage.get("touches")
@@ -527,7 +583,7 @@ def _context_adjustment(player: PoolPlayer) -> float:
     team_epa = player.team_context.get("epa_per_play")
     if isinstance(team_epa, (int, float)):
         adjustment += 1.0 if team_epa >= 0.08 else -1.0 if team_epa < -0.03 else 0.0
-    return max(-20.0, min(4.0, adjustment))
+    return max(-4.0, min(4.0, adjustment))
 
 
 def _normalize_nfl_team(team: str | None) -> str | None:
@@ -604,6 +660,8 @@ def _analysis(
     uncertainty_penalty: float,
     reach_penalty: float,
     next_pick: int | None,
+    bye_conflict: float = 0.0,
+    bye_factors: list[str] | None = None,
 ) -> PlayerAnalysis:
     consensus = player.projection_consensus if player.projection_consensus is not None else player.points
     placeholder = (
@@ -628,6 +686,9 @@ def _analysis(
             f"expected {player.position} fallback value {fallback:.1f}."
         )
     risks = list(player.risk_flags)
+    if player.bye_week is not None:
+        risks.append(f"Bye week {player.bye_week}.")
+    risks.extend(bye_factors or [])
     if placeholder:
         risks.append("Projection range is an engine placeholder until source dispersion is available.")
     if not player.usage:
@@ -676,6 +737,8 @@ def _analysis(
             *correlation_factors,
             f"Projection uncertainty penalty: -{uncertainty_penalty:.1f}.",
             f"Waitability/reach penalty: -{reach_penalty:.1f}.",
+            *([f"Bye-week concentration: {bye_conflict:+.1f}."] if bye_conflict else []),
+            *(bye_factors or []),
         ],
         usage=usage,
         team_context=team_context,
@@ -773,8 +836,16 @@ def recommend(
     # adjusted_value call and across the ranking loop. Computing them once here
     # replaces roughly 2N redundant passes -- the counterfactual loop calls
     # adjusted_value for the whole board once per simulated candidate.
+    # Team -> bye week, taken from the pool itself so no caller has to supply
+    # it and both platform paths get it for free.
+    team_byes: dict[str, int] = {
+        normalized: player.bye_week
+        for player in pool
+        if player.bye_week is not None
+        and (normalized := _normalize_nfl_team(player.team)) is not None
+    }
     adjustments: dict[str, PlayerAdjustments] = {
-        player.canonical_id: _player_adjustments(player, ctx, params)
+        player.canonical_id: _player_adjustments(player, ctx, params, team_byes)
         for player in available
     }
 
@@ -813,6 +884,7 @@ def recommend(
             - adjustment.uncertainty
             + adjustment.context
             + adjustment.correlation
+            + adjustment.bye_conflict
         )
 
     values = {p.canonical_id: adjusted_value(p, need, have) for p in available}
@@ -923,7 +995,14 @@ def recommend(
         # contradict each other.
         if ctx.my_next_pick is None:
             survival, disappearance = 1.0, 0.0
-        elif simulation.picks_simulated and p.canonical_id in simulation.disappearance_probability:
+        elif simulation.picks_simulated == 0:
+            # Back-to-back snake turns (edge seats): zero opponents pick before
+            # my next turn, so nothing can disappear. The falsy count used to
+            # read as "no simulation ran" and substituted the analytic ADP
+            # curve, which showed "50% to last until pick 25" for a player
+            # nobody could take -- false pressure at every single edge turn.
+            survival, disappearance = 1.0, 0.0
+        elif p.canonical_id in simulation.disappearance_probability:
             disappearance = simulation.disappearance_probability[p.canonical_id]
             survival = 1.0 - disappearance
         else:
@@ -982,6 +1061,8 @@ def recommend(
                 uncertainty_penalty=adjustment.uncertainty,
                 reach_penalty=reach_penalty,
                 next_pick=ctx.my_next_pick,
+                bye_conflict=adjustment.bye_conflict,
+                bye_factors=adjustment.bye_factors,
             ),
             held_for_later=_held_for_later(
                 p.position, settings, ctx, have, startable, params
@@ -1030,6 +1111,11 @@ def recommend(
     )
 
     recommended_pick = ranked[0]
+    # A board can exhaust down to only held rows (everyone else drafted or
+    # capped). Whatever tops the sort IS the recommendation; leaving it marked
+    # held made the extension's board table filter out the very pick it was
+    # supposed to lead.
+    recommended_pick.held_for_later = False
 
     # The room-aware answer is driven by modeled disappearance and the value of
     # the same-position cliff. It is intentionally distinct from roster utility.
@@ -1040,13 +1126,18 @@ def recommend(
     # worse", and the panel showed him beside the real pick as though he were
     # one. The room pick answers which player worth having is about to go; a
     # player this roster cannot use is not an answer to that.
+    # Held rows are excluded outright. Must-fill promotion already clears the
+    # held flag on every legitimately promoted row, so admitting held rows
+    # "during must-fill" only ever admitted the leftovers promotion refused
+    # (K2, QB3) -- which is how a kicker run once made the room pick a second
+    # kicker while the DEF slot sat open.
     room_candidates = [
         r
         for r in ranked
         if r.adp is not None
         and r.value > 0
         and r.position not in capped_positions
-        and (must_fill or not r.held_for_later)
+        and not r.held_for_later
     ]
     if simulation.picks_simulated:
         room_pick = max(
@@ -1062,6 +1153,12 @@ def recommend(
             ),
             default=recommended_pick,
         )
+    elif ctx.my_next_pick is not None:
+        # Zero picks between my turns: nobody can take anyone, so there is no
+        # "about to go" answer. Min-ADP chalk here degraded the room pick to a
+        # meaningless name at every edge-seat turn; the honest answer is the
+        # recommendation itself.
+        room_pick = recommended_pick
     else:
         room_pick = (
             min(room_candidates, key=lambda r: (r.adp or float("inf"), r.canonical_id))
@@ -1088,7 +1185,16 @@ def recommend(
     # fallback serves from this cache and still needs them at the endgame.
     board = ranked[:200]
     board += [r for r in ranked[200:] if r.position in params.late_fill_positions]
-    alternates = [r for r in ranked[1:] if r.canonical_id != room_pick.canonical_id][:2]
+    # Alternates obey the same surfacing filter as every other slot: no held
+    # rows, no capped positions. On a nearly-exhausted board the unfiltered
+    # list served two held RBs as "alternatives" the roster could not use.
+    alternates = [
+        r
+        for r in ranked[1:]
+        if r.canonical_id != room_pick.canonical_id
+        and not r.held_for_later
+        and r.position not in capped_positions
+    ][:2]
     by_id = {p.canonical_id: p for p in available}
     return Recommendation(
         recommended_pick=recommended_pick,

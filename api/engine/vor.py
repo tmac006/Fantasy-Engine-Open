@@ -49,6 +49,10 @@ class PoolPlayer:
     advanced_season: str | None = None
     team_context: dict[str, ContextValue] = field(default_factory=dict)
     status: str | None = None
+    # The week this player's NFL team does not play. Draft-time rosters are
+    # built one player at a time, so without this the engine will happily
+    # assemble a lineup that cannot be fielded in a particular week.
+    bye_week: int | None = None
     risk_flags: tuple[str, ...] = ()
     freshness: dict[str, str | None] = field(default_factory=dict)
     # Platform-native IDs ({"sleeper": "9221", "espn": "4429795"}), passed

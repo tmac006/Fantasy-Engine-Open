@@ -23,6 +23,7 @@ from api.engine.presets import preset_scoring
 from api.engine.recommend import DraftContext, Recommendation, recommend
 from api.engine.simulation import DraftPickContext, TeamDraftContext
 from api.engine.vor import PoolPlayer
+from api.eval.pool_check import pool_health_problems
 from api.models import PlayerIds
 from api.schemas import LeagueSettings
 from api.services import build_pool, translate_espn_ids, translate_prefixed_ids
@@ -154,6 +155,12 @@ def espn_board(
     )
     if result is None:
         raise HTTPException(status_code=404, detail="no players available to rank")
+    # The board build is the one request that happens exactly once, pre-draft:
+    # the moment to check the inputs themselves. These reach the panel's
+    # warning banner, not just a server log.
+    result.warnings = pool_health_problems(session, settings, pool)
+    for warning in result.warnings:
+        log.warning("espn board pool health: %s", warning)
     return result
 
 
@@ -215,6 +222,24 @@ def _attribute_my_roster(
                 f"{expected - len(pairs)} of your {expected} picks could not be matched to a "
                 "player -- position advice may miss part of your roster"
             )
+        # Cross-check the typed slot against the room's own schedule. The slot
+        # stays authoritative -- in an ESPN practice room the schedule belongs
+        # to the real league and legitimately disagrees -- but in a real room a
+        # mismatch means the seat number is wrong, and then every roster-need
+        # call is being made for somebody else's team. That is the failure mode
+        # worth shouting about, so say it rather than quietly proceeding.
+        if my_team_id is not None and schedule:
+            scheduled_for_me = {
+                int(pick)
+                for pick, team_id in schedule.items()
+                if pick.isdigit() and team_id == my_team_id
+            }
+            if scheduled_for_me and scheduled_for_me != owned:
+                warnings.append(
+                    f"typed draft slot claims picks {sorted(owned)[:3]}, but this room's "
+                    f"schedule gives team {my_team_id} picks {sorted(scheduled_for_me)[:3]} "
+                    "-- unless this is a practice room, correct the slot number"
+                )
         return (
             tuple(pos for pos, _ in pairs),
             tuple(team for _, team in pairs),
@@ -330,6 +355,27 @@ def espn_recommendations(
         nfl_teams=nfl_teams,
         my_pick_numbers=request.my_pick_numbers,
     )
+    # The room being drafted is the ground truth for its own size. Stored
+    # league settings go stale when teams leave (a 16-team league quietly
+    # became 14), and total_teams drives replacement level, round math and the
+    # FFC ADP table choice -- all silently wrong if we trust the stale number.
+    #
+    # Only believe a schedule complete enough to be a real room. ESPN
+    # pre-allocates every pick, so a genuine payload shows at least two full
+    # rounds; a partially delivered one (the bridge mid-fetch, a socket-only
+    # start) would otherwise rewrite total_teams to 2 or 3 and wreck
+    # replacement level for the entire board -- far worse than the stale count
+    # this override exists to correct.
+    live_team_count = len({team_id for _, team_id in scheduled})
+    schedule_is_credible = (
+        live_team_count >= 4 and len(scheduled) >= live_team_count * 2
+    )
+    if schedule_is_credible and live_team_count != settings.total_teams:
+        roster_warnings.append(
+            f"live draft room has {live_team_count} teams but league settings say "
+            f"{settings.total_teams}; using the live count"
+        )
+        settings = settings.model_copy(update={"total_teams": live_team_count})
     for warning in roster_warnings:
         log.warning("espn live draft: %s", warning)
     recent = tuple(pos for pos in positions[-params.run_window :] if pos is not None)

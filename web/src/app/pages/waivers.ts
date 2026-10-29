@@ -7,6 +7,10 @@ import { Api, type WaiverTarget } from '../services/api';
 @Component({
   selector: 'app-waivers',
   imports: [MetersComponent],
+  styles: [`
+    .shot { width: 30px; height: 30px; border-radius: 50%; object-fit: cover;
+            object-position: 50% 22%; background: var(--line); vertical-align: middle; }
+  `],
   template: `
     <div class="row filters">
       <select [value]="leagueId()" (change)="pick($any($event.target).value)" aria-label="League">
@@ -36,6 +40,9 @@ import { Api, type WaiverTarget } from '../services/api';
           <div class="card">
             <div class="card-title">
               <span class="rank">{{ i + 1 }}</span>
+              @if (target.headshot_url) {
+                <img class="shot" [src]="target.headshot_url" [alt]="target.name" loading="lazy" />
+              }
               {{ target.name }}
               <span class="pos">{{ target.position }}</span>
               @if (target.team) {

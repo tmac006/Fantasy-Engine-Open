@@ -51,6 +51,10 @@ class LeagueRoster(Base, TimestampMixin):
     player_ids: Mapped[list[Any]] = mapped_column(JSONB, default=list)
     # Platform ids we could not map, kept so gaps are visible rather than silent.
     unmapped_player_ids: Mapped[list[Any]] = mapped_column(JSONB, default=list)
+    # Canonical id -> the platform's injury status (ESPN `injuryStatus`) at the
+    # last sync. Only non-empty statuses are stored; Sleeper leagues leave it
+    # empty and readers fall back to the players table.
+    injury_statuses: Mapped[dict[str, Any]] = mapped_column(JSONB, default=dict)
 
     league: Mapped[League] = relationship(back_populates="rosters")
 

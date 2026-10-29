@@ -17,6 +17,7 @@ from api.routers.admin import router as admin_router
 from api.routers.draft import router as draft_router
 from api.routers.leagues import router as leagues_router
 from api.routers.news import router as news_router
+from api.routers.trades import router as trades_router
 from api.routers.weekly import router as weekly_router
 from api.scheduler import build_scheduler, run_due_jobs
 
@@ -47,6 +48,7 @@ app.include_router(draft_router)
 app.include_router(admin_router)
 app.include_router(news_router)
 app.include_router(weekly_router)
+app.include_router(trades_router)
 
 
 class _WebFiles(StaticFiles):

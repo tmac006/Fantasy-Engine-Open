@@ -88,6 +88,17 @@ JOBS: tuple[Job, ...] = (
         interval=timedelta(hours=24),
         description="Sleeper player master + ID crosswalk",
     ),
+    # Before projections: the weekly projection window is derived from which
+    # games have final scores, so after a long sleep a stale schedule made the
+    # catch-up fetch last week's projections and skip the week being set.
+    Job(
+        name="lines",
+        fn=_run_lines,
+        # Lines drift all week and settle near kickoff, so this is worth
+        # refreshing more often than the schedule it rides along with.
+        interval=timedelta(hours=6),
+        description="Game schedule, betting lines and conditions",
+    ),
     Job(
         name="projections",
         fn=_run_projections,
@@ -107,14 +118,6 @@ JOBS: tuple[Job, ...] = (
         # the Tuesday waiver window always has fresh usage without cron timing.
         interval=timedelta(hours=12),
         description="In-season weekly usage (snaps, targets, shares)",
-    ),
-    Job(
-        name="lines",
-        fn=_run_lines,
-        # Lines drift all week and settle near kickoff, so this is worth
-        # refreshing more often than the schedule it rides along with.
-        interval=timedelta(hours=6),
-        description="Game schedule, betting lines and conditions",
     ),
     Job(
         name="news",
@@ -144,7 +147,14 @@ def last_success(session: Session, job_name: str) -> datetime | None:
     return _as_utc(
         session.scalar(
             select(IngestRun.finished_at)
-            .where(IngestRun.job == job_name, IngestRun.status == "ok")
+            .where(
+                IngestRun.job == job_name,
+                IngestRun.status == "ok",
+                # A run cut off mid-flight (process killed) has no finish time.
+                # Postgres sorts NULL first in DESC order, so without this
+                # guard one orphan row hides every later success.
+                IngestRun.finished_at.is_not(None),
+            )
             .order_by(IngestRun.finished_at.desc())
             .limit(1)
         )
@@ -161,7 +171,7 @@ def is_due(session: Session, job: Job, now: datetime | None = None) -> bool:
 def run_job(job: Job) -> IngestRun:
     """Run one job in its own session and record the outcome either way."""
     with get_sessionmaker()() as session:
-        record = IngestRun(job=job.name, status="ok")
+        record = IngestRun(job=job.name, status="running")
         session.add(record)
         session.commit()
         try:

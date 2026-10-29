@@ -10,8 +10,19 @@ from sqlalchemy.orm import Session
 from api.engine.advanced import build_profiles
 from api.engine.scoring import score_stats
 from api.engine.vor import PoolPlayer
-from api.models import Adp, PlayerContext, PlayerIds, Projection, TeamContext
+from api.models import Adp, GameLine, PlayerContext, PlayerIds, Projection, TeamContext
 from api.schemas import LeagueSettings
+
+
+def is_free_agent_team(team: str | None) -> bool:
+    """True when a team code means "no NFL team".
+
+    Sources disagree on the sentinel: Sleeper uses null, ESPN "FA", and
+    DynastyProcess "FA*" (and "NONE" has appeared). No real NFL code starts
+    with "FA", so prefix-match rather than enumerate.
+    """
+    code = (team or "").strip().upper()
+    return not code or code == "NONE" or code.startswith("FA")
 
 
 def canonical_map_for_sleeper(session: Session, sleeper_ids: list[str]) -> dict[str, str]:
@@ -71,6 +82,39 @@ def translate_prefixed_ids(session: Session, prefixed: list[str]) -> tuple[list[
     return out, unmapped
 
 
+def bye_weeks_for_season(session: Session, season: str) -> dict[str, int]:
+    """Each NFL team's bye week, derived from the schedule it is absent from.
+
+    The schedule is the only source for this -- no feed publishes a "bye" row --
+    so a team's bye is simply the week it appears in no game. Weeks the whole
+    league is idle (a schedule not yet fully published) would otherwise read as
+    everyone being on bye at once, so only weeks that actually contain games
+    count as candidates.
+    """
+    rows = session.execute(
+        select(GameLine.week, GameLine.home_team, GameLine.away_team).where(
+            GameLine.season == season
+        )
+    ).all()
+    if not rows:
+        return {}
+    weeks_with_games: set[int] = {week for week, _, _ in rows}
+    playing: dict[str, set[int]] = {}
+    for week, home, away in rows:
+        for team in (home, away):
+            if team:
+                playing.setdefault(team, set()).add(week)
+    byes: dict[str, int] = {}
+    for team, played in playing.items():
+        idle = sorted(weeks_with_games - played)
+        # Exactly one idle week is a bye. Several means the schedule is partial
+        # for this team, and guessing which one is the bye would be worse than
+        # admitting we do not know.
+        if len(idle) == 1:
+            byes[team] = idle[0]
+    return byes
+
+
 def build_pool(
     session: Session,
     settings: LeagueSettings,
@@ -125,6 +169,7 @@ def build_pool(
         for context in team_context_rows
         if context.source == "nflverse"
     }
+    byes = bye_weeks_for_season(session, season)
 
     reception_points = settings.scoring.get("rec", 0.0)
     adp_format = (
@@ -209,7 +254,7 @@ def build_pool(
         # Checked before enabling: every team-less player fell in that
         # placeholder ADP band, so nothing the market actually drafts is lost.
         # They return on their own once an ingest sees them signed.
-        if not ids.team or ids.team.strip().upper() in ("FA", "NONE"):
+        if is_free_agent_team(ids.team):
             continue
         adp = adp_by_player.get(canonical_id)
         platform_ids = {
@@ -254,6 +299,7 @@ def build_pool(
                 advanced_season=profile.season if profile else None,
                 team_context=team_data,
                 status=status,
+                bye_week=byes.get(ids.team or ""),
                 risk_flags=tuple(risks),
                 freshness=freshness,
                 platform_ids=platform_ids,

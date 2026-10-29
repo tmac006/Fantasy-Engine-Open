@@ -6,6 +6,7 @@
 
 import { isRealEspnPlayerId, parseEspnFrame } from "./adapters/espn-frames.ts";
 import { rowMatchesPlayer } from "./lib/autodraft.ts";
+import { HEARTBEAT_MS, draftStateKey, leagueSettingsKey } from "./lib/bridge-state.ts";
 
 const TAP_MESSAGE_TYPE = "fantasy-draft-tap";
 const API_READS = "https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl";
@@ -69,6 +70,40 @@ let flushTimer: number | null = null;
 let draftDetailTimer: number | null = null;
 let contextValid = true;
 let domObserver: MutationObserver | null = null;
+// Session-storage keys, per draft-room tab. Null until the service worker has
+// echoed our tab id back; nothing is written before then, because an unkeyed
+// slot is exactly the two-open-rooms clobber this keying exists to prevent.
+let stateKey: string | null = null;
+let settingsKey: string | null = null;
+
+async function resolveStorageKeys(): Promise<void> {
+  // Never give up. Until this resolves the bridge writes NOTHING, so a bounded
+  // retry that expires turns one unlucky service-worker wake-up into a panel
+  // that stays blank for the entire draft. The worker is event-driven and
+  // wakes on this very message, so retrying is cheap and eventually succeeds.
+  for (let attempt = 0; hasExtensionContext(); attempt += 1) {
+    try {
+      const response = (await chrome.runtime.sendMessage({ type: "get-tab-id" })) as
+        | { tabId?: number | null }
+        | undefined;
+      if (typeof response?.tabId === "number") {
+        stateKey = draftStateKey(response.tabId);
+        settingsKey = leagueSettingsKey(response.tabId);
+        markDirty(); // flush current state under the real key immediately
+        if (attempt > 0) {
+          console.info("draft-assistant: tab id resolved after %d retries", attempt);
+        }
+        return;
+      }
+    } catch {
+      // Service worker asleep or mid-reload; retry below.
+    }
+    // Fast at first (the common case is a cold worker), then back off so a
+    // genuinely broken worker does not spin for the whole draft.
+    const delay = attempt < 10 ? 500 : 3000;
+    await new Promise((resolve) => setTimeout(resolve, delay));
+  }
+}
 
 function markDirty(): void {
   dirty = true;
@@ -128,10 +163,17 @@ function setSession(value: Record<string, unknown>): Promise<void> {
 }
 
 flushTimer = window.setInterval(() => {
-  if (!dirty) return;
+  if (stateKey === null) return;
+  // Heartbeat: rewrite even when clean, so updatedAt means "the bridge is
+  // alive" rather than "something changed". The panel's staleness gate (and
+  // the armed auto-draft behind it) is only sound if a healthy-but-quiet
+  // room keeps its timestamp moving.
+  const heartbeatDue =
+    state.updatedAt !== 0 && Date.now() - state.updatedAt >= HEARTBEAT_MS;
+  if (!dirty && !heartbeatDue) return;
   dirty = false;
   state.updatedAt = Date.now();
-  void setSession({ espn_draft_state: state });
+  void setSession({ [stateKey]: state });
 }, 500);
 
 // -- socket path ------------------------------------------------------------
@@ -180,13 +222,24 @@ async function fetchLeagueJson(view: string): Promise<unknown> {
   return resp.json();
 }
 
-async function loadSettingsAndSchedule(): Promise<void> {
+// The panel cannot ask the server for a board until these settings arrive, so
+// one transient failure here used to cost the whole draft ("Waiting for league
+// settings from the draft page…" forever). Keep trying until it lands.
+let settingsStored = false;
+
+async function loadLeagueSettings(): Promise<void> {
+  if (settingsStored || settingsKey === null || !hasExtensionContext()) return;
   try {
     const settings = await fetchLeagueJson("mSettings");
-    await setSession({ espn_league_settings: settings });
+    await setSession({ [settingsKey]: settings });
+    settingsStored = true;
   } catch (err) {
-    console.warn("draft-assistant: mSettings fetch failed", err);
+    console.warn("draft-assistant: mSettings fetch failed; will retry", err);
   }
+}
+
+async function loadSettingsAndSchedule(): Promise<void> {
+  await loadLeagueSettings();
   await syncDraftDetail();
 }
 
@@ -197,8 +250,20 @@ interface EspnDraftDetailPick {
   player?: { id?: number | string | null };
 }
 
+// Consecutive mDraftDetail reads reporting fewer picks than we already hold.
+let shrinkStreak = 0;
+// True while a mDraftDetail fetch is in flight.
+let syncing = false;
+
 async function syncDraftDetail(): Promise<void> {
   if (!contextValid) return;
+  // The 2s timer fires without awaiting, so a fetch slower than its interval
+  // used to leave two requests racing -- and the OLDER response could land
+  // last, overwriting the pick list with a staler view of the draft. Skipping
+  // a tick costs nothing (the next one is 2s away); applying a stale response
+  // puts an already-drafted player back on the board.
+  if (syncing) return;
+  syncing = true;
   try {
     const detail = (await fetchLeagueJson("mDraftDetail")) as {
       draftDetail?: { picks?: EspnDraftDetailPick[] };
@@ -216,11 +281,19 @@ async function syncDraftDetail(): Promise<void> {
         : [];
     });
     // mDraftDetail describes the whole draft, so it is authoritative in both
-    // directions. The old growth-only guard meant an undo or a room reset could
-    // never shrink our list, leaving phantom picks in the drafted set for the
-    // rest of the session. A zero-length response is still ignored: that is a
-    // failed or pre-draft fetch, not an emptied draft.
-    if (selected.length > 0) {
+    // directions -- an undo or a room reset must be able to SHRINK our list, or
+    // phantom picks stay in the drafted set for the rest of the session. But
+    // REST also lags the socket routinely, and accepting a short read
+    // immediately would resurrect a player drafted seconds ago and offer him as
+    // the pick. Require the shrink to persist across two consecutive polls:
+    // real undos stay undone, momentary lag does not.
+    const shrinks = selected.length < state.pickedPlayerIds.length;
+    if (shrinks) {
+      shrinkStreak += 1;
+    } else {
+      shrinkStreak = 0;
+    }
+    if (selected.length > 0 && (!shrinks || shrinkStreak >= 2)) {
       state.pickedPlayerIds = selected.map((pick) => pick.playerId);
       state.pickedTeamIds = selected.map((pick) => pick.teamId);
       state.restSeen = true;
@@ -234,6 +307,8 @@ async function syncDraftDetail(): Promise<void> {
     markDirty();
   } catch (err) {
     console.warn("draft-assistant: mDraftDetail fetch failed", err);
+  } finally {
+    syncing = false;
   }
 }
 
@@ -305,9 +380,14 @@ function armDomFallback(): void {
 }
 
 if (state.leagueId) {
-  void loadSettingsAndSchedule();
+  void resolveStorageKeys().then(loadSettingsAndSchedule);
+  let tick = 0;
   draftDetailTimer = window.setInterval(() => {
+    tick += 1;
     void syncDraftDetail();
+    // Retry the settings fetch until it lands (no-op once stored). Every 5th
+    // tick so a persistent failure does not hammer ESPN.
+    if (!settingsStored && tick % 5 === 0) void loadLeagueSettings();
     scrapeClockPick();
     scrapeMyTurn();
     scrapeTotalRounds();

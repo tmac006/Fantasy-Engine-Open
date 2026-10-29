@@ -51,6 +51,20 @@ import { Api, type LineupResponse } from '../services/api';
             @if (starter.outlook; as o) {
               <app-meters [outlook]="o" [showDrivers]="starter.is_toss_up" />
             }
+            @if (starter.advanced?.length) {
+              <details class="advanced">
+                <summary>{{ starter.advanced_summary || 'Advanced stats' }}</summary>
+                @for (line of starter.advanced; track line) {
+                  <div class="note">{{ line }}</div>
+                }
+                <div class="note muted">
+                  Prior season, shown for context. Not part of the score.
+                </div>
+              </details>
+            }
+            @if (starter.baseline_source) {
+              <div class="source">from {{ starter.baseline_source }}</div>
+            }
           </div>
         }
       </div>
@@ -62,8 +76,8 @@ import { Api, type LineupResponse } from '../services/api';
       }
       @if (data.unsupported.length) {
         <p class="muted" style="margin-top:10px">
-          {{ data.unsupported.join(', ') }} not ranked: the weekly data has no
-          kicking or team-defense stats, so set those slots by matchup.
+          {{ data.unsupported.join(', ') }} not ranked: no weekly data is modelled
+          for those slots.
         </p>
       }
 

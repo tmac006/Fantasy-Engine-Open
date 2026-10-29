@@ -14,6 +14,7 @@ import { ThemeService } from './services/theme';
         <a class="tab" routerLink="/news" routerLinkActive="active" ariaCurrentWhenActive="page">News</a>
         <a class="tab" routerLink="/lineup" routerLinkActive="active" ariaCurrentWhenActive="page">Start/Sit</a>
         <a class="tab" routerLink="/waivers" routerLinkActive="active" ariaCurrentWhenActive="page">Waivers</a>
+        <a class="tab" routerLink="/trades" routerLinkActive="active" ariaCurrentWhenActive="page">Trades</a>
         <a class="tab" routerLink="/leagues" routerLinkActive="active" ariaCurrentWhenActive="page">Leagues</a>
         <a class="tab" routerLink="/data" routerLinkActive="active" ariaCurrentWhenActive="page">Data</a>
       </nav>

@@ -12,7 +12,7 @@ else has since been ingested.
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from statistics import median
 
 from sqlalchemy import select
@@ -20,19 +20,23 @@ from sqlalchemy.orm import Session
 
 from api.engine.advanced import AdvancedProfile, build_profiles
 from api.engine.outlook import outlook
+from api.engine.restofseason import RestOfSeason, league_scoring_points, rest_of_season
 from api.engine.startsit import GameEnvironment, LineupCandidate
 from api.engine.usage import WeeklyRow, player_form
+from api.engine.vor import PoolPlayer
 from api.engine.waivers import Candidate
 from api.models import (
     GameLine,
     League,
     LeagueRoster,
+    LeagueSettingsRow,
     Player,
     PlayerContext,
     PlayerIds,
     Projection,
     WeeklyStat,
 )
+from api.schemas import LeagueSettings
 
 log = logging.getLogger("api.inseason")
 
@@ -42,6 +46,12 @@ log = logging.getLogger("api.inseason")
 # kicker would score 0.0 and read as droppable. Both are reported via
 # UNSUPPORTED_SLOTS in the weekly router instead of being ranked wrongly.
 SKILL_POSITIONS = ("QB", "RB", "WR", "TE")
+# Kickers and team defenses carry no rows in the nflverse per-player feed, so
+# they have no form and were long excluded from start/sit entirely. They are
+# startable slots on a real roster, though, and a season-long projection plus
+# this week's game environment answers the streaming question the user actually
+# has -- which is more than the blank they used to get.
+LINEUP_POSITIONS = (*SKILL_POSITIONS, "K", "DEF")
 
 # A player with no game this week is on bye. Distinguishing that from "we have
 # no line for his game" matters: one is a zero, the other is missing data.
@@ -87,8 +97,12 @@ def load_history(session: Session, season: str) -> dict[int, list[WeeklyRow]]:
     return history
 
 
-def load_players(session: Session, ids: set[int] | None = None) -> dict[int, PlayerRow]:
-    query = select(Player).where(Player.position.in_(SKILL_POSITIONS))
+def load_players(
+    session: Session,
+    ids: set[int] | None = None,
+    positions: tuple[str, ...] = SKILL_POSITIONS,
+) -> dict[int, PlayerRow]:
+    query = select(Player).where(Player.position.in_(positions))
     if ids is not None:
         query = query.where(Player.canonical_id.in_(ids))
     return {
@@ -206,22 +220,170 @@ def _projections(session: Session, season: str, week: int, ids: set[int]) -> dic
     would silently pick a source at random. The median also keeps one wild
     outlier from dragging a lineup call.
     """
+    by_week = _projections_by_week(session, season, week, ids)
+    return {canonical_id: weeks[week] for canonical_id, weeks in by_week.items() if week in weeks}
+
+
+def _projections_by_week(
+    session: Session, season: str, from_week: int, ids: set[int] | None
+) -> dict[int, dict[int, float]]:
+    """Median weekly projection per player per week, for `from_week` onward.
+
+    `ids=None` loads every player; the trade engine values whole rosters.
+    """
+    if ids is not None and not ids:
+        return {}
+    query = select(Projection).where(
+        Projection.season == season,
+        Projection.week.is_not(None),
+        Projection.week >= from_week,
+    )
+    if ids is not None:
+        query = query.where(Projection.canonical_id.in_(ids))
+    collected: dict[int, dict[int, list[float]]] = {}
+    for row in session.scalars(query):
+        if row.points is not None and row.week is not None:
+            collected.setdefault(row.canonical_id, {}).setdefault(row.week, []).append(row.points)
+    return {
+        canonical_id: {week: median(points) for week, points in weeks.items()}
+        for canonical_id, weeks in collected.items()
+    }
+
+
+def injury_statuses(
+    session: Session, league: League, ids: set[int] | None = None
+) -> dict[int, str]:
+    """Each player's current injury designation, platform first.
+
+    The league's own sync (ESPN mRoster `injuryStatus`) is the freshest view
+    and is what the platform itself acts on. Anyone it does not cover -- a
+    Sleeper league, a free agent, a league not re-synced since the column was
+    added -- falls back to the daily Sleeper player refresh.
+    """
+    statuses: dict[int, str] = {}
+    for player in session.scalars(
+        select(Player).where(Player.canonical_id.in_(ids)) if ids is not None else select(Player)
+    ):
+        status = player.injury_status or player.status
+        if status:
+            statuses[player.canonical_id] = status
+    for roster in session.scalars(
+        select(LeagueRoster).where(LeagueRoster.league_id == league.id)
+    ):
+        for canonical_id, status in (roster.injury_statuses or {}).items():
+            if str(canonical_id).isdigit() and status:
+                statuses[int(canonical_id)] = str(status)
+    return statuses
+
+
+def season_scoring_rates(
+    history: dict[int, list[WeeklyRow]], before_week: int, reception_value: float
+) -> dict[int, tuple[float, int]]:
+    """(points per game, games) this season, scored at the league's PPR value.
+
+    Only weeks strictly before `before_week` count -- the same point-in-time
+    cutoff `api.engine.usage` applies everywhere else.
+    """
+    rates: dict[int, tuple[float, int]] = {}
+    for canonical_id, rows in history.items():
+        points = [
+            scored
+            for row in rows
+            if row.week < before_week
+            and (scored := league_scoring_points(row.stats, reception_value)) is not None
+        ]
+        if points:
+            rates[canonical_id] = (sum(points) / len(points), len(points))
+    return rates
+
+
+def rest_of_season_pool(
+    session: Session,
+    league: League,
+    settings: LeagueSettings,
+    pool: list[PoolPlayer],
+    season: str | None = None,
+    week: int | None = None,
+) -> tuple[list[PoolPlayer], dict[str, RestOfSeason], int]:
+    """The draft pool re-valued on what each player is worth from here on.
+
+    Returns (pool with `points` = rest-of-season points, schedules by
+    canonical id, current week). `status` is replaced by the resolved
+    availability class so downstream notes read the same designation that
+    priced him, rather than a stale Sleeper string.
+    """
+    season = season or league.season
+    week = week if week is not None else current_week(session, season)
+    projections = _projections_by_week(session, season, week, None)
+    rates = season_scoring_rates(
+        load_history(session, season), week, float(settings.scoring.get("rec", 0.0))
+    )
+    statuses = injury_statuses(session, league)
+
+    valued: list[PoolPlayer] = []
+    schedules: dict[str, RestOfSeason] = {}
+    for player in pool:
+        canonical_id = int(player.canonical_id) if player.canonical_id.isdigit() else None
+        rate, games = rates.get(canonical_id, (None, 0)) if canonical_id is not None else (None, 0)
+        schedule = rest_of_season(
+            preseason_total=player.points,
+            current_week=week,
+            bye_week=player.bye_week,
+            weekly_projections=projections.get(canonical_id) if canonical_id is not None else None,
+            season_rate=rate,
+            games_played=games,
+            injury_status=statuses.get(canonical_id) if canonical_id is not None else None,
+        )
+        schedules[player.canonical_id] = schedule
+        valued.append(
+            replace(
+                player,
+                points=schedule.points,
+                status=f"injury: {schedule.availability}" if schedule.availability else None,
+            )
+        )
+    return valued, schedules, week
+
+
+# A full NFL season. Turns a season-long projection into a per-game baseline.
+SEASON_GAMES = 17
+# Past the last real week, so `weeks_before` keeps a whole prior season.
+_PRIOR_SEASON_END = 99
+
+
+def _season_projection_rate(
+    session: Session, league: League, season: str, ids: set[int]
+) -> dict[int, float]:
+    """Per-game baseline from this season's long-range projections.
+
+    Week 1 has no form and no weekly projection, and refusing to answer is the
+    wrong response when a season-long forecast exists: it already prices team
+    changes, role and depth-chart moves, which last season's rate cannot. Built
+    through `build_pool` rather than read raw so it is scored under this
+    league's own rules, exactly like the draft board.
+    """
     if not ids:
         return {}
-    by_player: dict[int, list[float]] = {}
-    rows = session.scalars(
-        select(Projection).where(
-            Projection.season == season,
-            Projection.week == week,
-            Projection.canonical_id.in_(ids),
-        )
+    row = session.scalar(
+        select(LeagueSettingsRow).where(LeagueSettingsRow.league_id == league.id)
     )
-    for row in rows:
-        if row.points is not None:
-            by_player.setdefault(row.canonical_id, []).append(row.points)
-    return {
-        canonical_id: median(points) for canonical_id, points in by_player.items() if points
-    }
+    if row is None:
+        return {}
+    settings = LeagueSettings(
+        scoring=dict(row.scoring),
+        roster_slots=dict(row.roster_slots),
+        total_teams=row.total_teams,
+    )
+    from api.services import build_pool  # local: avoids an import cycle
+
+    rates: dict[int, float] = {}
+    for player in build_pool(session, settings, season=season, platform=league.platform):
+        if not player.canonical_id.isdigit():
+            continue
+        canonical_id = int(player.canonical_id)
+        if canonical_id in ids and player.points > 0:
+            rates[canonical_id] = player.points / SEASON_GAMES
+    return rates
 
 
 def lineup_candidates(
@@ -239,20 +401,45 @@ def lineup_candidates(
         return []
 
     history = load_history(session, season)
-    players = load_players(session, owned)
+    players = load_players(session, owned, positions=LINEUP_POSITIONS)
     games = _game_index(session, season, week)
     projected = _projections(session, season, week, owned)
+    season_rate = _season_projection_rate(session, league, season, owned)
+    profiles = advanced_profiles(session, season)
+    statuses = injury_statuses(session, league, owned)
+    prior_season = str(int(season) - 1) if season.isdigit() else None
+    prior_history = load_history(session, prior_season) if prior_season else {}
 
     candidates: list[LineupCandidate] = []
     for canonical_id, player in players.items():
         rows = history.get(canonical_id, [])
         form = player_form(rows, as_of_week=week)
+        prior_rows = prior_history.get(canonical_id, [])
+        prior_form = (
+            player_form(prior_rows, as_of_week=_PRIOR_SEASON_END) if prior_rows else None
+        )
+
+        # Most specific source first. Each step down is a genuinely weaker
+        # claim, so the one actually used is recorded and shown on the card.
         baseline = projected.get(canonical_id)
+        source = f"week {week} projection"
         if baseline is None:
             baseline = form.to_date.ppr_per_game
+            source = f"{season} scoring rate ({form.to_date.games} gm)"
         if baseline is None:
-            # No projection and never played: nothing to rank him on.
+            baseline = season_rate.get(canonical_id)
+            source = f"{season} season projection"
+        if baseline is None and prior_form is not None:
+            baseline = prior_form.to_date.ppr_per_game
+            source = f"{prior_season} scoring rate ({prior_form.to_date.games} gm)"
+        if baseline is None:
+            # No projection, no history either season: nothing to rank him on.
             continue
+
+        # The floor/ceiling read needs games played. Before this season has any,
+        # last season's spread is the honest stand-in -- blank would suggest the
+        # player has no variance rather than that we have not measured it yet.
+        meter_form = form if form.to_date.games else (prior_form or form)
         game = games.get(player.team) if player.team else None
         candidates.append(
             LineupCandidate(
@@ -260,9 +447,13 @@ def lineup_candidates(
                 name=player.name,
                 position=player.position,
                 baseline=round(baseline, 2),
+                baseline_source=source,
                 environment=_environment(game, player.team),
-                outlook=outlook(form, player.position),
+                outlook=outlook(meter_form, player.position),
+                advanced=tuple(profile.lines) if (profile := profiles.get(str(canonical_id))) else (),
+                advanced_summary=profile.summary if profile else None,
                 is_on_bye=player.team is not None and player.team not in games,
+                injury_status=statuses.get(canonical_id),
             )
         )
     return candidates

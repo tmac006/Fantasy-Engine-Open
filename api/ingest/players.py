@@ -59,7 +59,28 @@ class CrosswalkIndex:
         self.by_sleeper = {r.sleeper_id: r for r in rows if r.sleeper_id}
         self.by_gsis = {r.gsis_id: r for r in rows if r.gsis_id}
         self.by_espn = {r.espn_id: r for r in rows if r.espn_id}
-        self.by_name = {(r.merge_name, r.position): r for r in rows}
+        self.by_name: dict[tuple[str, str | None], PlayerIds] = {}
+        # Namesakes: merge_name strips Jr/Sr/II, so Frank Gore Jr. and Sr. (both
+        # RB) share a key. Keeping "one row per name" silently handed the second
+        # player's ids and projections to the first. Ambiguous keys are tracked
+        # and name-joins refuse them -- wrong attribution is worse than a miss.
+        self.ambiguous: set[tuple[str, str | None]] = set()
+        for r in rows:
+            self._index_name(r)
+
+    def _index_name(self, row: PlayerIds) -> None:
+        key = (row.merge_name, row.position)
+        existing = self.by_name.get(key)
+        if existing is not None and existing is not row:
+            if key not in self.ambiguous:
+                self.ambiguous.add(key)
+                log.warning(
+                    "namesake collision: %s (%s) matches multiple players; "
+                    "name-based joins disabled for this name",
+                    row.full_name, row.position,
+                )
+        else:
+            self.by_name[key] = row
 
     def find(
         self,
@@ -76,7 +97,23 @@ class CrosswalkIndex:
         ):
             if key and key in index:
                 return index[key]
-        return self.by_name.get((merge_name, position))
+        name_key = (merge_name, position)
+        if name_key in self.ambiguous:
+            return None
+        row = self.by_name.get(name_key)
+        if row is None:
+            return None
+        # A name match that contradicts a known platform id is a namesake, not
+        # a match: the caller carries an id this row provably does not own.
+        for attr, value in (
+            ("sleeper_id", sleeper_id),
+            ("gsis_id", gsis_id),
+            ("espn_id", espn_id),
+        ):
+            owned = getattr(row, attr)
+            if value and owned and owned != value:
+                return None
+        return row
 
     def add(self, row: PlayerIds) -> None:
         if row.sleeper_id:
@@ -85,7 +122,7 @@ class CrosswalkIndex:
             self.by_gsis[row.gsis_id] = row
         if row.espn_id:
             self.by_espn[row.espn_id] = row
-        self.by_name[(row.merge_name, row.position)] = row
+        self._index_name(row)
 
     def claim_ok(self, row: PlayerIds, attr: str, value: str) -> bool:
         """True if `value` for unique column `attr` isn't already owned by another row."""
@@ -135,6 +172,11 @@ def ingest_dynastyprocess(session: Session, csv_text: str) -> Counts:
 
         row = idx.find(sleeper_id, gsis_id, espn_id, merge_name, position)
         if row is None:
+            if not (sleeper_id or gsis_id or espn_id) and (merge_name, position) in idx.ambiguous:
+                # No id to anchor on and the name is claimed by multiple
+                # players: creating a row would mint a new duplicate every run.
+                c.skip("ambiguous_name")
+                continue
             row = PlayerIds(
                 full_name=name, merge_name=merge_name, position=position,
                 team=(rec.get("team") or None),
@@ -186,7 +228,11 @@ def ingest_sleeper_players(session: Session, payload: dict[str, Any]) -> Counts:
         else:
             c.updated += 1
         _set_ids(idx, row, c, sleeper_id=sleeper_id, gsis_id=gsis_id, espn_id=espn_id)
-        row.team = p.get("team") or row.team
+        # Sleeper is authoritative for current team, including team=None for a
+        # released player. `or row.team` here once made cuts permanent: a stored
+        # team could never be cleared, so cut players kept passing the
+        # free-agent pool filter with full projections.
+        row.team = p.get("team")
         session.flush()
 
         player = existing_players.get(row.canonical_id)
@@ -249,7 +295,13 @@ def ingest_espn_pool(session: Session, players: list[dict[str, Any]]) -> Counts:
             abbrev = ESPN_PRO_TEAM_ABBREV.get(p.get("proTeamId", 0))
             row = def_by_team.get(abbrev) if abbrev else None
         else:
-            row = idx.by_name.get((make_merge_name(name), position))
+            name_key = (make_merge_name(name), position)
+            if name_key in idx.ambiguous:
+                # Attaching this espn_id to whichever namesake happens to own
+                # the key would corrupt the crosswalk silently; skip loudly.
+                c.skip("ambiguous_name")
+                continue
+            row = idx.by_name.get(name_key)
         if row is None:
             c.skip("no_name_match")
             continue

@@ -22,6 +22,12 @@ import {
   postEspnRecommendations,
 } from "../lib/api.ts";
 import { computeOffline } from "../lib/board.ts";
+import {
+  acceptBridgeState,
+  bridgeFresh,
+  draftStateKey,
+  leagueSettingsKey,
+} from "../lib/bridge-state.ts";
 import type { PlayerAnalysis, RankedPlayer, Recommendation, SleeperPick } from "../lib/types.ts";
 
 const POLL_MS = 3000;
@@ -153,7 +159,21 @@ function wireConfig(): void {
 
 async function detectDraftFromTab(): Promise<void> {
   const tabs = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
-  const url = tabs[0]?.url ?? "";
+  let tab = tabs[0];
+  let url = tab?.url ?? "";
+  // The draft room is not always the focused tab: the user checks a rankings
+  // site between picks, pops the room into its own window, or opens the panel
+  // before navigating. Binding only to the active tab left the panel showing
+  // "Open the ESPN draft room tab to connect" while the draft ran one tab
+  // over. Fall back to any open draft room, preferring the focused one.
+  if (!ESPN_DRAFT_URL.test(url)) {
+    const espnTabs = await chrome.tabs.query({ url: "https://fantasy.espn.com/football/draft*" });
+    const found = espnTabs.find((t) => t.active) ?? espnTabs[0];
+    if (found?.url) {
+      tab = found;
+      url = found.url;
+    }
+  }
   // Platform detection must beat a Sleeper override saved from another tab.
   // Otherwise an old draft ID makes the ESPN page poll Sleeper and report the
   // API as unreachable even though the local API is healthy.
@@ -161,7 +181,7 @@ async function detectDraftFromTab(): Promise<void> {
     const leagueId = new URL(url).searchParams.get("leagueId");
     if (leagueId) {
       state.mode = "espn";
-      state.draftTabId = tabs[0]?.id ?? null;
+      state.draftTabId = tab?.id ?? null;
       if (state.draftId !== `espn:${leagueId}`) state.espnBoardRequested = false;
       state.draftId = `espn:${leagueId}`;
       const input = $<HTMLInputElement>("draft-id");
@@ -417,9 +437,29 @@ const normalizeName = (n: string): string =>
   n.toLowerCase().replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ").trim();
 
 async function espnTick(leagueId: string): Promise<void> {
-  const session = await chrome.storage.session.get(["espn_draft_state", "espn_league_settings"]);
-  const draft = session["espn_draft_state"] as EspnDraftState | undefined;
-  const leagueJson = session["espn_league_settings"];
+  // Bridge state is keyed per draft-room tab: two open rooms (a mock plus the
+  // real one shares even the league id) must never feed each other's panel.
+  const tabId = state.draftTabId;
+  if (tabId === null) {
+    setStatus("idle", "Open the ESPN draft room tab to connect");
+    return;
+  }
+  const stateKey = draftStateKey(tabId);
+  const settingsKey = leagueSettingsKey(tabId);
+  const session = await chrome.storage.session.get([stateKey, settingsKey]);
+  const { draft, mismatch } = acceptBridgeState(
+    session[stateKey] as EspnDraftState | undefined,
+    leagueId,
+  );
+  // A tab that navigated between leagues can leave the other league's payloads
+  // behind for a beat; a mismatched draft state condemns the settings written
+  // by the same bridge instance too.
+  const storedSettings = mismatch ? undefined : session[settingsKey];
+  const settingsLeagueId = (storedSettings as { id?: number } | undefined)?.id;
+  const leagueJson =
+    settingsLeagueId !== undefined && String(settingsLeagueId) !== leagueId
+      ? undefined
+      : storedSettings;
   const cacheKey = `espn:${leagueId}`;
 
   let cached = await loadCachedBoard(cacheKey);
@@ -507,6 +547,18 @@ async function espnTick(leagueId: string): Promise<void> {
         + "refresh the ESPN draft page to resync"
       : null;
 
+  // No bridge state at all means the content script never injected (or the tab
+  // was reloaded and has not reported yet). Every number below is then computed
+  // from an untouched pre-draft board while the room may be twenty picks in --
+  // and the desync check above cannot fire, because it needs the bridge to tell
+  // it the clock. Silence here reads as "the draft has not started".
+  const bridgeWarning =
+    draft === undefined
+      ? "the ESPN draft page is not connected -- reload the draft tab; no picks are being tracked"
+      : !bridgeFresh(draft, Date.now())
+        ? "the ESPN draft page has stopped updating -- reload the draft tab"
+        : null;
+
   if (leagueJson) {
     try {
       const live = await postEspnRecommendations({
@@ -517,20 +569,23 @@ async function espnTick(leagueId: string): Promise<void> {
         my_team_id: draft?.myTeamId ?? null,
         my_pick_numbers: myPickNumbers,
       });
-      const inputWarnings = [desyncWarning, slotWarning].filter(
+      const mismatchWarning = mismatch
+        ? "this tab's draft state belongs to a different league -- ignoring it"
+        : null;
+      const inputWarnings = [bridgeWarning, desyncWarning, slotWarning, mismatchWarning].filter(
         (warning): warning is string => warning !== null,
       );
       if (inputWarnings.length) live.warnings = [...inputWarnings, ...(live.warnings ?? [])];
       await cacheBoard(cacheKey, live);
       state.offline = false;
-      const fresh = draft && Date.now() - draft.updatedAt < 15000;
+      const fresh = bridgeFresh(draft, Date.now());
       if (desyncWarning) {
         // Every number below is computed from a board we know is behind, so it
         // must not wear the same "live" badge as a healthy poll.
         setStatus("error", `ESPN | STALE BOARD | ${draftedIds.size} picks seen`);
       } else if (draft?.restSeen && fresh) {
         setStatus("live", `ESPN | live REST | ${draftedIds.size} picks seen`);
-      } else if (draft?.usingDomFallback) {
+      } else if (draft?.usingDomFallback && fresh) {
         setStatus("live", `ESPN | DOM fallback | ${draftedIds.size} picks seen`);
       } else if (draft?.socketSeen && fresh) {
         setStatus("live", `ESPN | live model | ${draftedIds.size} picks seen`);
@@ -542,8 +597,11 @@ async function espnTick(leagueId: string): Promise<void> {
       // advising off it is bad enough, clicking DRAFT off it is worse.
       // ESPN's own banner is authoritative for whose turn it is; the
       // server's on_clock is only a fallback when the slot is unset.
+      // And the banner is only trustworthy while the bridge heartbeat is
+      // fresh: a frozen bridge keeps myTurn=true forever, and the desync
+      // warning cannot trip because both sides froze together.
       const onClock = draft?.myTurn ?? live.on_clock;
-      if (!desyncWarning) void maybeAutoDraft(live, currentPick, onClock);
+      if (!desyncWarning && fresh) void maybeAutoDraft(live, currentPick, onClock);
       return;
     } catch {
       // The cached board remains a safe clock-time fallback.
@@ -581,8 +639,14 @@ async function espnTick(leagueId: string): Promise<void> {
   });
   // Reaching here means the live call failed or settings are missing: this is
   // the cached-board heuristic, not a live answer, and the status must say so.
+  // Name the actual cause. Landing here without league settings means the
+  // draft page never delivered them, and blaming the API sends the user to
+  // restart a server that was never the problem.
   const offlineWarnings = [
-    "API unreachable -- showing a cached board, not live recommendations",
+    leagueJson
+      ? "API unreachable -- showing a cached board, not live recommendations"
+      : "no league settings from the draft page -- showing a cached board, not live recommendations",
+    bridgeWarning,
     desyncWarning,
     slotWarning,
   ].filter((warning): warning is string => warning !== null);
@@ -592,10 +656,10 @@ async function espnTick(leagueId: string): Promise<void> {
     setStatus("error", "Board exhausted");
     return;
   }
-  const fresh = draft && Date.now() - draft.updatedAt < 15000;
+  const fresh = bridgeFresh(draft, Date.now());
   if (draft?.restSeen && fresh) {
     setStatus("live", `ESPN | live REST | ${draftedIds.size} picks seen`);
-  } else if (draft?.usingDomFallback) {
+  } else if (draft?.usingDomFallback && fresh) {
     setStatus("live", `ESPN | DOM fallback | ${draftedIds.size} picks seen`);
   } else if (draft?.socketSeen && fresh) {
     setStatus("live", `ESPN | live socket | ${draftedIds.size} picks seen`);

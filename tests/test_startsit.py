@@ -146,3 +146,37 @@ class TestLineup:
         ]
         slot = optimize_lineup(roster, {"TE": 1, "BN": 1}).slots[0]
         assert slot.starter.name == "Available"
+
+
+# -- preseason baselines ----------------------------------------------------
+
+
+def test_baseline_source_is_recorded_on_the_candidate() -> None:
+    """Week 1 has no form, so the number leans on a season projection. Which
+    source was used has to travel with it, or the card shows a mystery number."""
+    candidate = LineupCandidate(
+        canonical_id=1,
+        name="Someone",
+        position="RB",
+        baseline=15.0,
+        baseline_source="2026 season projection",
+    )
+    assert candidate.baseline_source == "2026 season projection"
+
+
+def test_baseline_source_defaults_to_empty() -> None:
+    candidate = LineupCandidate(canonical_id=1, name="A", position="WR", baseline=9.0)
+    assert candidate.baseline_source == ""
+
+
+def test_kickers_and_defenses_are_lineup_eligible() -> None:
+    """They carry no rows in the per-player weekly feed, which is why they were
+    excluded; a season projection plus game environment answers the streaming
+    question anyway, so the slots must no longer read as unsupported."""
+    from api.inseason import LINEUP_POSITIONS, SKILL_POSITIONS
+    from api.routers.weekly import UNSUPPORTED_SLOTS
+
+    assert "K" in LINEUP_POSITIONS
+    assert "DEF" in LINEUP_POSITIONS
+    assert "K" not in SKILL_POSITIONS, "the waiver path is unchanged"
+    assert not {"K", "DEF"} & UNSUPPORTED_SLOTS

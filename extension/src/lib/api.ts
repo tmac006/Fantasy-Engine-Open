@@ -60,7 +60,27 @@ export interface CachedBoard {
 }
 
 export async function cacheBoard(draftId: string, rec: Recommendation): Promise<void> {
-  const entry: CachedBoard = { draftId, fetchedAt: Date.now(), recommendation: rec };
+  // The LIVE board contains only players still available, so re-caching it
+  // verbatim each poll progressively erases everyone already drafted -- the
+  // user's own picks included. The offline fallback rebuilds its roster by
+  // looking those picks up in this board, so that erasure turned an API outage
+  // into "every starter slot is open" and duplicate-position advice. Keep the
+  // union instead: fresh rows win, drafted rows survive as identity. Nothing
+  // downstream is confused by the extras -- computeOffline filters the board
+  // by the drafted set before ranking.
+  let board = rec.board;
+  const data = await chrome.storage.local.get(CACHE_KEY);
+  const previous = data[CACHE_KEY] as CachedBoard | undefined;
+  const priorBoard = previous?.draftId === draftId ? previous.recommendation?.board : undefined;
+  if (priorBoard?.length) {
+    const fresh = new Set(board.map((p) => p.canonical_id));
+    board = [...board, ...priorBoard.filter((p) => !fresh.has(p.canonical_id))];
+  }
+  const entry: CachedBoard = {
+    draftId,
+    fetchedAt: Date.now(),
+    recommendation: { ...rec, board },
+  };
   await chrome.storage.local.set({ [CACHE_KEY]: entry });
 }
 

@@ -171,7 +171,12 @@ class TestExplicitPickNumbers:
         )
         assert mine == ("QB", "TE")
         assert len(teams) == 2
-        assert not warnings
+        # Attribution still follows the typed slot. The disagreement is now
+        # SAID rather than swallowed: it is expected in a practice room, but in
+        # a real room it is the signature of a mistyped seat, which otherwise
+        # hands the engine a stranger's roster in complete silence.
+        assert any("correct the slot number" in w for w in warnings)
+        assert not any("could not be matched" in w for w in warnings)
 
     def test_future_picks_do_not_count_as_missing(self) -> None:
         mine, _, _, warnings = _attribute_my_roster(
@@ -183,7 +188,7 @@ class TestExplicitPickNumbers:
             my_pick_numbers=[7, 18, 31],
         )
         assert mine == ("RB",)  # only pick 7 has happened
-        assert not warnings
+        assert not any("could not be matched" in w for w in warnings)
 
     def test_unmatched_owned_pick_is_reported(self) -> None:
         positions: list[str | None] = ["RB"] * 24
@@ -260,3 +265,34 @@ class TestNonContiguousTeamIds:
             nfl_teams=[None] * count,
         )
         assert roster == ("WR",)
+
+
+class TestSlotScheduleCrossCheck:
+    """A mistyped seat is silent and catastrophic; the schedule can catch it."""
+
+    def test_matching_slot_and_schedule_is_quiet(self) -> None:
+        # The real case on draft day: ESPN's own schedule agrees with the typed
+        # slot, so nothing is said.
+        mine_picks = sorted(int(p) for p, t in SNAKE.items() if t == 4)
+        _, _, _, warnings = _attribute_my_roster(
+            my_team_id=4,
+            picked_team_ids=None,
+            schedule=SNAKE,
+            positions=["RB"] * 24,
+            nfl_teams=[None] * 24,
+            my_pick_numbers=mine_picks,
+        )
+        assert not any("correct the slot number" in w for w in warnings)
+
+    def test_wrong_slot_is_reported(self) -> None:
+        # Seat typed one off: every roster-need call would be for another team.
+        wrong = [p + 1 for p in sorted(int(p) for p, t in SNAKE.items() if t == 4)]
+        _, _, _, warnings = _attribute_my_roster(
+            my_team_id=4,
+            picked_team_ids=None,
+            schedule=SNAKE,
+            positions=["RB"] * 24,
+            nfl_teams=[None] * 24,
+            my_pick_numbers=wrong,
+        )
+        assert any("correct the slot number" in w for w in warnings)

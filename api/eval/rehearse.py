@@ -37,6 +37,7 @@ from api.db import get_sessionmaker
 from api.engine.params import EngineParams
 from api.engine.vor import startable_slots
 from api.eval.mockdraft import check_invariants, grade_roster, simulate_draft
+from api.eval.pool_check import pool_health_problems
 from api.models.league import League, LeagueSettingsRow
 from api.schemas import LeagueSettings
 from api.services import build_pool
@@ -105,6 +106,9 @@ def rehearse_league(
 
     with get_sessionmaker()() as session:
         pool = build_pool(session, settings, platform=platform)
+        pool_problems = pool_health_problems(session, settings, pool)
+    for problem in pool_problems:
+        print(f"  POOL WARNING: {problem}")
     print(f"  pool: {len(pool)} players\n")
 
     scores: list[float] = []

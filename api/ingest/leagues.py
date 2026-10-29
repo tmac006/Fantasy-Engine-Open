@@ -60,11 +60,32 @@ def map_roster_players(
     return matched, missing
 
 
+def map_injury_statuses(
+    platform_player_ids: list[str],
+    statuses: dict[str, str],
+    canonical: dict[str, str],
+) -> dict[str, str]:
+    """Canonical id -> platform injury status, for one roster's mapped players.
+
+    Healthy players (no status, or ESPN's ACTIVE) are left out so the stored
+    map lists only the designations that change a valuation.
+    """
+    out: dict[str, str] = {}
+    for pid in platform_player_ids:
+        target = canonical.get(str(pid))
+        status = statuses.get(str(pid))
+        if target is not None and status and status.upper() != "ACTIVE":
+            out[target] = status
+    return out
+
+
 def _store_rosters(
     session: Session,
     league: League,
     rosters: dict[str, list[str]],
     canonical: dict[str, str],
+    team_names: dict[str, str] | None = None,
+    injury_statuses: dict[str, str] | None = None,
 ) -> tuple[int, int]:
     """Replace this league's rosters. Returns (mapped, unmapped) player counts."""
     existing = {
@@ -85,9 +106,28 @@ def _store_rosters(
             session.add(row)
         row.player_ids = canonical_ids
         row.unmapped_player_ids = missing
+        row.injury_statuses = map_injury_statuses(
+            platform_player_ids, injury_statuses or {}, canonical
+        )
         row.is_mine = (
             league.my_team_id is not None and str(league.my_team_id) == platform_roster_id
         )
+        name = (team_names or {}).get(platform_roster_id)
+        if name:
+            row.owner = name
+    # "Replace" must include the reverse direction: a team that left the league
+    # keeps its roster row forever under a pure upsert, and its players then
+    # read as owned in-season -- hiding exactly the abandoned-team players most
+    # likely to actually be on waivers.
+    departed = [
+        row for roster_id, row in existing.items() if roster_id not in rosters
+    ]
+    for row in departed:
+        log.info(
+            "league %s: removing roster %s (absent from sync payload)",
+            league.platform_league_id, row.platform_roster_id,
+        )
+        session.delete(row)
     return mapped, unmapped
 
 
@@ -103,6 +143,10 @@ def sync_league(session: Session, league: League) -> tuple[int, int]:
         canonical = canonical_map_for_sleeper(
             session, [pid for ids in rosters.values() for pid in ids]
         )
+        team_names = {}
+        # Sleeper rosters carry no status; readers fall back to the players
+        # table, which is refreshed from Sleeper daily anyway.
+        injury_statuses: dict[str, str] = {}
     elif league.platform == "espn":
         client = EspnReadClient()
         payload = client.league_view(league.platform_league_id, league.season, "mSettings")
@@ -110,7 +154,14 @@ def sync_league(session: Session, league: League) -> tuple[int, int]:
         _store_settings(
             session, league, translate_espn_settings(payload)
         )
-        rosters = client.get_rosters(league.platform_league_id, league.season)
+        rosters, injury_statuses = client.get_rosters_with_status(
+            league.platform_league_id, league.season
+        )
+        try:
+            team_names = client.get_team_names(league.platform_league_id, league.season)
+        except Exception as exc:  # noqa: BLE001 - names are cosmetic; rosters are not
+            log.warning("could not read team names for %s: %s", league.platform_league_id, exc)
+            team_names = {}
         canonical = canonical_map_for_espn(
             session, [pid for ids in rosters.values() for pid in ids]
         )
@@ -121,7 +172,9 @@ def sync_league(session: Session, league: League) -> tuple[int, int]:
     if platform_name and not league.name:
         league.name = str(platform_name)[:128]
 
-    mapped, unmapped = _store_rosters(session, league, rosters, canonical)
+    mapped, unmapped = _store_rosters(
+        session, league, rosters, canonical, team_names, injury_statuses
+    )
     session.commit()
     return mapped, unmapped
 

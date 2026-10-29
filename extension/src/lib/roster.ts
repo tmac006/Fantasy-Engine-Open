@@ -24,15 +24,25 @@ export function roomSizeFromSchedule(
   totalRounds: number | null | undefined,
   fallback: RoomSize,
 ): RoomSize {
-  const rounds = totalRounds ?? fallback.rounds;
   const distinctTeams = new Set(Object.values(schedule ?? {})).size;
   const scheduledPicks = Object.keys(schedule ?? {}).length;
+  const roughRounds = totalRounds ?? fallback.rounds;
   const teams =
     distinctTeams >= 2
       ? distinctTeams
-      : scheduledPicks > 0 && rounds > 0
-        ? Math.max(2, Math.round(scheduledPicks / rounds))
+      : scheduledPicks > 0 && roughRounds > 0
+        ? Math.max(2, Math.round(scheduledPicks / roughRounds))
         : fallback.teams;
+  // Rounds must not fall back to a hardcoded default. ESPN pre-allocates the
+  // whole draft (192 picks / 12 teams = 16 rounds), so the schedule answers
+  // this exactly, while `totalRounds` comes from a regex over the room's
+  // header text and is simply absent before the draft starts or if ESPN
+  // rewords it. Defaulting to Sleeper's 15 in a 16-round room drops the user's
+  // final pick: seat 11 loses pick 182, so the panel never sees its own last
+  // turn and the endgame must-fill budget is short by one all draft.
+  const derivedRounds =
+    teams >= 2 && scheduledPicks >= teams * 2 ? Math.round(scheduledPicks / teams) : null;
+  const rounds = totalRounds ?? derivedRounds ?? fallback.rounds;
   return { teams, rounds };
 }
 

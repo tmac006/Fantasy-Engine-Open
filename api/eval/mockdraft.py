@@ -23,14 +23,15 @@ from collections import Counter
 from dataclasses import dataclass, field
 
 from api.adapters.sleeper import remaining_picks_for_slot, snake_slot_for_pick
+from api.engine.lineup import NON_SCORING_SLOTS as _NON_SCORING_SLOTS
+from api.engine.lineup import fill_lineup
 from api.engine.params import EngineParams
 from api.engine.recommend import DraftContext, recommend
 from api.engine.simulation import _market_weight, _roster_weight
-from api.engine.vor import FLEX_ELIGIBILITY, PoolPlayer, startable_slots
+from api.engine.vor import PoolPlayer, startable_slots
 from api.schemas import LeagueSettings
 
 # Slots that hold no one who scores for you.
-_NON_SCORING_SLOTS = frozenset({"BN", "IR", "TAXI"})
 
 
 @dataclass(frozen=True)
@@ -171,36 +172,6 @@ def simulate_draft(
 
 def _recent_positions(picks: list[SimulatedPick], window: int = 10) -> list[str]:
     return [p.player.position for p in picks[-window:]]
-
-
-def fill_lineup(
-    players: list[PoolPlayer], roster_slots: dict[str, int]
-) -> tuple[list[PoolPlayer], list[PoolPlayer]]:
-    """The best legal starting lineup, plus everyone left over.
-
-    Direct slots claim their own position's best first, then flex slots take the
-    best of whatever remains eligible. Greedy is exact here because every flex
-    slot's eligibility is a superset of the direct slots it competes with.
-    """
-    remaining = sorted(players, key=lambda p: p.points, reverse=True)
-    starters: list[PoolPlayer] = []
-
-    def claim(eligible: tuple[str, ...], count: int) -> None:
-        for _ in range(count):
-            pick = next((p for p in remaining if p.position in eligible), None)
-            if pick is None:
-                return
-            starters.append(pick)
-            remaining.remove(pick)
-
-    for slot, count in roster_slots.items():
-        if slot in _NON_SCORING_SLOTS or slot in FLEX_ELIGIBILITY:
-            continue
-        claim((slot,), count)
-    for slot, count in roster_slots.items():
-        if slot in FLEX_ELIGIBILITY:
-            claim(tuple(FLEX_ELIGIBILITY[slot]), count)
-    return starters, remaining
 
 
 @dataclass(frozen=True)
