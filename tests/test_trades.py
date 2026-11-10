@@ -552,3 +552,41 @@ def test_waiver_never_includes_a_rostered_player() -> None:
     pool = [*mine.players, *them.players, free]
     for team in attach_waiver([mine, them], pool, SETTINGS):
         assert [p.canonical_id for p in team.waiver] == ["fa"]
+
+
+def test_never_sends_a_qb_to_a_team_that_starts_one() -> None:
+    """Bryce Young offered to a team starting Tyler Shough, twice. Lineup math
+    called it +24; no manager with a starting QB answers that."""
+    from api.engine.trades import fits_their_roster, starter_lines
+
+    mine = roster("me", [*BALANCED, ("QB", 290.0)], mine=True)
+    them = roster("them", BALANCED)  # QB 300: a starter
+    lines = starter_lines([mine, them], SETTINGS)
+    backup_qb = mine.players[-1]
+    assert not fits_their_roster(them, (backup_qb,), (them.players[3],), SETTINGS, lines)
+
+
+def test_every_player_sent_must_start_for_them() -> None:
+    """A bench body bundled in only to pad the market-value total is something
+    they would cut, not a reason to say yes."""
+    from api.engine.trades import fits_their_roster, starter_lines
+
+    mine = roster("me", [*BALANCED, ("WR", 240.0), ("WR", 40.0)], mine=True)
+    them = roster("them", [*BALANCED[:4], ("WR", 120.0), *BALANCED[5:]])
+    lines = starter_lines([mine, them], SETTINGS)
+    good_wr, filler = mine.players[-2], mine.players[-1]
+    ask = (them.players[1],)
+    assert fits_their_roster(them, (good_wr,), ask, SETTINGS, lines)
+    assert not fits_their_roster(them, (good_wr, filler), ask, SETTINGS, lines)
+
+
+def test_generated_packages_respect_their_roster() -> None:
+    from api.engine.trades import fits_their_roster, starter_lines
+
+    mine, others, pool = _around_setup()
+    lines = starter_lines([mine, *others], SETTINGS)
+    by_team = {o.team_id: o for o in others}
+    for mode in ("normal", "fleece"):
+        for package in generate_packages(mine, others, SETTINGS, pool, mode=mode):
+            theirs = by_team[package.their_team_id]
+            assert fits_their_roster(theirs, package.give, package.receive, SETTINGS, lines)

@@ -26,7 +26,7 @@ receive exceeds the value we give by more than the market's pricing suggests.
 from dataclasses import dataclass, replace
 from itertools import combinations
 
-from api.engine.lineup import lineup_points
+from api.engine.lineup import fill_lineup, lineup_points
 from api.engine.vor import FLEX_ELIGIBILITY, PoolPlayer
 from api.schemas import LeagueSettings
 
@@ -218,6 +218,60 @@ def roster_points(
 ) -> float:
     """Best legal lineup from these players plus the free agents he could add."""
     return lineup_points([*players, *roster.waiver], settings.roster_slots)
+
+
+# Positions a team starts exactly one of. Offering a second one to a team that
+# already starts a good one is the offer nobody answers, however the lineup
+# math reads: it is a 2-3 point weekly upgrade they did not ask for.
+ONE_STARTER_POSITIONS = ("QB", "TE", "K", "DEF")
+
+
+def starter_lines(rosters: list[TeamRoster], settings: LeagueSettings) -> dict[str, float]:
+    """The worst projection that still starts somewhere in this league, per position.
+
+    Ranked over every rostered player, so "has a starter" means a starter by
+    this league's standard: in a 12-team, 1-QB league, the 12th-best owned QB.
+    """
+    lines: dict[str, float] = {}
+    for position in ONE_STARTER_POSITIONS:
+        slots = settings.roster_slots.get(position, 0)
+        if slots <= 0:
+            continue
+        ranked = sorted(
+            (p.points for r in rosters for p in r.players if p.position == position),
+            reverse=True,
+        )
+        index = settings.total_teams * slots - 1
+        if 0 <= index < len(ranked):
+            lines[position] = ranked[index]
+    return lines
+
+
+def fits_their_roster(
+    theirs: TeamRoster,
+    give: tuple[PoolPlayer, ...],
+    receive: tuple[PoolPlayer, ...],
+    settings: LeagueSettings,
+    lines: dict[str, float],
+) -> bool:
+    """Judged on their whole roster: would every player we send be wanted?
+
+    Two failures this exists for, both pitched on lineup math alone:
+    Bryce Young offered to a team starting Tyler Shough, and filler bench
+    players bundled in only to move the market-value total. Every player sent
+    must fill a position they actually lack AND start for them afterwards.
+    """
+    for player in give:
+        line = lines.get(player.position)
+        if line is None:
+            continue
+        current = [p.points for p in theirs.players if p.position == player.position]
+        if current and max(current) >= line:
+            return False
+    after = _swap(theirs.players, receive, give)
+    starters, _ = fill_lineup([*after, *theirs.waiver], settings.roster_slots)
+    starting = {p.canonical_id for p in starters}
+    return all(p.canonical_id in starting for p in give)
 
 
 def starter_benchmarks(pool: list[PoolPlayer], settings: LeagueSettings) -> dict[str, float]:
@@ -513,6 +567,7 @@ def generate_packages(
     needy_teams = needy_teams or {}
     curve = market_value_curve(pool, availability)
     benchmarks = starter_benchmarks(pool, settings)
+    lines = starter_lines([mine, *others], settings)
     packages: list[TradePackage] = []
 
     for other in others:
@@ -523,6 +578,8 @@ def generate_packages(
         for take_mine, take_theirs in PACKAGE_SHAPES:
             for give in combinations(my_chips, take_mine):
                 for receive in combinations(their_chips, take_theirs):
+                    if not fits_their_roster(other, give, receive, settings, lines):
+                        continue
                     my_gain, their_gain, edge = evaluate_package(
                         mine, other, give, receive, settings, curve
                     )
@@ -597,6 +654,7 @@ def packages_around(
     needy_teams = needy_teams or {}
     curve = market_value_curve(pool, availability)
     benchmarks = starter_benchmarks(pool, settings)
+    lines = starter_lines([mine, *others], settings)
     mine_ids = {p.canonical_id for p in mine.players}
     anchor_is_mine = anchor.canonical_id in mine_ids
     packages: list[TradePackage] = []
@@ -659,6 +717,8 @@ def packages_around(
                         give = chosen
                         receive = (anchor, *extras)
                     if not give or not receive:
+                        continue
+                    if not fits_their_roster(other, give, receive, settings, lines):
                         continue
                     my_gain, their_gain, edge = evaluate_package(
                         mine, other, give, receive, settings, curve
